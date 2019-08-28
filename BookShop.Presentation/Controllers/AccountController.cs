@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookShop.BusinessLogic.Models;
-using Microsoft.AspNetCore.Http;
+﻿using BookShop.BusinessLogic.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
