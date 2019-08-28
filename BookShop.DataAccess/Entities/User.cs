@@ -4,7 +4,7 @@ namespace BookShop.DataAccess.Entities
 {
     public class User:IdentityUser
     {
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
