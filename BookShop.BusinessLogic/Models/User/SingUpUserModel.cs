@@ -21,6 +21,8 @@ namespace BookShop.BusinessLogic.Models.User
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        public string Id { get; set; }
+        public string SignUpToken { get; set; }
         //[Required]
         //[Compare("Password", ErrorMessage = "Passwords dont match")]
         //[DataType(DataType.Password)]

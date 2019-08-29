@@ -12,22 +12,10 @@ namespace BookShop.Presentation.Controllers
         private readonly IUserService _userService;
         private readonly EmailService _emailService;
 
-        public AccountController(IUserService userService,EmailService emailService)
+        public AccountController(IUserService userService, EmailService emailService)
         {
             _userService = userService;
             _emailService = emailService;
-        }
-
-        [HttpGet]
-        public void Registration()
-        {
-            
-        }
-
-        [HttpGet]
-        public void SignIn()
-        {
-            
         }
 
         [HttpPost]
@@ -38,12 +26,21 @@ namespace BookShop.Presentation.Controllers
                 return BadRequest();
             }
 
-            var result=await _userService.SignUpAsync(model);
+            var result = await _userService.SignUpAsync(model);
             if (result.Succeeded)
             {
-                await _emailService.SendEmailAsync(model.Email, model.FirstName);
-                await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
+                var callbackUrl = Url.Action(
+                    "ConfirmEmail",
+                    "Account",
+                    new { userId = model.Id, code = model.SignUpToken },
+                    Request.Scheme);
+
+                await _emailService.SendEmailAsync(model.Email, model.FirstName, "Confirm your account",
+                    $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+
+                var signInResult = await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
             }
+
             return Ok(model);
         }
 
@@ -55,9 +52,28 @@ namespace BookShop.Presentation.Controllers
                 return BadRequest();
             }
 
-            var result=await _userService.SignInAsync(model);
-            
+            var result = await _userService.SignInAsync(model);
+
             return Ok(model);
+        }
+
+        [HttpGet]
+        public async Task ConfirmEmail(string userId, string code)
+        {
+            //if (userId == null || code == null)
+            //{
+            //    return View("Error");
+            //}
+            //var user = await _userManager.FindByIdAsync(userId);
+            //if (user == null)
+            //{
+            //    return View("Error");
+            //}
+            await _userService.ConfirmEmailAsync(code);
+            //if (result.Succeeded)
+            //    return RedirectToAction("Index", "Home");
+            //else
+            //    return View("Error");
         }
     }
 }
