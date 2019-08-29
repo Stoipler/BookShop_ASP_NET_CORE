@@ -1,20 +1,24 @@
 ﻿using BookShop.BusinessLogic.Models.Users;
 using BookShop.BusinessLogic.Services.Interfaces;
-using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
-using BookShop.DataAccess.Repostories.EFRepsoitories;
 using BookShop.DataAccess.Repostories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         public IEnumerable<UserModel> GetAll()
         {
@@ -26,13 +30,29 @@ namespace BookShop.BusinessLogic.Services
             }
             return userModels;
         }
-        public void Register(RegistrationUserModel userModel)
+        public async Task SignUp(SignUpUserModel userModel)
         {
-            User user = new User { FirstName = userModel.FirstName,
+            User user = new User
+            {
+                UserName = userModel.FirstName + userModel.LastName,
+                FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 Email = userModel.Email,
-                PasswordHash = userModel.Password };
-            _userRepository.Create(user);
+            };
+            await _userManager.CreateAsync(user,userModel.Password);
         }
+        //public async Task SingnIn(SignUpUserModel userModel)
+        //{
+        //    User user = new User
+        //    {
+        //        UserName = userModel.FirstName + userModel.LastName,
+        //        FirstName = userModel.FirstName,
+        //        LastName = userModel.LastName,
+        //        Email = userModel.Email,
+        //    };
+        //    await _userManager.CreateAsync(user, userModel.Password);
+        //}
+
+
     }
 }

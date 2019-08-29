@@ -34,9 +34,9 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("Firstname");
+                    b.Property<string>("FirstName");
 
-                    b.Property<string>("Lastname");
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 

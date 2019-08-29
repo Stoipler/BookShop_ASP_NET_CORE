@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository : IUserRepository
     {
         ApplicationContext _context;
         DbSet<User> _dbSet;

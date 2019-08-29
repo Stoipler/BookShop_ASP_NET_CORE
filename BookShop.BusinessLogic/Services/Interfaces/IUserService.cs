@@ -1,13 +1,12 @@
 ﻿using BookShop.BusinessLogic.Models.Users;
-using BookShop.DataAccess.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces
 {
     public interface IUserService
     {
         IEnumerable<UserModel> GetAll();
-
-        void Register(RegistrationUserModel userModel);
+        Task SignUp(SignUpUserModel userModel);
     }
 }

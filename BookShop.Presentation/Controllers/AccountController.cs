@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using BookShop.BusinessLogic.Models.Users;
+﻿using BookShop.BusinessLogic.Models.Users;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,7 +17,7 @@ namespace BookShop.Presentation.Controllers
         {
             _userService = userService;
         }
-        
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<UserModel> Get()
@@ -33,14 +34,14 @@ namespace BookShop.Presentation.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post([FromBody]RegistrationUserModel userModel)
+        public async Task<IActionResult> Post([FromBody]SignUpUserModel userModel)
         {
-            if (userModel == null)
+            if (userModel is null)
             {
                 return BadRequest();
             }
 
-            _userService.Register(userModel);
+            await _userService.SignUp(userModel);
             return Ok(userModel);
         }
 
