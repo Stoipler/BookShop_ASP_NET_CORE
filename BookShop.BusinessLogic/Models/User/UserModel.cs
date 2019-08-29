@@ -1,4 +1,4 @@
-﻿namespace BookShop.BusinessLogic.Models.Users
+﻿namespace BookShop.BusinessLogic.Models.User
 {
     public class UserModel
     {

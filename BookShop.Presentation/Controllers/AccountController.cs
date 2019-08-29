@@ -1,60 +1,59 @@
-﻿using BookShop.BusinessLogic.Models.Users;
+﻿using BookShop.BusinessLogic.Models.User;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BookShop.Presentation.Controllers
 {
-    [Route("api/[controller]")]
-    public class RegistrationController : Controller
+    [Route("api/[controller]/[action]")]
+    public class AccountController : Controller
     {
         private readonly IUserService _userService;
 
-        public RegistrationController(IUserService userService)
+        public AccountController(IUserService userService)
         {
             _userService = userService;
         }
 
-        // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<UserModel> Get()
+        public void Registration()
         {
-            return _userService.GetAll();
+            
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public void SignIn()
         {
-            return "value";
+            
         }
 
-        // POST api/<controller>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]SignUpUserModel userModel)
+        public async Task<IActionResult> Registration([FromBody]SignUpUserModel model)
         {
-            if (userModel is null)
+            if (model is null)
             {
                 return BadRequest();
             }
 
-            await _userService.SignUp(userModel);
-            return Ok(userModel);
+            var result=await _userService.SignUpAsync(model);
+            if (result.Succeeded)
+            {
+                await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
+            }
+            return Ok(model);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        public async Task<IActionResult> SignIn([FromBody]SignInUserModel model)
         {
-        }
+            if (model is null)
+            {
+                return BadRequest();
+            }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result=await _userService.SignInAsync(model);
+            
+            return Ok(model);
         }
     }
 }
