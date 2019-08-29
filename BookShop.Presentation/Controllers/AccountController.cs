@@ -1,4 +1,5 @@
-﻿using BookShop.BusinessLogic.Models.User;
+﻿using BookShop.BusinessLogic.Common;
+using BookShop.BusinessLogic.Models.User;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,10 +10,12 @@ namespace BookShop.Presentation.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly EmailService _emailService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService,EmailService emailService)
         {
             _userService = userService;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -38,6 +41,7 @@ namespace BookShop.Presentation.Controllers
             var result=await _userService.SignUpAsync(model);
             if (result.Succeeded)
             {
+                await _emailService.SendEmailAsync(model.Email, model.FirstName);
                 await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
             }
             return Ok(model);

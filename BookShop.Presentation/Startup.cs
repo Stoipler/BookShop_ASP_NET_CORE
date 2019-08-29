@@ -16,7 +16,7 @@ namespace BookShop.Presentation
         {
 
             string connectionString = Configuration.GetConnectionString("ApplicationDb");
-            BusinessLogic.Startup.OnLoad(connectionString, services);
+            BusinessLogic.Startup.OnLoad(Configuration,connectionString, services);
 
             services.AddMvc();
 
