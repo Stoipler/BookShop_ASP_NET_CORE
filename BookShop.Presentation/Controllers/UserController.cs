@@ -1,6 +1,7 @@
 ﻿using BookShop.BusinessLogic.Models.User;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
@@ -14,15 +15,20 @@ namespace BookShop.Presentation.Controllers
             this._userService = userService;
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<UserModel>> Get()
+        {
+            return await _userService.GetAsync();
+        }
         [HttpPost]
-        public async Task Create([FromBody]UserCreateModel model)
+        public async Task<IActionResult> Create([FromBody]UserCreateModel model)
         {
             if (ModelState.IsValid)
             {
                 var result = await _userService.CreateAsync(model);
                 if (result.Succeeded)
                 {
-                    
+                    return Ok(model);
                 }
                 else
                 {
@@ -32,6 +38,7 @@ namespace BookShop.Presentation.Controllers
                     }
                 }
             }
+            return BadRequest(ModelState);
         }
 
         //public async Task<IActionResult> Edit(string id)

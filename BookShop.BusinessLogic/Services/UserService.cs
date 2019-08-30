@@ -19,9 +19,15 @@ namespace BookShop.BusinessLogic.Services
             this._userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<User>> GetAsync()
+        public async Task<IEnumerable<UserModel>> GetAsync()
         {
-            return await _userRepository.GetAsync();
+            var users= await _userRepository.GetAsync();
+            List<UserModel> userModels = new List<UserModel>();
+            foreach(User user in users)
+            {
+                userModels.Add(new UserModel(user));
+            }
+            return userModels; 
         }
         public async Task<IdentityResult> CreateAsync(UserCreateModel model)
         {

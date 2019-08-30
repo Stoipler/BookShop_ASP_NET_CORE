@@ -26,7 +26,7 @@ namespace BookShop.BusinessLogic.Services
                 UserName = userModel.Email,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                Email = userModel.Email,
+                Email = userModel.Email
             };
             var result= await _userManager.CreateAsync(user,userModel.Password);
             userModel.Id= user.Id;
