@@ -9,7 +9,6 @@ namespace BookShop.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private User _user;
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -22,16 +21,16 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task<IdentityResult> SignUpAsync(SignUpUserModel userModel)
         {
-            _user = new User
+            var user = new User
             {
                 UserName = userModel.Email,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 Email = userModel.Email,
             };
-            var result= await _userManager.CreateAsync(_user,userModel.Password);
-            userModel.Id= _user.Id;
-            userModel.SignUpToken= await _userManager.GenerateEmailConfirmationTokenAsync(_user);
+            var result= await _userManager.CreateAsync(user,userModel.Password);
+            userModel.Id= user.Id;
+            userModel.SignUpToken= await _userManager.GenerateEmailConfirmationTokenAsync(user);
             return result;
         }
         public async Task<SignInResult> SignInAsync(SignInUserModel userModel)
@@ -39,9 +38,10 @@ namespace BookShop.BusinessLogic.Services
             return await _signInManager.PasswordSignInAsync(userModel.Email,userModel.Password,false,false); 
         }
 
-        public Task ConfirmEmailAsync( string code)
+        public async Task ConfirmEmailAsync(string userId, string code)
         {
-            return _userManager.ConfirmEmailAsync(_user, code);
+            var user=await _userManager.FindByIdAsync(userId);
+            await _userManager.ConfirmEmailAsync(user, code);
         }
     }
 }

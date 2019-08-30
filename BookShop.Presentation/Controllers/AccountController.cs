@@ -36,7 +36,7 @@ namespace BookShop.Presentation.Controllers
                     Request.Scheme);
 
                 await _emailService.SendEmailAsync(model.Email, model.FirstName, "Confirm your account",
-                    $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+                    $"Please confirm your registration using the link: <a href='{callbackUrl}'>link</a>");
 
                 var signInResult = await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
             }
@@ -60,16 +60,7 @@ namespace BookShop.Presentation.Controllers
         [HttpGet]
         public async Task ConfirmEmail(string userId, string code)
         {
-            //if (userId == null || code == null)
-            //{
-            //    return View("Error");
-            //}
-            //var user = await _userManager.FindByIdAsync(userId);
-            //if (user == null)
-            //{
-            //    return View("Error");
-            //}
-            await _userService.ConfirmEmailAsync(code);
+            await _userService.ConfirmEmailAsync(userId,code);
             //if (result.Succeeded)
             //    return RedirectToAction("Index", "Home");
             //else
