@@ -7,13 +7,13 @@ namespace BookShop.BusinessLogic.Common
 {
     public class EmailService
     {
-        public async Task SendEmailAsync(string userEmail,string userFirstName, string messageSubject, string message)
+        public async Task SendEmailAsync(string userEmail, string messageSubject, string message)
         {
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("BookShopStoipler@gmail.com", "Admin");
             var subject = messageSubject;
-            var to = new EmailAddress(userEmail, userFirstName);
+            var to = new EmailAddress(userEmail, "User");
             var plainTextContent = message;
             var htmlContent ="";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);

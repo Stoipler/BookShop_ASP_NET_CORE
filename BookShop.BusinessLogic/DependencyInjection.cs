@@ -13,16 +13,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BookShop.BusinessLogic
 {
-    public class Startup
+    public static class DependencyInjection
     {
-        public static void OnLoad(IConfiguration configuration ,string connectionString, IServiceCollection services)
+        public static void OnLoad(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
             
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<EmailService>();
         }

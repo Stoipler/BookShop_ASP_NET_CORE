@@ -1,6 +1,7 @@
 ﻿using BookShop.BusinessLogic.Common;
 using BookShop.BusinessLogic.Models.User;
 using BookShop.BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,24 +10,24 @@ namespace BookShop.Presentation.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
         private readonly EmailService _emailService;
 
-        public AccountController(IUserService userService, EmailService emailService)
+        public AccountController(IAccountService userService, EmailService emailService)
         {
-            _userService = userService;
+            _accountService = userService;
             _emailService = emailService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration([FromBody]SignUpUserModel model)
+        public async Task<IActionResult> Registration([FromBody]UserSignUpModel model)
         {
             if (model is null)
             {
                 return BadRequest();
             }
 
-            var result = await _userService.SignUpAsync(model);
+            var result = await _accountService.SignUpAsync(model);
             if (result.Succeeded)
             {
                 var callbackUrl = Url.Action(
@@ -35,24 +36,24 @@ namespace BookShop.Presentation.Controllers
                     new { userId = model.Id, code = model.SignUpToken },
                     Request.Scheme);
 
-                await _emailService.SendEmailAsync(model.Email, model.FirstName, "Confirm your account",
+                await _emailService.SendEmailAsync(model.Email,  "Confirm your account",
                     $"Please confirm your registration using the link: <a href='{callbackUrl}'>link</a>");
 
-                var signInResult = await _userService.SignInAsync(new SignInUserModel { Email = model.Email, Password = model.Password });
+                var signInResult = await _accountService.SignInAsync(new UserSignInModel { Email = model.Email, Password = model.Password });
             }
 
             return Ok(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn([FromBody]SignInUserModel model)
+        public async Task<IActionResult> SignIn([FromBody]UserSignInModel model)
         {
             if (model is null)
             {
                 return BadRequest();
             }
 
-            var result = await _userService.SignInAsync(model);
+            var result = await _accountService.SignInAsync(model);
 
             return Ok(model);
         }
@@ -60,11 +61,30 @@ namespace BookShop.Presentation.Controllers
         [HttpGet]
         public async Task ConfirmEmail(string userId, string code)
         {
-            await _userService.ConfirmEmailAsync(userId,code);
-            //if (result.Succeeded)
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //    return View("Error");
+            await _accountService.ConfirmEmailAsync(userId,code);
+        }
+
+        [HttpGet]
+        public void ResetPassword()
+        {
+            
+        }
+
+        [HttpPost]
+        public async Task ForgotPassword([FromBody] UserForgotPasswordModel model)
+        {
+            UserModel userModel = await _accountService.IsEmailConfirmedAsync(model);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = userModel.Id, code = userModel.Code }, Request.Scheme);
+            await _emailService.SendEmailAsync(model.Email, "Reset Password",
+                $"To reset password use the next link: <a href='{callbackUrl}'>link</a>");
+        }
+
+
+
+        [HttpPost]
+        public async Task ResetPassword( [FromBody]UserResetPasswordModel model)
+        {
+            await _accountService.ResetPasswordAsync(model);
         }
     }
 }

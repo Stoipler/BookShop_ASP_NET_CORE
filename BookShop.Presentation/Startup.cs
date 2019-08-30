@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BookShop.BusinessLogic;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,9 +15,7 @@ namespace BookShop.Presentation
         }
         public void ConfigureServices(IServiceCollection services)
         {
-
-            string connectionString = Configuration.GetConnectionString("ApplicationDb");
-            BusinessLogic.Startup.OnLoad(Configuration,connectionString, services);
+            DependencyInjection.OnLoad(services, Configuration);
 
             services.AddMvc();
 

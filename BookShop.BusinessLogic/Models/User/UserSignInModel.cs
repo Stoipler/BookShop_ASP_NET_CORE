@@ -2,7 +2,7 @@
 
 namespace BookShop.BusinessLogic.Models.User
 {
-    public class SignInUserModel
+    public class UserSignInModel
     {
         [Required]
         [Display(Name = "Email")]
