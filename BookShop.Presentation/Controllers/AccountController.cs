@@ -73,7 +73,7 @@ namespace BookShop.Presentation.Controllers
         [HttpPost]
         public async Task ForgotPassword([FromBody] UserForgotPasswordModel model)
         {
-            UserModel userModel = await _accountService.IsEmailConfirmedAsync(model);
+            UserTransportModel userModel = await _accountService.IsEmailConfirmedAsync(model);
             var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = userModel.Id, code = userModel.Code }, Request.Scheme);
             await _emailService.SendEmailAsync(model.Email, "Reset Password",
                 $"To reset password use the next link: <a href='{callbackUrl}'>link</a>");

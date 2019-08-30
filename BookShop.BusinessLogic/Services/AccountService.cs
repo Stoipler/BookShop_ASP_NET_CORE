@@ -42,13 +42,13 @@ namespace BookShop.BusinessLogic.Services
             var user=await _userManager.FindByIdAsync(userId);
             await _userManager.ConfirmEmailAsync(user, code);
         }
-        public async Task<UserModel> IsEmailConfirmedAsync(UserForgotPasswordModel model)
+        public async Task<UserTransportModel> IsEmailConfirmedAsync(UserForgotPasswordModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             
             await _userManager.IsEmailConfirmedAsync(user);
 
-            UserModel userModel = new UserModel { Id = user.Id };
+            UserTransportModel userModel = new UserTransportModel { Id = user.Id };
             userModel.Code= await _userManager.GeneratePasswordResetTokenAsync(user);
 
             return userModel;

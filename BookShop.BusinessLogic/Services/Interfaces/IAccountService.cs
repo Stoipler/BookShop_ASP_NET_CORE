@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<IdentityResult> SignUpAsync(UserSignUpModel userModel);
         Task<SignInResult> SignInAsync(UserSignInModel userModel);
         Task ConfirmEmailAsync(string userId, string code);
-        Task<UserModel> IsEmailConfirmedAsync(UserForgotPasswordModel model);
+        Task<UserTransportModel> IsEmailConfirmedAsync(UserForgotPasswordModel model);
         Task ResetPasswordAsync(UserResetPasswordModel model);
     }
 }
