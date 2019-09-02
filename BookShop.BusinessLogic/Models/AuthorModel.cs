@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.Models
 
         public AuthorModel(Author author)
         {
-            Id =author.Id;
+            
             Name = author.Name;
         }
     }
