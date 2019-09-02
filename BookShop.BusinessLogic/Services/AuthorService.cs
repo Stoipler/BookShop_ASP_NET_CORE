@@ -29,7 +29,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task CreateAsync(AuthorModel model)
         {
-            Author author = new Author { Id=model.Id, Name=model.Name };
+            Author author = new Author { Name=model.Name };
             await _authorRepository.CreateAsync(author);
         }
         public async Task Update(AuthorModel model)

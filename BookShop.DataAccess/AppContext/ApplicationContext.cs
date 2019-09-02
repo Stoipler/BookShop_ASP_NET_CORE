@@ -12,6 +12,9 @@ namespace BookShop.DataAccess.AppContext
         public DbSet<Author> Authors { get; set; }
         public DbSet<AuthorInPrintedEdition> AuthorInPrintedEditions { get; set; }
         public DbSet<PrintedEdition> PrintedEditions { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options) {
