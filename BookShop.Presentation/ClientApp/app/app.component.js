@@ -4,16 +4,63 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { Component } from '@angular/core';
+import { DataService } from './data.service';
+import { User } from './user';
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
-        this.name = '';
+    function AppComponent(dataService) {
+        this.dataService = dataService;
+        this.user = new User(); // изменяемый товар
+        this.tableMode = true; // табличный режим
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.loadUsers(); // загрузка данных при старте компонента  
+    };
+    // получаем данные через сервис
+    AppComponent.prototype.loadUsers = function () {
+        var _this = this;
+        this.dataService.getUsers()
+            .subscribe(function (data) { return _this.users = data; });
+    };
+    // сохранение данных
+    AppComponent.prototype.save = function () {
+        var _this = this;
+        if (this.user.id == null) {
+            this.dataService.createUser(this.user)
+                .subscribe(function (data) { return _this.users.push(data); });
+        }
+        else {
+            this.dataService.updateUser(this.user)
+                .subscribe(function (data) { return _this.loadUsers(); });
+        }
+        this.cancel();
+    };
+    AppComponent.prototype.edituser = function (u) {
+        this.user = u;
+    };
+    AppComponent.prototype.cancel = function () {
+        this.user = new User();
+        this.tableMode = true;
+    };
+    AppComponent.prototype.delete = function (u) {
+        var _this = this;
+        this.dataService.deleteUser(u.id)
+            .subscribe(function (data) { return _this.loadUsers(); });
+    };
+    AppComponent.prototype.add = function () {
+        this.cancel();
+        this.tableMode = false;
+    };
     AppComponent = __decorate([
         Component({
             selector: 'app',
-            template: "<label>\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F:</label>\n                 <input [(ngModel)]=\"name\" placeholder=\"name\">\n                 <h2>\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C {{name}}!</h2>"
-        })
+            templateUrl: './app.component.html',
+            providers: [DataService]
+        }),
+        __metadata("design:paramtypes", [DataService])
     ], AppComponent);
     return AppComponent;
 }());

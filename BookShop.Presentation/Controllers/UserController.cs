@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

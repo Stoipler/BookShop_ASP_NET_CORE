@@ -10,10 +10,10 @@ namespace BookShop.BusinessLogic.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountService(IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountService(IUserRepository userRepository, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userRepository = userRepository;
             _userManager = userManager;
@@ -21,7 +21,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task<IdentityResult> SignUpAsync(UserSignUpModel userModel)
         {
-            var user = new User
+            var user = new ApplicationUser
             {
                 UserName = userModel.Email,
                 FirstName = userModel.FirstName,

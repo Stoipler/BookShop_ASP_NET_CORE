@@ -10,7 +10,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
     {
         Task<IEnumerable<UserModel>> GetAsync();
         Task<IdentityResult> CreateAsync(UserCreateModel model);
-        Task Update(User user);
-        Task Remove(User user);
+        Task UpdateAsync(ApplicationUser user);
+        Task RemoveAsync(ApplicationUser user);
     }
 }

@@ -19,13 +19,17 @@ namespace BookShop.BusinessLogic
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
             
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<EmailService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IPrintedEditionService, PrintedEditionService>();
+            services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
         }
     }
 }

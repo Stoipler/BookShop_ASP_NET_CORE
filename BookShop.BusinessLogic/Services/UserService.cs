@@ -10,10 +10,10 @@ namespace BookShop.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserRepository _userRepository;
 
-        public UserService(UserManager<User> userManager,IUserRepository userRepository)
+        public UserService(UserManager<ApplicationUser> userManager,IUserRepository userRepository)
         {
             this._userManager = userManager;
             this._userRepository = userRepository;
@@ -23,7 +23,7 @@ namespace BookShop.BusinessLogic.Services
         {
             var users= await _userRepository.GetAsync();
             List<UserModel> userModels = new List<UserModel>();
-            foreach(User user in users)
+            foreach(ApplicationUser user in users)
             {
                 userModels.Add(new UserModel(user));
             }
@@ -31,14 +31,14 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task<IdentityResult> CreateAsync(UserCreateModel model)
         {
-            User user = new User { Email = model.Email, UserName = model.Email };
+            ApplicationUser user = new ApplicationUser { Email = model.Email, UserName = model.Email };
             return await _userManager.CreateAsync(user, model.Password);
         }
-        public async Task Update(User user)
+        public async Task UpdateAsync(ApplicationUser user)
         {
             await _userRepository.Update(user);
         }
-        public async Task Remove(User user)
+        public async Task RemoveAsync(ApplicationUser user)
         {
             await _userRepository.Remove(user);
         }

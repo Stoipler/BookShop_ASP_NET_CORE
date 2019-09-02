@@ -5,7 +5,7 @@ using BookShop.DataAccess.Repostories.Interfaces;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<ApplicationUser>, IUserRepository
     {
         public UserRepository(ApplicationContext context) : base(context)
         {
