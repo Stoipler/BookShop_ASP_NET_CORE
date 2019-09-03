@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "",
       "environmentVariables": {
         "API_KEY": "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",
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -21,7 +21,7 @@
     "BookShop.Presentation": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

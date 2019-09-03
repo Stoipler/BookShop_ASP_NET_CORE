@@ -27,22 +27,12 @@ namespace BookShop.Presentation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                // добавляем сборку через webpack
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
-                //
             }
             else
             {
                 app.UseHsts();
             }
-            //
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-            //
+            
             app.UseHttpsRedirection();
             app.UseMvc();
         }

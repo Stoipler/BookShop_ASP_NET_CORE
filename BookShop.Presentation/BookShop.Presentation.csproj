@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\app.component.ts" />
-    <None Remove="ClientApp\app\app.module.ts" />
-    <None Remove="ClientApp\app\data.service.ts" />
-    <None Remove="ClientApp\app\user.ts" />
-    <None Remove="ClientApp\main.ts" />
-    <None Remove="ClientApp\polyfills.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -34,13 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookShop.BusinessLogic\BookShop.BusinessLogic.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
-    <TypeScriptCompile Include="ClientApp\main.ts" />
-    <TypeScriptCompile Include="ClientApp\polyfills.ts" />
   </ItemGroup>
 
 </Project>
