@@ -17,7 +17,7 @@ namespace BookShop.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             DependencyInjection.OnLoad(services, Configuration);
-
+            services.AddCors();
             services.AddMvc();
 
         }
@@ -27,12 +27,18 @@ namespace BookShop.Presentation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                
             }
             else
             {
                 app.UseHsts();
             }
-            
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }

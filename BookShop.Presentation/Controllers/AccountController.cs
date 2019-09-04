@@ -20,7 +20,7 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration([FromBody]UserSignUpModel model)
+        public async Task<IActionResult> SignUp([FromBody]UserSignUpModel model)
         {
             if (model is null)
             {
@@ -37,7 +37,7 @@ namespace BookShop.Presentation.Controllers
                     Request.Scheme);
 
                 await _emailService.SendEmailAsync(model.Email,  "Confirm your account",
-                    $"Please confirm your registration using the link: <a href='{callbackUrl}'>link</a>");
+                    $"Please confirm your registration using the link: <a title='Confirmation' href='{callbackUrl}'>link</a>");
 
                 var signInResult = await _accountService.SignInAsync(new UserSignInModel { Email = model.Email, Password = model.Password });
             }

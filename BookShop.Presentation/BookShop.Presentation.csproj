@@ -27,4 +27,8 @@
     <ProjectReference Include="..\BookShop.BusinessLogic\BookShop.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

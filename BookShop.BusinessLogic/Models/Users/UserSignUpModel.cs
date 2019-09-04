@@ -23,10 +23,11 @@ namespace BookShop.BusinessLogic.Models.User
 
         public string Id { get; set; }
         public string SignUpToken { get; set; }
-        //[Required]
-        //[Compare("Password", ErrorMessage = "Passwords dont match")]
-        //[DataType(DataType.Password)]
-        //[Display(Name = "Password confirmation")]
-        //public string PasswordConfirmation { get; set; }
+
+        [Required]
+        [Compare("Password", ErrorMessage = "Passwords dont match")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password confirmation")]
+        public string PasswordConfirmation { get; set; }
     }
 }
