@@ -27,8 +27,6 @@ namespace BookShop.Presentation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                
             }
             else
             {
@@ -38,6 +36,7 @@ namespace BookShop.Presentation
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();

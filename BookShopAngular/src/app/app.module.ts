@@ -12,6 +12,7 @@ import { AuthorService } from './author/author.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { SignUpService } from './sign-up/signUp.service';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,10 +20,11 @@ import { SignUpService } from './sign-up/signUp.service';
     NavigationBarComponent,
     HomeComponent,
     SignUpComponent,
-    AuthorComponent
+    AuthorComponent,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule

@@ -20,15 +20,15 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody]UserSignUpModel model)
+        public async Task<object> SignUp([FromBody]UserSignUpModel model)
         {
-            if (model is null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
-            var result = await _accountService.SignUpAsync(model);
-            if (result.Succeeded)
+            var signUpResult = await _accountService.SignUpAsync(model);
+            if (signUpResult.Succeeded)
             {
                 var callbackUrl = Url.Action(
                     "ConfirmEmail",
@@ -36,38 +36,51 @@ namespace BookShop.Presentation.Controllers
                     new { userId = model.Id, code = model.SignUpToken },
                     Request.Scheme);
 
-                await _emailService.SendEmailAsync(model.Email,  "Confirm your account",
+                await _emailService.SendEmailAsync(model.Email, "Confirm your account",
                     $"Please confirm your registration using the link: <a title='Confirmation' href='{callbackUrl}'>link</a>");
 
-                var signInResult = await _accountService.SignInAsync(new UserSignInModel { Email = model.Email, Password = model.Password });
+                await _accountService.SignInAsync(new UserSignInModel { Email = model.Email, Password = model.Password });
+            }
+            if (!signUpResult.Succeeded)
+            {
+                foreach (var error in signUpResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return BadRequest(ModelState);
             }
 
-            return Ok(model);
+            return model;
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn([FromBody]UserSignInModel model)
+        public async Task<object> SignIn([FromBody]UserSignInModel model)
         {
-            if (model is null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-
             var result = await _accountService.SignInAsync(model);
+            if (result.Succeeded)
+            {
+                return Ok(model);
+            }
 
-            return Ok(model);
+            ModelState.AddModelError("", "Wrong login or/and password");
+            return BadRequest(ModelState);
         }
 
         [HttpGet]
         public async Task ConfirmEmail(string userId, string code)
         {
-            await _accountService.ConfirmEmailAsync(userId,code);
+            await _accountService.ConfirmEmailAsync(userId, code);
         }
 
         [HttpGet]
         public void ResetPassword()
         {
-            
+
         }
 
         [HttpPost]
@@ -82,7 +95,7 @@ namespace BookShop.Presentation.Controllers
 
 
         [HttpPost]
-        public async Task ResetPassword( [FromBody]UserResetPasswordModel model)
+        public async Task ResetPassword([FromBody]UserResetPasswordModel model)
         {
             await _accountService.ResetPasswordAsync(model);
         }

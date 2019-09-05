@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignUpService } from './signUp.service';
-import { SignUpModel } from './signUpModel';
+import { SignUpModel } from '../core/models/signUpModel';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { error } from 'util';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,13 +11,31 @@ import { SignUpModel } from './signUpModel';
   providers: [SignUpService]
 })
 export class SignUpComponent implements OnInit {
-    user: SignUpModel = new SignUpModel();
-    constructor(private signUpService: SignUpService) { }
+  angForm: FormGroup;
+  user: SignUpModel = new SignUpModel();
+  isSignUpSuccessful:boolean=false;
 
-    ngOnInit() {
-    }
-    register() {
-        this.signUpService.createUser(this.user)
-        .subscribe((data: SignUpModel) => this.user = data);
-    }
+  constructor(private signUpService: SignUpService,
+    private formBuilder: FormBuilder) {
+
+  }
+
+  ngOnInit() {
+
+  }
+
+  clearForm() {
+    this.user = new SignUpModel();
+  }
+
+  register() {
+    this.signUpService.createUser(this.user)
+      .subscribe(
+        (data: SignUpModel) => {
+          this.isSignUpSuccessful=true;
+        },
+        (error) => {
+
+        });
+  }
 }
