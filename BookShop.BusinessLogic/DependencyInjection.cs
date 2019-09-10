@@ -19,13 +19,14 @@ namespace BookShop.BusinessLogic
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
             
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<EmailService>();
+            services.AddTransient<EmailHelper>();
+            services.AddTransient<JwtHelper>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
@@ -40,6 +41,7 @@ namespace BookShop.BusinessLogic
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
+                
 
                 // Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -51,6 +53,9 @@ namespace BookShop.BusinessLogic
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
             });
+
+            
+
         }
     }
 }

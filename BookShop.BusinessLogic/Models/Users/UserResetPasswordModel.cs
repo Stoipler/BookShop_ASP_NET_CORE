@@ -15,7 +15,7 @@ namespace BookShop.BusinessLogic.Models.User
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "Passwords don't match")]
+        //[Compare("Password", ErrorMessage = "Passwords don't match")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

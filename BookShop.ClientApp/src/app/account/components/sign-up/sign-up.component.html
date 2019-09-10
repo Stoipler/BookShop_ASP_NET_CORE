@@ -1,0 +1,59 @@
+<div *ngIf="isSignUpSuccessful">
+    <h3>
+        <strong>Confirm your email adress</strong>
+    </h3>
+    <p>
+        We have sent an email with a confirmation link to your email adress.
+        In order to complete the sign-up process, please clic the confirmation link.
+    </p>
+    <p>
+        If you didn't receive a confirmation email, please check your spam folder.
+        Also, please verify that you entered a valid email address in our sign-up form.
+    </p>
+</div>
+<div *ngIf="!isSignUpSuccessful">
+
+
+    <div class="form-group">
+        <label>Your First name</label>
+        <input class="form-control" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" required />
+        <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
+            Please enter Your First name
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Your Last name</label>
+        <input class="form-control" name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" required />
+        <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+            Please enter Your Last name
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Your E-mail</label>
+        <input class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+            Please enter correct E-mail
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel"
+            required />
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+            Please enter correct password
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password confirmation</label>
+        <input type="password" class="form-control" name="passwordConfirmation" [(ngModel)]="user.passwordConfirmation"
+            #passwordConfirmation="ngModel" required />
+        <div [hidden]="passwordConfirmation.valid || passwordConfirmation.untouched" class="alert alert-danger">
+            Please enter correct password
+        </div>
+    </div>
+
+    <button [disabled]="firstName.invalid || lastName.invalid || 
+    email.invalid|| password.invalid || passwordConfirmation.invalid" class="btn btn-default"
+        (click)="register()">Confirm</button>
+
+</div>

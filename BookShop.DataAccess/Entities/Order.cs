@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BookShop.DataAccess.Entities.Interfaces;
+using System;
 
 namespace BookShop.DataAccess.Entities
 {
-    public class Order
+    public class Order: IBaseEntity
     {
         public int Id { get; set; }
         public string Description { get; set; }

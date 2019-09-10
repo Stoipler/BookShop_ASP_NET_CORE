@@ -1,8 +1,9 @@
-﻿using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+﻿using BookShop.DataAccess.Entities.Interfaces;
+using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Entities
 {
-    public class PrintedEdition
+    public class PrintedEdition: IBaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

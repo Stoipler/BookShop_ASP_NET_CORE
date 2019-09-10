@@ -1,4 +1,5 @@
 ﻿using BookShop.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 
 namespace BookShop.DataAccess.AppContext
 {
-    public class ApplicationContext:IdentityDbContext<ApplicationUser>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         private string _connectionString { get; set; }
         public DbSet<Author> Authors { get; set; }
@@ -17,8 +18,9 @@ namespace BookShop.DataAccess.AppContext
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            : base(options) {
-            
+            : base(options)
+        {
+
             var sqlServerOptionsExtension =
                    options.FindExtension<SqlServerOptionsExtension>();
             if (sqlServerOptionsExtension != null)

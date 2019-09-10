@@ -21,7 +21,7 @@ namespace BookShop.BusinessLogic.Models.User
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string SignUpToken { get; set; }
 
         [Required]

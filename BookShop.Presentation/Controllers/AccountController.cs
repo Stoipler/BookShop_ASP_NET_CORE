@@ -2,32 +2,42 @@
 using BookShop.BusinessLogic.Models.User;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace BookShop.Presentation.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ApiController]
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly EmailService _emailService;
+        private readonly EmailHelper _emailHelper;
+        private readonly string _applicatonLink;
 
-        public AccountController(IAccountService userService, EmailService emailService)
+
+        public AccountController(IAccountService userService, EmailHelper emailHelper)
         {
             _accountService = userService;
-            _emailService = emailService;
+            _emailHelper = emailHelper;
+            _applicatonLink = Environment.GetEnvironmentVariable("ClientAppRoot");
         }
-
+       
+       
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<object> SignUp([FromBody]UserSignUpModel model)
+        public async Task<IActionResult> SignUp([FromBody]UserSignUpModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var signUpResult = await _accountService.SignUpAsync(model);
+            
+            IdentityResult signUpResult = await _accountService.SignUpAsync(model);
             if (signUpResult.Succeeded)
             {
                 var callbackUrl = Url.Action(
@@ -36,7 +46,7 @@ namespace BookShop.Presentation.Controllers
                     new { userId = model.Id, code = model.SignUpToken },
                     Request.Scheme);
 
-                await _emailService.SendEmailAsync(model.Email, "Confirm your account",
+                await _emailHelper.SendEmailAsync(model.Email, "Confirm your account",
                     $"Please confirm your registration using the link: <a title='Confirmation' href='{callbackUrl}'>link</a>");
 
                 await _accountService.SignInAsync(new UserSignInModel { Email = model.Email, Password = model.Password });
@@ -50,54 +60,87 @@ namespace BookShop.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            return model;
+            return Ok(model);
 
         }
-
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<object> SignIn([FromBody]UserSignInModel model)
+        public async Task<IActionResult> SignIn([FromBody]UserSignInModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = await _accountService.SignInAsync(model);
+            SignInResult result = await _accountService.SignInAsync(model);
             if (result.Succeeded)
             {
                 return Ok(model);
             }
 
-            ModelState.AddModelError("", "Wrong login or/and password");
+            ModelState.AddModelError(string.Empty, "Wrong login or/and password");
             return BadRequest(ModelState);
         }
 
         [HttpGet]
-        public async Task ConfirmEmail(string userId, string code)
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             await _accountService.ConfirmEmailAsync(userId, code);
+            return Redirect(_applicatonLink+ "/account/emailconfirmed");
         }
 
         [HttpGet]
-        public void ResetPassword()
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string code = null)
         {
+            if(code is null)
+            {
+                return BadRequest();
+            }
 
+            return Redirect(_applicatonLink + "/account/resetpassword" + "/?code="+code);
+            
         }
 
         [HttpPost]
-        public async Task ForgotPassword([FromBody] UserForgotPasswordModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(UserResetPasswordModel model)
         {
-            UserTransportModel userModel = await _accountService.IsEmailConfirmedAsync(model);
-            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = userModel.Id, code = userModel.Code }, Request.Scheme);
-            await _emailService.SendEmailAsync(model.Email, "Reset Password",
-                $"To reset password use the next link: <a href='{callbackUrl}'>link</a>");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            IdentityResult result= await _accountService.ResetPasswordAsync(model);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return BadRequest(model);
         }
 
-
-
         [HttpPost]
-        public async Task ResetPassword([FromBody]UserResetPasswordModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody]UserForgotPasswordModel model)
         {
-            await _accountService.ResetPasswordAsync(model);
+            if (ModelState.IsValid)
+            {
+                model =await _accountService.ForgotPasswordAsync(model);
+
+                if (!model.IsPossibleToUseCurrentEmail)
+                {
+                    return BadRequest();
+                }
+
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = model.Id, code = model.Code }, protocol: HttpContext.Request.Scheme);
+                await _emailHelper.SendEmailAsync(model.Email, "Reset Password",
+                $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                return Ok();
+            }
+            return BadRequest(ModelState);
         }
     }
 }

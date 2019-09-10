@@ -1,4 +1,5 @@
 ﻿using BookShop.DataAccess.AppContext;
+using BookShop.DataAccess.Entities.Interfaces;
 using BookShop.DataAccess.Repostories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
 {
-    public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
     {
         private ApplicationContext _context;
         private DbSet<TEntity> _dbSet;

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BookShop.DataAccess.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookShop.DataAccess.Entities
 {
-    public class AuthorInPrintedEdition
+    public class AuthorInPrintedEdition : IBaseEntity
     {
         [Key]
         public int AuthorId { get; set; }
