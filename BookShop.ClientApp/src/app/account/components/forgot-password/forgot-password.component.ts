@@ -12,9 +12,12 @@ export class ForgotPasswordComponent implements OnInit {
 
   user: ForgotPasswordModel = new ForgotPasswordModel();
   isEmailSended: boolean=false;
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService) { 
+    this.user.redirectUrl='http://localhost:4200/account/resetpassword';
+  }
 
   ngOnInit() {
+    
   }
 
   forgotPassword() {

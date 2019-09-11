@@ -7,6 +7,11 @@ const routes: Routes = [
   path: 'account',
   pathMatch: 'full',
   loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)
+},
+{
+  path: 'author',
+  pathMatch: 'full',
+  loadChildren: () => import('./author/author.module').then(mod => mod.AuthorModule)
 }
 ];
 

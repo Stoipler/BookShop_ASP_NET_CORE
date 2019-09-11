@@ -5,6 +5,7 @@ export class SignUpModel {
     public email: string;
     public password: string;
     public passwordConfirmation: string;
+    public redirectUrl: string;
     constructor() {
         }
 }

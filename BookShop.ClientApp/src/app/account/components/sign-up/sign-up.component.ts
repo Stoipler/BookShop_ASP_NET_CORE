@@ -14,7 +14,9 @@ export class SignUpComponent implements OnInit {
   angForm: FormGroup;
   user: SignUpModel = new SignUpModel();
   isSignUpSuccessful:boolean=false;
-  constructor(private accountService: AccountService,private router: Router) { }
+  constructor(private accountService: AccountService,private router: Router) { 
+    this.user.redirectUrl='http://localhost:4200/account/emailconfirmed'
+  }
 
   ngOnInit(): void {
     

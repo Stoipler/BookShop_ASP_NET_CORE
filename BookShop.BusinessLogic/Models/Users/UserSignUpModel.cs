@@ -29,5 +29,6 @@ namespace BookShop.BusinessLogic.Models.User
         [DataType(DataType.Password)]
         [Display(Name = "Password confirmation")]
         public string PasswordConfirmation { get; set; }
+        public string RedirectUrl { get; set; }
     }
 }

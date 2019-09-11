@@ -43,7 +43,7 @@ namespace BookShop.Presentation.Controllers
                 var callbackUrl = Url.Action(
                     "ConfirmEmail",
                     "Account",
-                    new { userId = model.Id, code = model.SignUpToken },
+                    new { userId = model.Id, code = model.SignUpToken, redirectUrl=model.RedirectUrl },
                     Request.Scheme);
 
                 await _emailHelper.SendEmailAsync(model.Email, "Confirm your account",
@@ -83,22 +83,21 @@ namespace BookShop.Presentation.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail(string userId, string code,string redirectUrl)
         {
             await _accountService.ConfirmEmailAsync(userId, code);
-            return Redirect(_applicatonLink+ "/account/emailconfirmed");
+            return Redirect(redirectUrl);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
+        public IActionResult ResetPassword([FromQuery]string redirectUrl,string email ,string code = null)
         {
-            if(code is null)
+            if(string.IsNullOrWhiteSpace(code))
             {
                 return BadRequest();
             }
-
-            return Redirect(_applicatonLink + "/account/resetpassword" + "/?code="+code);
+            return Redirect(redirectUrl + "/?code="+code+"&email="+email);
             
         }
 
@@ -135,7 +134,7 @@ namespace BookShop.Presentation.Controllers
                     return BadRequest();
                 }
 
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = model.Id, code = model.Code }, protocol: HttpContext.Request.Scheme);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = model.Id, code = model.Code,redirectUrl=model.RedirectUrl,email=model.Email }, protocol: HttpContext.Request.Scheme);
                 await _emailHelper.SendEmailAsync(model.Email, "Reset Password",
                 $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return Ok();

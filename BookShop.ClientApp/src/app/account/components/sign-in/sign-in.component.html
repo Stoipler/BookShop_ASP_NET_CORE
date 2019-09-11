@@ -14,10 +14,9 @@
     </div>
 </div>
 
-<div class="form-group">
-    <label>Remember me</label>
-    <input type="checkbox" class="form-control" name="rememberMe" [(ngModel)]="user.rememberMe" #password="ngModel"/>
+<div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="user.rememberMe" >
+    <label class="custom-control-label" for="rememberMe">Remember me</label>
 </div>
 
-<button [disabled]=" email.invalid|| password.invalid " class="btn btn-default"
-    (click)="logIn()">Log in</button>
+<button [disabled]=" email.invalid|| password.invalid " class="btn btn-default" (click)="logIn()">Log in</button>

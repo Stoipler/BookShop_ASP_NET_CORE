@@ -4,6 +4,7 @@ using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -77,7 +78,7 @@ namespace BookShop.BusinessLogic.Services
             model.Id = user.Id;
             model.IsPossibleToUseCurrentEmail = true;
             string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            model.Code = HttpUtility.UrlEncode(code);
+            model.Code = Base64UrlEncoder.Encode(code);
             return model;
         }
         public async Task<IdentityResult> ResetPasswordAsync(UserResetPasswordModel model)
@@ -87,7 +88,7 @@ namespace BookShop.BusinessLogic.Services
             {
                 return null;
             }
-            string code = HttpUtility.UrlDecode(model.Code);
+            string code = Base64UrlEncoder.Decode(model.Code);
             var result=await _userManager.ResetPasswordAsync(user,code , model.Password);
 
             return result;

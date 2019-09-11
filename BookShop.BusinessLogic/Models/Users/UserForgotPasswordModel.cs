@@ -11,5 +11,6 @@ namespace BookShop.BusinessLogic.Models.User
         public int Id { get; set; }
         public string Code { get; set; }
         public bool IsPossibleToUseCurrentEmail { get; set; }
+        public string RedirectUrl { get; set; }
     }
 }

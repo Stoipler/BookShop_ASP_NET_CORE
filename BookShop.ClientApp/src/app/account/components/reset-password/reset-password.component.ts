@@ -19,6 +19,7 @@ export class ResetPasswordComponent implements OnInit {
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
         this.user.code = queryParam['code'];
+        this.user.email = queryParam['email'];
       }
     );
   }
@@ -29,6 +30,11 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword(){
-    this.accountService.resetPassword(this.user).subscribe();
+    this.accountService.resetPassword(this.user).subscribe(
+      (data: ResetPasswordModel) => {this.isPasswordChanged=true
+      },
+      (error) => {
+
+      });
   }
 }
