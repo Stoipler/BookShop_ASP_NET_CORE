@@ -30,12 +30,16 @@ namespace BookShop.DataAccess.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsRemoved");
 
                     b.Property<string>("LastName");
 
@@ -81,6 +85,10 @@ namespace BookShop.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<bool>("IsRemoved");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -90,15 +98,21 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.AuthorInPrintedEdition", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AuthorId");
+
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<DateTime>("Date");
+
+                    b.Property<bool>("IsRemoved");
 
                     b.Property<int>("PrintedEditionId");
 
-                    b.HasKey("AuthorId");
+                    b.HasKey("Id");
 
                     b.ToTable("AuthorInPrintedEditions");
                 });
@@ -109,9 +123,13 @@ namespace BookShop.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Description");
+
+                    b.Property<bool>("IsRemoved");
 
                     b.Property<int>("PaymentId");
 
@@ -132,7 +150,11 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<int>("Count");
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<int>("Currency");
+
+                    b.Property<bool>("IsRemoved");
 
                     b.Property<int>("PrintedEditionId");
 
@@ -147,6 +169,10 @@ namespace BookShop.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<bool>("IsRemoved");
+
                     b.Property<int>("TransactionId");
 
                     b.HasKey("Id");
@@ -159,6 +185,8 @@ namespace BookShop.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<int>("Currency");
 

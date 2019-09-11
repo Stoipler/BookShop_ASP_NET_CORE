@@ -10,5 +10,18 @@ namespace BookShop.DataAccess.Entities
         public int UserId { get; set; }
         public DateTime Date { get; set; }
         public int PaymentId { get; set; }
+        private DateTime _creationDate;
+        public DateTime CreationDate
+        {
+            get
+            {
+                return _creationDate;
+            }
+            set
+            {
+                _creationDate = DateTime.Now;
+            }
+        }
+        public bool IsRemoved { get; set; }
     }
 }

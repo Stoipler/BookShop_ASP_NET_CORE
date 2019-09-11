@@ -5,7 +5,7 @@ import { AuthorsComponent } from './components/authors/authors.component';
 
 const routes: Routes = [
   {
-    path: 'account',
+    path: 'author',
     component: AuthorsComponent,
   },
 ];

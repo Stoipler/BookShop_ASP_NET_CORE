@@ -35,22 +35,34 @@ namespace BookShop.Presentation.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public async Task Post([FromBody]AuthorModel model)
+        public async Task<IActionResult> Post([FromBody]AuthorModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _authorService.CreateAsync(model);
+            return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]AuthorModel model)
+        public async Task<IActionResult> Put(int id, [FromBody]AuthorModel model)
         {
-            
+            if (ModelState.IsValid)
+            {
+                await _authorService.Update(model);
+                return Ok();
+            }
+            return BadRequest(ModelState);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await _authorService.Remove(id);
         }
     }
 }

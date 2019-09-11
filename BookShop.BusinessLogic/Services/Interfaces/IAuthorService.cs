@@ -9,6 +9,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<IEnumerable<AuthorModel>> GetAsync();
         Task CreateAsync(AuthorModel model);
         Task Update(AuthorModel model);
-        Task Remove(AuthorModel model);
+        Task Remove(int id);
+        Task<AuthorModel> GetByIdAsync(int id);
     }
 }

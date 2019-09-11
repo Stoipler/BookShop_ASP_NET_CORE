@@ -1,4 +1,5 @@
 ﻿using BookShop.DataAccess.Entities.Interfaces;
+using System;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Entities
@@ -13,5 +14,17 @@ namespace BookShop.DataAccess.Entities
         public Status Status { get; set; }
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
+        private DateTime _creationDate;
+        public DateTime CreationDate
+        {
+            get
+            {
+                return _creationDate;
+            }
+            set
+            {
+                _creationDate = DateTime.Now;
+            }
+        }
     }
 }

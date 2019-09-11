@@ -40,6 +40,11 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<TEntity> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
     }
 
 }

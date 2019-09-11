@@ -1,4 +1,5 @@
-﻿using BookShop.DataAccess.Entities.Interfaces;
+﻿using System;
+using BookShop.DataAccess.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookShop.DataAccess.Entities
@@ -8,5 +9,18 @@ namespace BookShop.DataAccess.Entities
         
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        private DateTime _creationDate;
+        public DateTime CreationDate {
+            get
+            {
+                return _creationDate;
+            }
+            set
+            {
+                _creationDate = DateTime.Now;
+            }
+        }
+        public bool IsRemoved { get ; set ; }
     }
 }

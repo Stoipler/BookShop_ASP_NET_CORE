@@ -44,7 +44,9 @@ namespace BookShop.DataAccess.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,14 +57,17 @@ namespace BookShop.DataAccess.Migrations
                 name: "AuthorInPrintedEditions",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AuthorId = table.Column<int>(nullable: false),
                     PrintedEditionId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorInPrintedEditions", x => x.AuthorId);
+                    table.PrimaryKey("PK_AuthorInPrintedEditions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,7 +76,9 @@ namespace BookShop.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,7 +94,9 @@ namespace BookShop.DataAccess.Migrations
                     Amount = table.Column<decimal>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
                     PrintedEditionId = table.Column<int>(nullable: false),
-                    Count = table.Column<int>(nullable: false)
+                    Count = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,7 +112,9 @@ namespace BookShop.DataAccess.Migrations
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    PaymentId = table.Column<int>(nullable: false)
+                    PaymentId = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +127,9 @@ namespace BookShop.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TransactionId = table.Column<int>(nullable: false)
+                    TransactionId = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,7 +148,8 @@ namespace BookShop.DataAccess.Migrations
                     IsRemoved = table.Column<bool>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
-                    Type = table.Column<int>(nullable: false)
+                    Type = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
