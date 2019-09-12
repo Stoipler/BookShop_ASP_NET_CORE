@@ -31,7 +31,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
-
+            services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.

@@ -11,7 +11,7 @@ namespace BookShop.DataAccess.AppContext
     {
         private string _connectionString { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<AuthorInPrintedEdition> AuthorInPrintedEditions { get; set; }
+        public DbSet<AuthorInBook> AuthorInBooks { get; set; }
         public DbSet<PrintedEdition> PrintedEditions { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -34,6 +34,21 @@ namespace BookShop.DataAccess.AppContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AuthorInBook>()
+                .HasKey(aib => new { aib.AuthorId, aib.PrintedEditionId });
+            modelBuilder.Entity<AuthorInBook>()
+                .HasOne(aib => aib.Author)
+                .WithMany(a => a.AuthorInBooks)
+                .HasForeignKey(aib => aib.AuthorId);
+            modelBuilder.Entity<AuthorInBook>()
+                    .HasOne(aib => aib.PrintedEdition)
+                    .WithMany(p => p.AuthorInBooks)
+                    .HasForeignKey(aib => aib.PrintedEditionId);
         }
     }
 }

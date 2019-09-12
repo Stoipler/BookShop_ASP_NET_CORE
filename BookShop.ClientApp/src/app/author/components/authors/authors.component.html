@@ -1,4 +1,4 @@
-<ng-template #content let-modal>
+<ng-template #authorEditor let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add author</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -18,33 +18,7 @@
   </div>
 </ng-template>
 
-<ng-template #edit let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Edit author</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="form-group">
-      <label for="authorName">Author's name</label>
-      <input type="text" class="form-control" id="authorName" aria-describedby="nameHelp" placeholder="Enter name"
-        [(ngModel)]="author.name" name="name" #name="ngModel" required>
-      <small id="nameHelp" class="form-text text-muted">Enter here name of the author</small>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="cancel()" (click)="modal.close()">Cancel</button>
-      <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid" ngbAutofocus class="btn btn-danger"
-        (click)="save()" (click)="modal.close()">Confirm</button>
-    </div>
-  </ng-template>
-
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add author</button>
-
-<hr>
-
-<pre>{{closeResult}}</pre>
-
-
+<button class="btn btn-lg btn-outline-primary" (click)="open(authorEditor)">Add author</button>
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
@@ -60,12 +34,12 @@
       <td>{{a.name}}</td>
       <td>There will books</td>
       <td>
-          <button class="btn btn-sm btn-primary"  (click)="editAuthor(a)" (click)="open(edit)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="delete(a)" >Remove</button>
+        <button class="btn btn-sm btn-primary" (click)="editAuthor(a)" (click)="open(authorEditor)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="delete(a)">Remove</button>
       </td>
     </tr>
-    
-    
+
+
   </tbody>
 </table>
 <router-outlet></router-outlet>

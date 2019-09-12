@@ -6,21 +6,16 @@ namespace BookShop.DataAccess.Entities
 {
     public class ApplicationUser : IdentityUser<int>, IBaseEntity
     {
-        
+       
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime CreationDate { get; set; }
+        public bool IsRemoved { get; set; }
 
-        private DateTime _creationDate;
-        public DateTime CreationDate {
-            get
-            {
-                return _creationDate;
-            }
-            set
-            {
-                _creationDate = DateTime.Now;
-            }
+
+        public ApplicationUser()
+        {
+            CreationDate = DateTime.Now;
         }
-        public bool IsRemoved { get ; set ; }
     }
 }

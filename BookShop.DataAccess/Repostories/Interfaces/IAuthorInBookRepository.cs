@@ -3,7 +3,7 @@ using BookShop.DataAccess.Repostories.Interfaces.Base;
 
 namespace BookShop.DataAccess.Repostories.Interfaces
 {
-    public interface IAuthorInPrintedEditionRepository:IGenericRepository<AuthorInPrintedEdition>
+    public interface IAuthorInBookRepository:IGenericRepository<AuthorInBook>
     {
     }
 }

@@ -25,5 +25,9 @@ namespace BookShop.BusinessLogic.Models
             Currency = printedEdition.Currency;
             Type = printedEdition.Type;
         }
+
+        public PrintedEditionModel()
+        {
+        }
     }
 }

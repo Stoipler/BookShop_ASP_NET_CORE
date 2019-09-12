@@ -12,6 +12,11 @@ const routes: Routes = [
   path: 'author',
   pathMatch: 'full',
   loadChildren: () => import('./author/author.module').then(mod => mod.AuthorModule)
+},
+{
+  path: 'printededition',
+  pathMatch: 'full',
+  loadChildren: () => import('./printed-edition/printed-edition.module').then(mod => mod.PrintedEditionModule)
 }
 ];
 

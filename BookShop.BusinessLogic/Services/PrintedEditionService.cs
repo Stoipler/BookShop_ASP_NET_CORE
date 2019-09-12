@@ -20,13 +20,9 @@ namespace BookShop.BusinessLogic.Services
         {
             PrintedEdition printedEdition = 
                 new PrintedEdition
-                {   Id=model.Id,
+                {   
                     Name =model.Name,
                     Description =model.Description,
-                    Price =model.Price,
-                    IsRemoved =model.IsRemoved,
-                    Status =model.Status,
-                    Currency =model.Currency,
                     Type =model.Type };
             await _printedEditionRepository.CreateAsync(printedEdition);
         }

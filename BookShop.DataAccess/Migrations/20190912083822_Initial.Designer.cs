@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190911104403_Initial")]
+    [Migration("20190912083822_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,25 +98,25 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("BookShop.DataAccess.Entities.AuthorInPrintedEdition", b =>
+            modelBuilder.Entity("BookShop.DataAccess.Entities.AuthorInBook", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("AuthorId");
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<bool>("IsRemoved");
 
                     b.Property<int>("PrintedEditionId");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.ToTable("AuthorInPrintedEditions");
+                    b.Property<int>("Id");
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.HasKey("AuthorId", "PrintedEditionId");
+
+                    b.HasAlternateKey("Id");
+
+                    b.HasIndex("PrintedEditionId");
+
+                    b.ToTable("AuthorInBooks");
                 });
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Order", b =>
@@ -125,9 +125,9 @@ namespace BookShop.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationDate");
+                    b.Property<int>("ApplicationUserId");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("Description");
 
@@ -135,9 +135,11 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<int>("PaymentId");
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("Orders");
                 });
@@ -161,6 +163,8 @@ namespace BookShop.DataAccess.Migrations
                     b.Property<int>("PrintedEditionId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrintedEditionId");
 
                     b.ToTable("OrderItems");
                 });
@@ -315,6 +319,40 @@ namespace BookShop.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.AuthorInBook", b =>
+                {
+                    b.HasOne("BookShop.DataAccess.Entities.Author", "Author")
+                        .WithMany("AuthorInBooks")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookShop.DataAccess.Entities.PrintedEdition", "PrintedEdition")
+                        .WithMany("AuthorInBooks")
+                        .HasForeignKey("PrintedEditionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.Order", b =>
+                {
+                    b.HasOne("BookShop.DataAccess.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookShop.DataAccess.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.OrderItem", b =>
+                {
+                    b.HasOne("BookShop.DataAccess.Entities.PrintedEdition", "PrintedEdition")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("PrintedEditionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

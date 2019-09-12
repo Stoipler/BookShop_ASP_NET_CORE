@@ -1,27 +1,15 @@
-﻿using BookShop.DataAccess.Entities.Interfaces;
-using System;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookShop.DataAccess.Entities
 {
-    public class Order: IBaseEntity
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
         public string Description { get; set; }
-        public int UserId { get; set; }
-        public DateTime Date { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser{get;set;}
+        [ForeignKey("Payment")]
         public int PaymentId { get; set; }
-        private DateTime _creationDate;
-        public DateTime CreationDate
-        {
-            get
-            {
-                return _creationDate;
-            }
-            set
-            {
-                _creationDate = DateTime.Now;
-            }
-        }
-        public bool IsRemoved { get; set; }
+        public Payment Payment { get; set; }
     }
 }

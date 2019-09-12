@@ -1,24 +1,10 @@
-﻿using System;
-using BookShop.DataAccess.Entities.Interfaces;
+﻿using System.Collections.Generic;
 
 namespace BookShop.DataAccess.Entities
 {
-    public class Author:IBaseEntity
+    public class Author:BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        private DateTime _creationDate;
-        public DateTime CreationDate
-        {
-            get
-            {
-                return _creationDate;
-            }
-            set
-            {
-                _creationDate = DateTime.Now;
-            }
-        }
-        public bool IsRemoved { get; set; }
+        public List<AuthorInBook> AuthorInBooks { get; set; }
     }
 }
