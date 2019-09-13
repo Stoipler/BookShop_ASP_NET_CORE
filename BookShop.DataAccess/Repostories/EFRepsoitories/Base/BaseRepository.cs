@@ -12,7 +12,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
     public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
     {
         private ApplicationContext _context;
-        private DbSet<TEntity> _dbSet;
+        protected DbSet<TEntity> _dbSet;
 
         public BaseRepository(ApplicationContext context)
         {
@@ -20,7 +20,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task <IEnumerable<TEntity>> GetAsync()
+        public virtual async Task <IEnumerable<TEntity>> GetAsync()
         {
             return await _dbSet.ToListAsync();
         }

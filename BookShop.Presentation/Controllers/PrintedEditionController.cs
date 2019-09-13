@@ -17,15 +17,9 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<PrintedEditionModel>> Get()
+        public async Task<IEnumerable<PrintedEditionModel>> Get([FromQuery]int sortOption=-1)
         {
-            return await _printedEditionService.GetAsync();
-        }
-
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return await _printedEditionService.GetAsync(sortOption);
         }
 
         [HttpPost]

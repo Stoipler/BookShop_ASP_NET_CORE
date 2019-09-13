@@ -4,6 +4,8 @@ using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -18,18 +20,22 @@ namespace BookShop.BusinessLogic.Services
 
         public async Task CreateAsync(PrintedEditionModel model)
         {
-            PrintedEdition printedEdition = 
+            PrintedEdition printedEdition =
                 new PrintedEdition
-                {   
-                    Name =model.Name,
-                    Description =model.Description,
-                    Type =model.Type };
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Type = model.Type
+                };
             await _printedEditionRepository.CreateAsync(printedEdition);
         }
 
-        public async Task<IEnumerable<PrintedEditionModel>> GetAsync()
+        public async Task<IEnumerable<PrintedEditionModel>> GetAsync(int sortCriteriaInt, int printedEditionTypeInt, decimal priceFrom, decimal priceTo)
         {
-            var printedEditions = await _printedEditionRepository.GetAsync();
+
+            SortCriteria sortCriteria = (SortCriteria)(sortCriteriaInt);
+            PrintedEditionType printedEditionType = (PrintedEditionType)(printedEditionTypeInt);
+            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(sortCriteria,printedEditionType,priceFrom,priceTo)).ToList(); 
             List<PrintedEditionModel> printedEditionModels = new List<PrintedEditionModel>();
             foreach (PrintedEdition printedEdition in printedEditions)
             {

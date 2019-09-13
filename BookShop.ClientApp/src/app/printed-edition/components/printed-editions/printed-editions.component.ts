@@ -45,7 +45,7 @@ export class PrintedEditionsComponent implements OnInit {
     // }
     this.cancel();
   }
-
+ 
   loadPrintedEditions() {
     this.printedEditionService.getPrintedEditions()
       .subscribe((data: PrintedEditionModel[]) => this.printedEditions = data);

@@ -24,6 +24,14 @@
                 UAH = 2,
                 EUR = 3
             }
+            public enum SortCriteria
+            {
+                None = 0,
+                PriceAsc,
+                PriceDesc,
+                CurrencyAsc,
+                CurrencyDesc
+            }
         }
     }
 }

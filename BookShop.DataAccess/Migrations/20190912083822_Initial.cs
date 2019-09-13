@@ -250,7 +250,7 @@ namespace BookShop.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorInBooks", x => new { x.AuthorId, x.PrintedEditionId });
+                    table.PrimaryKey("PK_AuthorInBooks", x => new { x.AuthorId, x.PrintedEditionId, x.Id });
                     table.UniqueConstraint("AK_AuthorInBooks_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AuthorInBooks_Authors_AuthorId",
