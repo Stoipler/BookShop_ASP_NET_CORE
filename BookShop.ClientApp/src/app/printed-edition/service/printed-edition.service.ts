@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PrintedEditionModel } from '../models/printedEditionModel';
+import { SearchParams } from '../models/searchParams';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,11 @@ export class PrintedEditionService {
 
   constructor(private http: HttpClient) {
   }
-
-  getPrintedEditions() {
-    return this.http.get(this.url);
-  }
   
   createPrintedEdition(printedEdition: PrintedEditionModel){
-    return this.http.post(this.url,printedEdition);
+    return this.http.post(this.url+'/post',printedEdition);
   }
-
+  get(searchParams?: SearchParams) {
+    return this.http.post(this.url+'/get',searchParams)
+  }
 }

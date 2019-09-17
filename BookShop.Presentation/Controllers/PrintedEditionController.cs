@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class PrintedEditionController : Controller
     {
         private readonly IPrintedEditionService _printedEditionService;
@@ -16,10 +16,10 @@ namespace BookShop.Presentation.Controllers
             _printedEditionService = printedEditionService;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<PrintedEditionModel>> Get([FromQuery]int sortOption=-1)
+        [HttpPost]
+        public async Task<PageModel> Get([FromBody]SearchParams searchParams)
         {
-            return await _printedEditionService.GetAsync(sortOption);
+            return await _printedEditionService.GetSortedAsync(searchParams);
         }
 
         [HttpPost]

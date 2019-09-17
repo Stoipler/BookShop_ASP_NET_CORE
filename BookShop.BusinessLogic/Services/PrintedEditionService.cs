@@ -3,9 +3,11 @@ using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+using SearchParams = BookShop.BusinessLogic.Models.SearchParams;
+using SearchParamsDA = BookShop.DataAccess.Models.SearchParams;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -25,17 +27,37 @@ namespace BookShop.BusinessLogic.Services
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    Type = model.Type
+                    Type = model.Type,
+                    Price=model.Price
+                    
                 };
             await _printedEditionRepository.CreateAsync(printedEdition);
         }
 
-        public async Task<IEnumerable<PrintedEditionModel>> GetAsync(int sortCriteriaInt, int printedEditionTypeInt, decimal priceFrom, decimal priceTo)
+        public async Task<PageModel> GetSortedAsync(SearchParams searchParams)
         {
 
-            SortCriteria sortCriteria = (SortCriteria)(sortCriteriaInt);
-            PrintedEditionType printedEditionType = (PrintedEditionType)(printedEditionTypeInt);
-            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(sortCriteria,printedEditionType,priceFrom,priceTo)).ToList(); 
+            SearchParamsDA searchParamsDA = new SearchParamsDA();
+            SearchParametersMaping(searchParams, searchParamsDA);
+
+            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(searchParamsDA)).ToList(); 
+            List<PrintedEditionModel> printedEditionModels = new List<PrintedEditionModel>();
+            foreach (PrintedEdition printedEdition in printedEditions)
+            {
+                printedEditionModels.Add(new PrintedEditionModel(printedEdition));
+            }
+            PageModel pageModel = new PageModel
+            {
+                Count = await _printedEditionRepository.GetCollectionSizeAsync(),
+                CurrentPage = searchParamsDA.Page,
+                PageSize = searchParamsDA.PageSize
+            };
+            pageModel.PrintedEditionModels = printedEditionModels;
+            return pageModel;
+        }
+        public async Task<IEnumerable<PrintedEditionModel>> GetAsync()
+        {
+            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetAsync()).ToList();
             List<PrintedEditionModel> printedEditionModels = new List<PrintedEditionModel>();
             foreach (PrintedEdition printedEdition in printedEditions)
             {
@@ -43,6 +65,7 @@ namespace BookShop.BusinessLogic.Services
             }
             return printedEditionModels;
         }
+
 
         public async Task Remove(PrintedEditionModel model)
         {
@@ -76,6 +99,34 @@ namespace BookShop.BusinessLogic.Services
                     Type = model.Type
                 };
             await _printedEditionRepository.Update(printedEdition);
+        }
+
+        private void SearchParametersMaping(SearchParams searchParams,SearchParamsDA searchParamsDA)
+        {
+            if (searchParams.Page != 0)
+            {
+                searchParamsDA.Page = searchParams.Page;
+            }
+            if (searchParams.PageSize != 0)
+            {
+                searchParamsDA.PageSize = searchParams.PageSize;
+            }
+            if (searchParams.PriceFrom != 0)
+            {
+                searchParamsDA.PriceFrom = searchParams.PriceFrom;
+            }
+            if (searchParams.PriceTo != 0)
+            {
+                searchParamsDA.PriceTo = searchParams.PriceTo;
+            }
+            if (searchParams.PrintedEditionType != PrintedEditionType.None)
+            {
+                searchParamsDA.PrintedEditionType = searchParams.PrintedEditionType;
+            }
+            if (searchParams.SortCriteria != SortCriteria.None)
+            {
+                searchParamsDA.SortCriteria = searchParams.SortCriteria;
+            }
         }
     }
 }

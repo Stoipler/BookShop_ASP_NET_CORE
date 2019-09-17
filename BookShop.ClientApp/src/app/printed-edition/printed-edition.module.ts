@@ -5,6 +5,7 @@ import { PrintedEditionRoutingModule } from './printed-edition-routing.module';
 import { PrintedEditionsComponent } from './components/printed-editions/printed-editions.component';
 import { PrintedEditionService } from './service/printed-edition.service';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PrintedEditionRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers:[PrintedEditionService]
 })
