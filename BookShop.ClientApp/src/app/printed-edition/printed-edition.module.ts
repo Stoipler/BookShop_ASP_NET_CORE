@@ -6,10 +6,10 @@ import { PrintedEditionsComponent } from './components/printed-editions/printed-
 import { PrintedEditionService } from './service/printed-edition.service';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { PrintedEditionDetailsComponent } from './components/printed-edition-details/printed-edition-details.component';
 
 @NgModule({
-  declarations: [PrintedEditionsComponent],
+  declarations: [PrintedEditionsComponent, PrintedEditionDetailsComponent],
   imports: [
     CommonModule,
     PrintedEditionRoutingModule,

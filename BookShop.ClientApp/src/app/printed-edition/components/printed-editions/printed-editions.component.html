@@ -1,4 +1,4 @@
-<ng-template #additem let-modal>
+<!-- <ng-template #additem let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add printed edition</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -32,40 +32,54 @@
       class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
   </div>
 </ng-template>
-
+<div >
+  <button class="btn btn-outline-dark" (click)="open(additem)">Add item</button>
+</div> -->
 
 <!--  -->
-<div class="row mb-5">
-  <div class="col-sm">
-    <button class="btn btn-outline-dark" (click)="open(additem)">Add item</button>
-  </div>
+
+<div class="row mb-5 align-items-end justify-content-center">
   <div class="col-sm">
     <label for="minPrice" class="m-0">Price from</label>
-    <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="searchParams.priceFrom"
+    <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom"
       name="priceFrom" #priceFrom="ngModel">
   </div>
   <div class="col-sm">
     <label for="maxPrice" class="m-0">Price to</label>
-    <input type="number" class="form-control" id="maxPrice"
-      [(ngModel)]="searchParams.priceTo" name="priceTo" #priceTo="ngModel">
+    <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo"
+      #priceTo="ngModel">
   </div>
   <div class="col-sm">
-    <label for="sortTypeSelect" class="m-0">Sort by:</label>
-    <select class="form-control" id="sortTypeSelect" [(ngModel)]="searchParams.sortCriteria">
-      <option *ngFor="let item of sortingKeys()">{{item}}</option>
+    <label for="typeOfPrintedEdition" class="m-0">Type:</label>
+    <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
+      <option *ngFor="let item of typeKeys()">{{item}}</option>
     </select>
   </div>
+
   <div class="col-sm">
-    <button type="button" class="btn btn-danger" (click)="getSortedPrintedEditions()">search</button>
+    <label for="sortTypeSelect" class="m-0">Sort by:</label>
+    <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
+      <option *ngFor="let item of sortingKeys()">
+        {{item}}
+      </option>
+    </select>
   </div>
+
+  <div class="col-sm">
+    <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+  </div>
+
+
 </div>
 <!--  -->
 <div class="container">
   <div class="row">
-    <div *ngFor="let p of printedEditions" class="col-sm-3" >
+    <div *ngFor="let p of printedEditions" class="col-sm-4">
       <div>
         <div class="card">
-          <img class="card-img-top" src="assets/book.png" alt="Card image cap">
+          <a [title]="p.name + ' details'" [routerLink]="[p.id]">
+            <img class="card-img-top" src="assets/book.png" alt="Card image cap">
+          </a>
           <div class="card-body">
             <h5 class="card-title">{{p.name}}</h5>
             <p class="card-text">{{p.description}}</p>
@@ -77,5 +91,7 @@
   </div>
 </div>
 
-<p>Default pagination:</p>
-<ngb-pagination class="d-flex justify-content-center" [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="goToAnotherPage()" aria-label="Default pagination"></ngb-pagination>
+<div class="footer">
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="count" [(page)]="currentPage"
+    [pageSize]="pageSize" [maxSize]="3" (pageChange)="goTo()"></ngb-pagination>
+</div>

@@ -10,7 +10,7 @@ namespace BookShop.Presentation.Controllers
     public class PrintedEditionController : Controller
     {
         private readonly IPrintedEditionService _printedEditionService;
-       
+
         public PrintedEditionController(IPrintedEditionService printedEditionService)
         {
             _printedEditionService = printedEditionService;
@@ -26,6 +26,11 @@ namespace BookShop.Presentation.Controllers
         public async Task Post([FromBody]PrintedEditionModel model)
         {
             await _printedEditionService.CreateAsync(model);
+        }
+        [HttpGet("{id}")]
+        public async Task<PrintedEditionModel> GetById(int id)
+        {
+            return await _printedEditionService.GetByIdAsync(id);
         }
 
         [HttpPut("{id}")]

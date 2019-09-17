@@ -48,7 +48,7 @@ namespace BookShop.BusinessLogic.Services
             }
             PageModel pageModel = new PageModel
             {
-                Count = await _printedEditionRepository.GetCollectionSizeAsync(),
+                Count = await _printedEditionRepository.GetCollectionSizeAsync(searchParamsDA),
                 CurrentPage = searchParamsDA.Page,
                 PageSize = searchParamsDA.PageSize
             };
@@ -127,6 +127,11 @@ namespace BookShop.BusinessLogic.Services
             {
                 searchParamsDA.SortCriteria = searchParams.SortCriteria;
             }
+        }
+        public async Task<PrintedEditionModel> GetByIdAsync(int id)
+        {
+            PrintedEdition printedEdition = await _printedEditionRepository.GetByIdAsync(id);
+            return new PrintedEditionModel(printedEdition);
         }
     }
 }

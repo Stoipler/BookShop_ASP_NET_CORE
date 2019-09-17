@@ -54,9 +54,34 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             printedEditions = printedEditions.Skip((searchParams.Page - 1) * searchParams.PageSize).Take(searchParams.PageSize);
             return await printedEditions.AsNoTracking().ToListAsync();
         }
-        public async Task<int> GetCollectionSizeAsync()
+        public async Task<int> GetCollectionSizeAsync(SearchParams searchParams)
         {
-            return await _dbSet.CountAsync();
+            IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.Authors);
+            printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));
+            if (searchParams.PrintedEditionType != 0)
+            {
+                printedEditions = printedEditions.Where(p => p.Type == searchParams.PrintedEditionType);
+            }
+            switch (searchParams.SortCriteria)
+            {
+                case SortCriteria.PriceAsc:
+                    printedEditions = printedEditions.OrderBy(s => s.Price);
+                    break;
+                case SortCriteria.PriceDesc:
+                    printedEditions = printedEditions.OrderByDescending(s => s.Price);
+                    break;
+                case SortCriteria.CurrencyAsc:
+                    printedEditions = printedEditions.OrderBy(s => s.Currency);
+                    break;
+                case SortCriteria.CurrencyDesc:
+                    printedEditions = printedEditions.OrderByDescending(s => s.Currency);
+                    break;
+                default:
+                    printedEditions = printedEditions.OrderBy(s => s.Name);
+                    break;
+            }
+            int count = await printedEditions.CountAsync();
+            return await printedEditions.CountAsync();
         }
 
     }
