@@ -27,11 +27,12 @@
             public enum SortCriteria
             {
                 None = 0,
-                PriceAsc,
-                PriceDesc,
-                CurrencyAsc,
-                CurrencyDesc
+                PriceAsc = 1,
+                PriceDesc = 2,
+                CurrencyAsc = 3,
+                CurrencyDesc = 4
             }
+
         }
     }
 }

@@ -17,6 +17,11 @@ const routes: Routes = [
   path: 'printededition',
   pathMatch: 'full',
   loadChildren: () => import('./printed-edition/printed-edition.module').then(mod => mod.PrintedEditionModule)
+},
+{
+  path: 'admin',
+  pathMatch: 'full',
+  loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule) 
 }
 ];
 

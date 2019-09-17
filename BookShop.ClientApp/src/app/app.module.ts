@@ -8,6 +8,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { AuthorModule } from './author/author.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PrintedEditionModule } from './printed-edition/printed-edition.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PrintedEditionModule } from './printed-edition/printed-edition.module';
   imports: [
     AccountModule,
     AuthorModule,
+    AdminModule,
     PrintedEditionModule,
     BrowserModule,
     AppRoutingModule,

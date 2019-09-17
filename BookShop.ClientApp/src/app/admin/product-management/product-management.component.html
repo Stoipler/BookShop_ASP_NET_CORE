@@ -1,0 +1,110 @@
+<!-- <ng-template #additem let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add printed edition</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="form-group">
+    <label for="printedEditionName">Title</label>
+    <input type="text" class="form-control" id="printedEditionName" placeholder="Title"
+      [(ngModel)]="printedEdition.name" name="name" #name="ngModel" required>
+  </div>
+
+  <div class="form-group">
+    <label for="printedEditionPrice">Price</label>
+    <input type="number" min="0" class="form-control" id="printedEditionPrice" [(ngModel)]="printedEdition.price"
+      name="price" #price="ngModel" required>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" rows="3" id="printedEditionDescription" placeholder="Description"
+      [(ngModel)]="printedEdition.description" name="description" #description="ngModel" required>
+  </textarea>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid" ngbAutofocus
+      class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
+  </div>
+</ng-template>
+<div >
+  <button class="btn btn-outline-dark" (click)="open(additem)">Add item</button>
+</div> -->
+
+<!--  -->
+
+<div class="row mb-5 align-items-end justify-content-center">
+  <div class="col-sm">
+    <label for="minPrice" class="m-0">Price from</label>
+    <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom"
+      name="priceFrom" #priceFrom="ngModel">
+  </div>
+  <div class="col-sm">
+    <label for="maxPrice" class="m-0">Price to</label>
+    <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo"
+      #priceTo="ngModel">
+  </div>
+  <div class="col-sm">
+    <label for="typeOfPrintedEdition" class="m-0">Type:</label>
+    <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
+      <option *ngFor="let item of typeKeys()">{{item}}</option>
+    </select>
+  </div>
+
+  <div class="col-sm">
+    <label for="sortTypeSelect" class="m-0">Sort by:</label>
+    <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria"
+      (change)="setSearchParams()">
+      <option *ngFor="let item of sortingKeys()">
+        {{item}}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-sm">
+    <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Category</th>
+      <th scope="col">Author</th>
+      <th scope="col">
+        <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria"
+          (change)="setSearchParams()">
+          <option>PriceAsc</option>
+          <option>PriceDesc</option>
+        </select>
+      </th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of printedEditions" class="table-secondary">
+      <th scope="row">{{p.id}}</th>
+      <td>{{p.name}}</td>
+      <td> {{p.description}}</td>
+      <td>{{p.category}}</td>
+      <td> Author</td>
+      <td>{{p.price}}</td>
+      <td>
+        <button type="button" class="btn"><img src="assets/pencil.png" alt="Account logo"
+            style="width:30px;height:30px;"></button>
+        <button type="button" class="btn"><img src="assets/remove.png" alt="Account logo"
+            style="width:30px;height:30px;"></button>
+      </td>
+    </tr>
+    <div class="footer">
+      <ngb-pagination class="d-flex justify-content-end" [collectionSize]="count" [(page)]="currentPage"
+        [pageSize]="pageSize" [maxSize]="3" (pageChange)="goTo()"></ngb-pagination>
+    </div>

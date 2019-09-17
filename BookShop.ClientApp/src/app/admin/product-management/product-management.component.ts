@@ -1,34 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionService } from '../../service/printed-edition.service';
-import { PrintedEditionModel } from '../../models/printedEditionModel';
+import { PrintedEditionModel } from 'src/app/printed-edition/models/printedEditionModel';
+import { SearchParams } from 'src/app/printed-edition/models/searchParams';
+import { SortCriteria } from 'src/app/printed-edition/enums/sortCriteria';
+import { PrintedEditionType } from 'src/app/printed-edition/enums/printedEditionType';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchParams } from '../../models/searchParams';
-import { SortCriteria } from '../../enums/sortCriteria';
-import { PrintedEditionType } from '../../enums/printedEditionType';
-import { PageModel } from '../../models/pageModel';
+import { ProductManagementService } from '../services/product-management.service';
+import { PageModel } from 'src/app/printed-edition/models/pageModel';
 
 @Component({
-  selector: 'app-printed-editions',
-  templateUrl: './printed-editions.component.html',
-  styleUrls: ['./printed-editions.component.css'],
-  providers: [PrintedEditionService]
+  selector: 'app-product-management',
+  templateUrl: './product-management.component.html',
+  styleUrls: ['./product-management.component.css']
 })
-export class PrintedEditionsComponent implements OnInit {
-
+export class ProductManagementComponent implements OnInit {
   printedEdition: PrintedEditionModel = new PrintedEditionModel();
   printedEditions: PrintedEditionModel[];
   searchParams: SearchParams = new SearchParams();
-  parametersSetting: ParametersSetting=new ParametersSetting();
+  parametersSetting: ParametersSetting = new ParametersSetting();
   currentPage: number;
   pageSize: number;
   count: number;
 
   sortCriteria = SortCriteria;
   printedEditionType = PrintedEditionType;
-  constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) { }
+  constructor(private modalService: NgbModal, private productManagementService: ProductManagementService) { }
 
   ngOnInit() {
-    
+    this.searchParams.pageSize=10;
     this.loadPrintedEditions();
   }
   sortingKeys(): Array<string> {
@@ -54,7 +52,7 @@ export class PrintedEditionsComponent implements OnInit {
   }
   save() {
     if (this.printedEdition.id == null) {
-      this.printedEditionService.createPrintedEdition(this.printedEdition)
+      this.productManagementService.createPrintedEdition(this.printedEdition)
         .subscribe((data: PrintedEditionModel) => this.loadPrintedEditions());
     }
     //  else {
@@ -65,7 +63,7 @@ export class PrintedEditionsComponent implements OnInit {
   }
 
   loadPrintedEditions() {
-    this.printedEditionService.get(this.searchParams)
+    this.productManagementService.get(this.searchParams)
       .subscribe((data: PageModel) => {
         this.printedEditions = data.printedEditionModels;
         this.currentPage = data.currentPage;
@@ -76,7 +74,7 @@ export class PrintedEditionsComponent implements OnInit {
 
   goTo() {
     this.searchParams.page = this.currentPage;
-    this.printedEditionService.get(this.searchParams)
+    this.productManagementService.get(this.searchParams)
       .subscribe((data: PageModel) => {
         this.printedEditions = data.printedEditionModels;
         this.currentPage = data.currentPage;
@@ -84,27 +82,27 @@ export class PrintedEditionsComponent implements OnInit {
         this.count = data.count;
       });
   }
-  setSearchParams(){
-    this.searchParams.priceFrom=this.parametersSetting.priceFrom;
-    this.searchParams.priceTo=this.parametersSetting.priceTo;
-    this.searchParams.printedEditionType=this.parametersSetting.printedEditionType;
-    this.searchParams.sortCriteria=this.parametersSetting.sortCriteria;
+  setSearchParams() {
+    this.searchParams.priceFrom = this.parametersSetting.priceFrom;
+    this.searchParams.priceTo = this.parametersSetting.priceTo;
+    this.searchParams.printedEditionType = this.parametersSetting.printedEditionType;
+    this.searchParams.sortCriteria = this.parametersSetting.sortCriteria;
     this.loadPrintedEditions();
   }
 }
 
-  class ParametersSetting {
+class ParametersSetting {
   public priceFrom: number;
   public priceTo: number;
   public sortCriteria: SortCriteria;
-  public printedEditionType:PrintedEditionType;
-  
+  public printedEditionType: PrintedEditionType;
+
   constructor(
-      ) { 
-          this.priceFrom=0;
-          this.priceTo=0;
-          this.sortCriteria=SortCriteria.None;
-          this.printedEditionType=PrintedEditionType.None;
-      }
-      
+  ) {
+    this.priceFrom = 0;
+    this.priceTo = 0;
+    this.sortCriteria = SortCriteria.None;
+    this.printedEditionType = PrintedEditionType.None;
+  }
+
 }
