@@ -5,7 +5,7 @@ export class PrintedEditionModel {
     public name: string;
     public description: string;
     public price: number;
-    public category:PrintedEditionType;
+    public type:PrintedEditionType;
     
     constructor(
        

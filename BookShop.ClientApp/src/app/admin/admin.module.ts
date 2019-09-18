@@ -6,7 +6,7 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { ProductManagementService } from './services/product-management.service';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [ProductManagementComponent],
@@ -14,7 +14,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ], 
   providers:[ProductManagementService]
 })

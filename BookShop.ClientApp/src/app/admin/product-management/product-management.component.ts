@@ -6,6 +6,10 @@ import { PrintedEditionType } from 'src/app/printed-edition/enums/printedEdition
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductManagementService } from '../services/product-management.service';
 import { PageModel } from 'src/app/printed-edition/models/pageModel';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBookDead } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { callbackify } from 'util';
 
 @Component({
   selector: 'app-product-management',
@@ -20,22 +24,31 @@ export class ProductManagementComponent implements OnInit {
   currentPage: number;
   pageSize: number;
   count: number;
-
+  faPencilAlt = faPencilAlt;
   sortCriteria = SortCriteria;
+  faBookDead = faBookDead;
+  faPlusCircle = faPlusCircle;
   printedEditionType = PrintedEditionType;
+
   constructor(private modalService: NgbModal, private productManagementService: ProductManagementService) { }
 
   ngOnInit() {
-    this.searchParams.pageSize=10;
+    this.searchParams.pageSize = 10;
     this.loadPrintedEditions();
+    this.parametersSetting.sortCriteria = SortCriteria.None;
   }
-  sortingKeys(): Array<string> {
-    var keys = Object.keys(this.sortCriteria);
-    return keys.slice(keys.length / 2);
-  }
-  typeKeys(): Array<string> {
-    var keys = Object.keys(this.printedEditionType);
-    return keys.slice(keys.length / 2);
+
+  enumMap(typeEnum: any,defaultOptionText:string):Array<EnumParams>{
+    let keys = Object.keys(typeEnum);
+    let startIndexWithoutDefault: number = (keys.length / 2) + 1;
+    keys = keys.slice(startIndexWithoutDefault);
+    let items=new Array();
+    items.push(new EnumParams(0,defaultOptionText))
+    keys.forEach(function(value,index){
+      let item=new EnumParams((index+1),value);
+      items.push(item);
+    })
+    return items;
   }
 
   open(content) {
@@ -105,4 +118,14 @@ class ParametersSetting {
     this.printedEditionType = PrintedEditionType.None;
   }
 
+}
+
+class EnumParams{
+  id:number;
+  name: string;
+  constructor(id:number,name:string)
+  {
+    this.id=id;
+    this.name=name;  
+  }
 }
