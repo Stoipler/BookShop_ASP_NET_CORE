@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PrintedEditionModel } from 'src/app/printed-edition/models/printedEditionModel';
-import { SearchParams } from 'src/app/printed-edition/models/searchParams';
+import { SearchParams } from '../models/searchParams';
+import { PrintedEditionModel } from '../models/printedEditionModel';
 
 
 @Injectable({

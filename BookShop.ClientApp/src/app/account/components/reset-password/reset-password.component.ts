@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../services/account.service';
-import { ResetPasswordModel } from '../../models/resetPasswordModel';
+import { AccountService } from '../../../services/account.service';
+import { ResetPasswordModel } from '../../../models/resetPasswordModel';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 

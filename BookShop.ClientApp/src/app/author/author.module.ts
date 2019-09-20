@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorsComponent } from './components/authors/authors.component';
-import { AuthorService } from './services/author.service';
+import { AuthorService } from '../services/author.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

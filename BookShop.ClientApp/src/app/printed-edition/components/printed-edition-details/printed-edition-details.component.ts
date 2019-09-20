@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionModel } from '../../models/printedEditionModel';
+import { PrintedEditionModel } from '../../../models/printedEditionModel';
 import { ActivatedRoute } from '@angular/router';
-import { PrintedEditionService } from '../../service/printed-edition.service';
+import { PrintedEditionService } from '../../../services/printed-edition.service';
 
 @Component({
   selector: 'app-printed-edition-details',

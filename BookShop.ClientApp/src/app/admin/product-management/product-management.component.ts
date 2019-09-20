@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionModel } from 'src/app/printed-edition/models/printedEditionModel';
-import { SearchParams } from 'src/app/printed-edition/models/searchParams';
-import { SortCriteria } from 'src/app/printed-edition/enums/sortCriteria';
-import { PrintedEditionType } from 'src/app/printed-edition/enums/printedEditionType';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductManagementService } from '../services/product-management.service';
-import { PageModel } from 'src/app/printed-edition/models/pageModel';
+import { ProductManagementService } from '../../services/product-management.service';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { callbackify } from 'util';
-import { Currency } from 'src/app/printed-edition/enums/currency';
+import { PageModel } from 'src/app/models/pageModel';
+import { SearchParams } from 'src/app/models/searchParams';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
+import { SortCriteria } from 'src/app/enums/sortCriteria';
+import { Currency } from 'src/app/enums/currency';
+import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 
 @Component({
   selector: 'app-product-management',

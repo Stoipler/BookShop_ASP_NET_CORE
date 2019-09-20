@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionService } from '../../service/printed-edition.service';
-import { PrintedEditionModel } from '../../models/printedEditionModel';
+import { PrintedEditionService } from '../../../services/printed-edition.service';
+import { PrintedEditionModel } from '../../../models/printedEditionModel';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchParams } from '../../models/searchParams';
-import { SortCriteria } from '../../enums/sortCriteria';
-import { PrintedEditionType } from '../../enums/printedEditionType';
-import { PageModel } from '../../models/pageModel';
+import { SearchParams } from '../../../models/searchParams';
+import { SortCriteria } from '../../../enums/sortCriteria';
+import { PrintedEditionType } from '../../../enums/printedEditionType';
+import { PageModel } from '../../../models/pageModel';
 
 @Component({
   selector: 'app-printed-editions',

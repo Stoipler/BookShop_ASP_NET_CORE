@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AuthorService } from '../../services/author.service';
-import { AuthorModel } from '../../models/authorModel';
+import { AuthorService } from '../../../services/author.service';
+import { AuthorModel } from '../../../models/authorModel';
 
 @Component({
   selector: 'app-authors',

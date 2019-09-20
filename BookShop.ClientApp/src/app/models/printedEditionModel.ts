@@ -1,6 +1,6 @@
 import { PrintedEditionType } from '../enums/printedEditionType';
 import { Currency } from '../enums/currency';
-import { AuthorModel } from 'src/app/author/models/authorModel';
+import { AuthorModel } from 'src/app/models/authorModel';
 
 export class PrintedEditionModel {
     public id: number;

@@ -1,3 +1,4 @@
+
 export class SignUpModel {
 
     public firstName: string;
