@@ -10,6 +10,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { callbackify } from 'util';
+import { Currency } from 'src/app/printed-edition/enums/currency';
 
 @Component({
   selector: 'app-product-management',
@@ -26,6 +27,7 @@ export class ProductManagementComponent implements OnInit {
   count: number;
   faPencilAlt = faPencilAlt;
   sortCriteria = SortCriteria;
+  currency = Currency;
   faBookDead = faBookDead;
   faPlusCircle = faPlusCircle;
   printedEditionType = PrintedEditionType;
@@ -38,14 +40,14 @@ export class ProductManagementComponent implements OnInit {
     this.parametersSetting.sortCriteria = SortCriteria.None;
   }
 
-  enumMap(typeEnum: any,defaultOptionText:string):Array<EnumParams>{
+  enumMap(typeEnum: any, defaultOptionText: string): Array<EnumParams> {
     let keys = Object.keys(typeEnum);
     let startIndexWithoutDefault: number = (keys.length / 2) + 1;
     keys = keys.slice(startIndexWithoutDefault);
-    let items=new Array();
-    items.push(new EnumParams(0,defaultOptionText))
-    keys.forEach(function(value,index){
-      let item=new EnumParams((index+1),value);
+    let items = new Array();
+    items.push(new EnumParams(0, defaultOptionText))
+    keys.forEach(function (value, index) {
+      let item = new EnumParams((index + 1), value);
       items.push(item);
     })
     return items;
@@ -83,6 +85,7 @@ export class ProductManagementComponent implements OnInit {
         this.pageSize = data.pageSize;
         this.count = data.count;
       });
+      
   }
 
   goTo() {
@@ -120,12 +123,11 @@ class ParametersSetting {
 
 }
 
-class EnumParams{
-  id:number;
+class EnumParams {
+  id: number;
   name: string;
-  constructor(id:number,name:string)
-  {
-    this.id=id;
-    this.name=name;  
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
   }
 }

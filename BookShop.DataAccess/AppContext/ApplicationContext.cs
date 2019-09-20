@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
-
+using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.DataAccess.AppContext
 {
@@ -28,7 +28,7 @@ namespace BookShop.DataAccess.AppContext
                 _connectionString = sqlServerOptionsExtension.ConnectionString;
             }
 
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,15 +40,16 @@ namespace BookShop.DataAccess.AppContext
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AuthorInBook>()
-                .HasKey(aib => new { aib.AuthorId, aib.PrintedEditionId });
+                .HasOne(e => e.Author)
+                .WithMany(p => p.AuthorInBooks);
             modelBuilder.Entity<AuthorInBook>()
-                .HasOne(aib => aib.Author)
-                .WithMany(a => a.AuthorInBooks)
-                .HasForeignKey(aib => aib.AuthorId);
-            modelBuilder.Entity<AuthorInBook>()
-                    .HasOne(aib => aib.PrintedEdition)
-                    .WithMany(p => p.AuthorInBooks)
-                    .HasForeignKey(aib => aib.PrintedEditionId);
+               .HasOne(e => e.PrintedEdition)
+               .WithMany(p => p.AuthorInBooks)
+               .IsRequired(true);
+
+
+
         }
+
     }
 }

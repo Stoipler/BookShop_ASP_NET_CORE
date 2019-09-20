@@ -10,12 +10,10 @@ namespace BookShop.Presentation.Controllers
     public class PrintedEditionController : Controller
     {
         private readonly IPrintedEditionService _printedEditionService;
-
         public PrintedEditionController(IPrintedEditionService printedEditionService)
         {
             _printedEditionService = printedEditionService;
         }
-
         [HttpPost]
         public async Task<PageModel> Get([FromBody]SearchParams searchParams)
         {
@@ -31,16 +29,6 @@ namespace BookShop.Presentation.Controllers
         public async Task<PrintedEditionModel> GetById(int id)
         {
             return await _printedEditionService.GetByIdAsync(id);
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

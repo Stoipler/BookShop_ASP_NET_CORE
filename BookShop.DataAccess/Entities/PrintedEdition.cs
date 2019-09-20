@@ -7,18 +7,15 @@ namespace BookShop.DataAccess.Entities
     {
         public PrintedEdition():base()
         {
-            Authors = new List<Author>();
+            AuthorInBooks = new List<AuthorInBook>();
         }
 
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public Status Status { get; set; }
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
         public List<AuthorInBook> AuthorInBooks { get; set; }
-        public List<Author> Authors { get; set; }
 
     }
 }

@@ -14,10 +14,13 @@ namespace BookShop.BusinessLogic.Services
     public class PrintedEditionService : IPrintedEditionService
     {
         private readonly IPrintedEditionRepository _printedEditionRepository;
-
-        public PrintedEditionService(IPrintedEditionRepository printedEditionRepository)
+        private readonly IAuthorInBookRepository _authorInBookRepository;
+        private readonly IAuthorRepository _authorRepository;
+        public PrintedEditionService(IPrintedEditionRepository printedEditionRepository, IAuthorInBookRepository authorInBookRepository, IAuthorRepository authorRepository)
         {
+            _authorRepository = authorRepository;
             this._printedEditionRepository = printedEditionRepository;
+            this._authorInBookRepository = authorInBookRepository;
         }
 
         public async Task CreateAsync(PrintedEditionModel model)
@@ -28,19 +31,18 @@ namespace BookShop.BusinessLogic.Services
                     Name = model.Name,
                     Description = model.Description,
                     Type = model.Type,
-                    Price=model.Price
-                    
+                    Price = model.Price
+
                 };
             await _printedEditionRepository.CreateAsync(printedEdition);
         }
-
         public async Task<PageModel> GetSortedAsync(SearchParams searchParams)
         {
 
             SearchParamsDA searchParamsDA = new SearchParamsDA();
             SearchParametersMaping(searchParams, searchParamsDA);
 
-            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(searchParamsDA)).ToList(); 
+            List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(searchParamsDA)).ToList();
             List<PrintedEditionModel> printedEditionModels = new List<PrintedEditionModel>();
             foreach (PrintedEdition printedEdition in printedEditions)
             {
@@ -65,8 +67,6 @@ namespace BookShop.BusinessLogic.Services
             }
             return printedEditionModels;
         }
-
-
         public async Task Remove(PrintedEditionModel model)
         {
             PrintedEdition printedEdition =
@@ -77,13 +77,11 @@ namespace BookShop.BusinessLogic.Services
                     Description = model.Description,
                     Price = model.Price,
                     IsRemoved = model.IsRemoved,
-                    Status = model.Status,
                     Currency = model.Currency,
                     Type = model.Type
                 };
             await _printedEditionRepository.Remove(printedEdition);
         }
-
         public async Task Update(PrintedEditionModel model)
         {
             PrintedEdition printedEdition =
@@ -94,14 +92,12 @@ namespace BookShop.BusinessLogic.Services
                     Description = model.Description,
                     Price = model.Price,
                     IsRemoved = model.IsRemoved,
-                    Status = model.Status,
                     Currency = model.Currency,
                     Type = model.Type
                 };
             await _printedEditionRepository.Update(printedEdition);
         }
-
-        private void SearchParametersMaping(SearchParams searchParams,SearchParamsDA searchParamsDA)
+        private void SearchParametersMaping(SearchParams searchParams, SearchParamsDA searchParamsDA)
         {
             if (searchParams.Page != 0)
             {
@@ -132,6 +128,10 @@ namespace BookShop.BusinessLogic.Services
         {
             PrintedEdition printedEdition = await _printedEditionRepository.GetByIdAsync(id);
             return new PrintedEditionModel(printedEdition);
+        }
+        public async Task AddAuthorToBookAsync(AuthorInBookModel model)
+        {
+            await _authorInBookRepository.CreateAsync(new AuthorInBook { AuthorId = model.AuthorId, PrintedEditionId = model.PrintedEditionId });
         }
     }
 }
