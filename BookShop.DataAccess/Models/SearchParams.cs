@@ -10,7 +10,6 @@ namespace BookShop.DataAccess.Models
         public decimal PriceTo { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }
-
         public SearchParams()
         {
             PrintedEditionType = PrintedEditionType.None;

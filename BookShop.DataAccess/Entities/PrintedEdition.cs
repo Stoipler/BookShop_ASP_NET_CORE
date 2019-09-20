@@ -9,7 +9,6 @@ namespace BookShop.DataAccess.Entities
         {
             AuthorInBooks = new List<AuthorInBook>();
         }
-
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

@@ -45,7 +45,6 @@ namespace BookShop.BusinessLogic.Services
             {
                 return result;
             }
-
             ApplicationUser user = await _userManager.FindByEmailAsync(userModel.Email);
             userModel.Password = null;
             userModel.Token = _jwtHelper.GenerateAccessToken(user);
@@ -90,7 +89,6 @@ namespace BookShop.BusinessLogic.Services
             }
             string code = Base64UrlEncoder.Decode(model.Code);
             var result=await _userManager.ResetPasswordAsync(user,code , model.Password);
-
             return result;
         }
     }

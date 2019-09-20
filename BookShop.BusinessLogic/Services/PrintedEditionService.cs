@@ -22,7 +22,6 @@ namespace BookShop.BusinessLogic.Services
             this._printedEditionRepository = printedEditionRepository;
             this._authorInBookRepository = authorInBookRepository;
         }
-
         public async Task CreateAsync(PrintedEditionModel model)
         {
             PrintedEdition printedEdition =
@@ -32,16 +31,13 @@ namespace BookShop.BusinessLogic.Services
                     Description = model.Description,
                     Type = model.Type,
                     Price = model.Price
-
                 };
             await _printedEditionRepository.CreateAsync(printedEdition);
         }
         public async Task<PageModel> GetSortedAsync(SearchParams searchParams)
         {
-
             SearchParamsDA searchParamsDA = new SearchParamsDA();
             SearchParametersMaping(searchParams, searchParamsDA);
-
             List<PrintedEdition> printedEditions = (await _printedEditionRepository.GetSortedAsync(searchParamsDA)).ToList();
             List<PrintedEditionModel> printedEditionModels = new List<PrintedEditionModel>();
             foreach (PrintedEdition printedEdition in printedEditions)

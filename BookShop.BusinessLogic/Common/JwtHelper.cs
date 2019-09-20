@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +15,6 @@ namespace BookShop.BusinessLogic.Common
         {
             _appSettings = appSettings.Value;
         }
-
         public string GenerateAccessToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -34,7 +32,6 @@ namespace BookShop.BusinessLogic.Common
             return tokenHandler.WriteToken(token);
         }
     }
-
     public class AppSettings
     {
         public string Secret { get; set; }

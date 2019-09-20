@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services
 {
-    public class AuthorService:IAuthorService
+    public class AuthorService : IAuthorService
     {
-        
         private readonly IAuthorRepository _authorRepository;
-
-        public AuthorService( IAuthorRepository authorRepository)
+        public AuthorService(IAuthorRepository authorRepository)
         {
             this._authorRepository = authorRepository;
         }
-
         public async Task<IEnumerable<AuthorModel>> GetAsync()
         {
             var authors = await _authorRepository.GetAsync();
@@ -29,7 +26,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task CreateAsync(AuthorModel model)
         {
-            Author author = new Author { Name=model.Name };
+            Author author = new Author { Name = model.Name };
             await _authorRepository.CreateAsync(author);
         }
         public async Task Update(AuthorModel model)

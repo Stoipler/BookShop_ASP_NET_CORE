@@ -8,13 +8,11 @@ namespace BookShop.BusinessLogic.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-
         public AuthorModel(Author author)
         {
             Id = author.Id;
             Name = author.Name;
         }
-
         public AuthorModel()
         {
         }

@@ -15,7 +15,7 @@ namespace BookShop.BusinessLogic.Common
             var subject = messageSubject;
             var to = new EmailAddress(userEmail, "User");
             var plainTextContent = "";
-            var htmlContent =message;
+            var htmlContent = message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }

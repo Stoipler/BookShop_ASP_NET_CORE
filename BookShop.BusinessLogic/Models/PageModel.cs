@@ -9,7 +9,6 @@ namespace BookShop.BusinessLogic.Models
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int Count { get; set; }
-
         public IEnumerable<PrintedEditionModel> PrintedEditionModels { get; set; }
     }
 }

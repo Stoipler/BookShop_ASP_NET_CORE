@@ -15,7 +15,6 @@ namespace BookShop.BusinessLogic.Models
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
         public List<AuthorModel> AuthorModels { get; set; }
-
         public PrintedEditionModel(PrintedEdition printedEdition)
         {
             Id = printedEdition.Id;
@@ -27,7 +26,6 @@ namespace BookShop.BusinessLogic.Models
             Type = printedEdition.Type;
             AuthorModels = printedEdition.AuthorInBooks.Select(item => new AuthorModel() { Id = item.AuthorId, Name = item.Author.Name }).ToList();
         }
-
         public PrintedEditionModel()
         {
         }

@@ -10,7 +10,6 @@ namespace BookShop.DataAccess.Entities
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsRemoved { get; set; }
-
         public BaseEntity()
         {
             CreationDate = DateTime.UtcNow;

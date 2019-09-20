@@ -7,16 +7,13 @@ namespace BookShop.BusinessLogic.Models.User
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
         [Display(Name = "Запомнить?")]
         public bool RememberMe { get; set; }
         public string Token { get; set; }
-
         public string ReturnUrl { get; set; }
     }
 }
