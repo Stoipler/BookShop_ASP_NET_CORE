@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductManagementService } from '../../services/product-management.service';
+import { ProductManagementService } from '../../../services/product-management.service';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';

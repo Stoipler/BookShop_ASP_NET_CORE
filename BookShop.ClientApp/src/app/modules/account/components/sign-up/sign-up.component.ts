@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../services/account.service';
-import { SignUpModel } from '../../../models/signUpModel';
+import { AccountService } from '../../../../services/account.service';
+import { SignUpModel } from '../../../../models/signUpModel';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 
