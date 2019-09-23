@@ -16,7 +16,7 @@ import { AuthorService } from 'src/app/services/author.service';
     AdminRoutingModule,
     FormsModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ], 
   providers:[ProductManagementService,AuthorService]
 })

@@ -4,6 +4,7 @@ using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuthorSearchParamsDA = BookShop.DataAccess.Models.AuthorSearchParams;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -14,9 +15,18 @@ namespace BookShop.BusinessLogic.Services
         {
             this._authorRepository = authorRepository;
         }
-        public async Task<IEnumerable<AuthorModel>> GetAsync()
+        public async Task<IEnumerable<AuthorModel>> GetAsync(AuthorSearchParams authorSearchParams)
         {
-            var authors = await _authorRepository.GetAsync();
+            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name };
+            if (!(authorSearchParams.AuthorsList is null))
+            {
+                authorSearchParamsDA.AuthorsList = new List<Author>();
+                foreach (AuthorModel authorModel in authorSearchParams.AuthorsList)
+                {
+                    authorSearchParamsDA.AuthorsList.Add(new Author { Id = authorModel.Id, Name = authorModel.Name });
+                }
+            }
+            var authors = await _authorRepository.GetWithParamsAsync(authorSearchParamsDA);
             List<AuthorModel> authorModels = new List<AuthorModel>();
             foreach (Author author in authors)
             {

@@ -25,10 +25,11 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             return await _dbSet.ToListAsync();
         }
 
-        public async Task CreateAsync(TEntity item)
+        public async Task<TEntity> CreateAsync(TEntity item)
         {
             await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
+            return item;
         }
         public async Task Update(TEntity item)
         {

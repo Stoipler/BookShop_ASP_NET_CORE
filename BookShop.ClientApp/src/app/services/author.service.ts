@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthorModel } from '../models/authorModel';
+import { AuthorSearchParams } from '../models/authorSearchParams';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,16 @@ export class AuthorService {
 
   }
 
-  getAuthors(){
-    return this.http.get(this.url);
+  getAuthors(authorSearchParams: AuthorSearchParams){
+    return this.http.post(this.url+'/get',authorSearchParams);
   }
   createAuthor(author: AuthorModel){
-    return this.http.post(this.url,author);
+    return this.http.post(this.url+'/post',author);
   } 
   deleteAuthor(id: number){
-      return this.http.delete(this.url + '/' + id);
+      return this.http.delete(this.url + '/delete/' + id);
   }
   updateAuthor(author: AuthorModel){
-    return this.http.put(this.url + '/' + author.id, author);
+    return this.http.put(this.url + '/put/' + author.id, author);
   }
 }

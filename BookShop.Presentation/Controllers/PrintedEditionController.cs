@@ -23,12 +23,31 @@ namespace BookShop.Presentation.Controllers
         [HttpPost]
         public async Task Post([FromBody]PrintedEditionModel model)
         {
-            await _printedEditionService.CreateAsync(model);
+            model= await _printedEditionService.CreateAsync(model);
+            if(!(model.AuthorModels is null))
+            {
+                foreach(AuthorModel author in model.AuthorModels)
+                {
+                   await _printedEditionService.AddAuthorToBookAsync(new AuthorInBookModel { AuthorId = author.Id, PrintedEditionId = model.Id });
+                }
+            }
         }
+
         [HttpGet("{id}")]
         public async Task<PrintedEditionModel> GetById(int id)
         {
             return await _printedEditionService.GetByIdAsync(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Put([FromBody]PrintedEditionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _printedEditionService.Update(model);
+                return Ok();
+            }
+            return BadRequest(ModelState);
         }
     }
 }

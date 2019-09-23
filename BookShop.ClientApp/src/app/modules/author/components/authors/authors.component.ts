@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AuthorService } from '../../../../services/author.service';
 import { AuthorModel } from '../../../../models/authorModel';
+import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 
 @Component({
   selector: 'app-authors',
@@ -15,7 +16,7 @@ export class AuthorsComponent implements OnInit {
   author: AuthorModel = new AuthorModel();   // изменяемый товар
   authors: AuthorModel[];                // массив товаров
   tableMode: boolean = true;
-
+  searchParams:AuthorSearchParams=new AuthorSearchParams();
   constructor(private modalService: NgbModal, private authorService: AuthorService) { }
 
   ngOnInit() {
@@ -23,7 +24,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   loadAuthors() {
-    this.authorService.getAuthors().subscribe((data: AuthorModel[]) => this.authors = data);
+    this.authorService.getAuthors(this.searchParams).subscribe((data: AuthorModel[]) => this.authors = data);
   }
 
   save() {

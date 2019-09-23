@@ -4,12 +4,18 @@ import { ProductManagementService } from '../../../services/product-management.s
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { PageModel } from 'src/app/models/pageModel';
 import { SearchParams } from 'src/app/models/searchParams';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { SortCriteria } from 'src/app/enums/sortCriteria';
 import { Currency } from 'src/app/enums/currency';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
+import { AuthorModel } from 'src/app/models/authorModel';
+import { AuthorService } from 'src/app/services/author.service';
+import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-product-management',
@@ -29,9 +35,18 @@ export class ProductManagementComponent implements OnInit {
   currency = Currency;
   faBookDead = faBookDead;
   faPlusCircle = faPlusCircle;
+  faTimes=faTimes;
   printedEditionType = PrintedEditionType;
+  authorSearchParams: AuthorSearchParams = new AuthorSearchParams();
+  authors: AuthorModel[];
 
-  constructor(private modalService: NgbModal, private productManagementService: ProductManagementService) { }
+  constructor(
+    private modalService: NgbModal,
+    private productManagementService: ProductManagementService,
+    private authorService: AuthorService,
+    private config:NgbDropdownConfig) { 
+      config.autoClose = false;
+    }
 
   ngOnInit() {
     this.searchParams.pageSize = 10;
@@ -39,6 +54,25 @@ export class ProductManagementComponent implements OnInit {
     this.parametersSetting.sortCriteria = SortCriteria.None;
   }
 
+  editPrintedEdition(p:PrintedEditionModel){
+      this.printedEdition=p;
+  }
+
+  addAuthorToList(author: AuthorModel) {
+    this.printedEdition.authorModels.push(author);
+    this.loadAuthors();
+  }
+  removeFromList(author: AuthorModel) {
+    this.printedEdition.authorModels.splice(this.authorSearchParams.authorsList.indexOf(author), 1)
+    this.loadAuthors();
+  }
+
+  loadAuthors() {
+    this.authorSearchParams.authorsList=this.printedEdition.authorModels;
+    this.authorService.getAuthors(this.authorSearchParams).subscribe((data: AuthorModel[]) => {
+      this.authors = data;
+    })
+  }
   enumMap(typeEnum: any, defaultOptionText: string): Array<EnumParams> {
     let keys = Object.keys(typeEnum);
     let startIndexWithoutDefault: number = (keys.length / 2) + 1;
@@ -53,6 +87,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   open(content) {
+    this.loadAuthors();
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.loadPrintedEditions();
     }, (reason) => {
@@ -69,10 +104,10 @@ export class ProductManagementComponent implements OnInit {
       this.productManagementService.createPrintedEdition(this.printedEdition)
         .subscribe((data: PrintedEditionModel) => this.loadPrintedEditions());
     }
-    //  else {
-    //   this.printedEditionService.updatePrintedEdition(this.printedEdition)
-    //     .subscribe(data => this.loadPrintedEditions());
-    // }
+     else {
+      this.productManagementService.updatePrintedEdition(this.printedEdition)
+        .subscribe(data => this.loadPrintedEditions());
+    }
     this.cancel();
   }
 
@@ -84,7 +119,7 @@ export class ProductManagementComponent implements OnInit {
         this.pageSize = data.pageSize;
         this.count = data.count;
       });
-      
+
   }
 
   goTo() {

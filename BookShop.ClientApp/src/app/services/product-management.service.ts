@@ -13,7 +13,10 @@ export class ProductManagementService {
 
   constructor(private http: HttpClient) {
   }
-  
+  updatePrintedEdition(printedEditionModel:PrintedEditionModel){
+      return this.http.post(this.url+'/put',printedEditionModel);
+  }
+
   createPrintedEdition(printedEdition: PrintedEditionModel){
     return this.http.post(this.url+'/post',printedEdition);
   }

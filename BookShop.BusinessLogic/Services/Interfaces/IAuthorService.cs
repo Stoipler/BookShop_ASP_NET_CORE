@@ -6,7 +6,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
 {
     public interface IAuthorService
     {
-        Task<IEnumerable<AuthorModel>> GetAsync();
+        Task<IEnumerable<AuthorModel>> GetAsync(AuthorSearchParams searchParams);
         Task CreateAsync(AuthorModel model);
         Task Update(AuthorModel model);
         Task Remove(int id);

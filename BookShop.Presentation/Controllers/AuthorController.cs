@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;
@@ -20,17 +20,14 @@ namespace BookShop.Presentation.Controllers
         }
 
         // GET: api/<controller>
-        [HttpGet]
-        public async Task<IEnumerable<AuthorModel>> Get()
+        [HttpPost]
+        public async Task<IEnumerable<AuthorModel>> Get([FromBody]AuthorSearchParams searchParams)
         {
-            return await _authorService.GetAsync();
-        }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            if (!string.IsNullOrWhiteSpace(searchParams.Name))
+            {
+                searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
+            }
+            return await _authorService.GetAsync(searchParams);
         }
 
         // POST api/<controller>
@@ -63,6 +60,14 @@ namespace BookShop.Presentation.Controllers
         public async Task Delete(int id)
         {
             await _authorService.Remove(id);
+        }
+
+        private string RemoveWhiteSpacesFromStart(string input)
+        {
+            if(input.IndexOf(' ')==0) {
+                return RemoveWhiteSpacesFromStart(input.TrimStart());
+            }
+            return input;
         }
     }
 }
