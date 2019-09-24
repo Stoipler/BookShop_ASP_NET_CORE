@@ -24,10 +24,20 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             return await printedEditions.AsNoTracking().ToListAsync();
         }
 
+        public override async Task<PrintedEdition> GetByIdAsync(int id)
+        {
+            IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.Author);
+            PrintedEdition printedEdition = await printedEditions.Where(p => (p.Id == id)).FirstAsync();
+            return printedEdition;
+        }
         public async Task<IEnumerable<PrintedEdition>> GetSortedAsync(SearchParams searchParams)
         {
             IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.Author);
             printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));
+            if (!string.IsNullOrWhiteSpace(searchParams.KeyWord))
+            {
+                printedEditions = printedEditions.Where(p => (p.Name.Contains(searchParams.KeyWord) || p.Description.Contains(searchParams.KeyWord)));
+            }
             if (searchParams.PrintedEditionType != 0)
             {
                 printedEditions = printedEditions.Where(p => p.Type == searchParams.PrintedEditionType);

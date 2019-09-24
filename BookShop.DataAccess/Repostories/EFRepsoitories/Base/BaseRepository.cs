@@ -11,7 +11,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
 {
     public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
     {
-        private ApplicationContext _context;
+        protected ApplicationContext _context;
         protected DbSet<TEntity> _dbSet;
 
         public BaseRepository(ApplicationContext context)
@@ -36,13 +36,13 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             _context.Entry(item).State = EntityState.Modified;
             await  _context.SaveChangesAsync();
         }
-        public async Task Remove(TEntity item)
+        public virtual async Task Remove(TEntity item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

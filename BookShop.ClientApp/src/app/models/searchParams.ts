@@ -8,9 +8,11 @@ export class SearchParams {
     public printedEditionType:PrintedEditionType;
     public page:number;
     public pageSize:number;
+    public keyWord:string;
 
     constructor(
         ) { 
+            this.keyWord='';
             this.priceFrom=0;
             this.priceTo=0;
             this.sortCriteria=SortCriteria.None;

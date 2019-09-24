@@ -82,18 +82,33 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task Update(PrintedEditionModel model)
         {
-            PrintedEdition printedEdition =
-                new PrintedEdition
-                {
-                    Id = model.Id,
-                    Name = model.Name,
-                    Description = model.Description,
-                    Price = model.Price,
-                    IsRemoved = model.IsRemoved,
-                    Currency = model.Currency,
-                    Type = model.Type
-                };
-            await _printedEditionRepository.Update(printedEdition);
+
+            PrintedEdition fromOrigin = await _printedEditionRepository.GetByIdAsync(model.Id);
+
+            fromOrigin.Id = model.Id;
+            fromOrigin.Name = model.Name;
+            fromOrigin.Description = model.Description;
+            fromOrigin.Price = model.Price;
+            fromOrigin.IsRemoved = model.IsRemoved;
+            fromOrigin.Currency = model.Currency;
+            fromOrigin.Type = model.Type;
+
+            List<int> authorIdsFromModel = model.AuthorModels.Select(item => item.Id).ToList();
+            List<int> newAuthorModelIds = fromOrigin.AuthorInBooks.Select(authorModel => authorModel.AuthorId).ToList();
+
+            List<AuthorInBook> toRemove = fromOrigin.AuthorInBooks.Where(item => !authorIdsFromModel.Contains(item.AuthorId)).ToList();
+            List<AuthorInBook> toCreate = model.AuthorModels.Where(item => !newAuthorModelIds.Contains(item.Id))
+                                                            .Select(item => new AuthorInBook() { AuthorId = item.Id, PrintedEditionId = model.Id }).ToList();
+
+            await _printedEditionRepository.Update(fromOrigin);
+            if (toCreate.Count != 0)
+            {
+                await _authorInBookRepository.AddRange(toCreate);
+            }
+            if (toRemove.Count != 0)
+            {
+                await _authorInBookRepository.RemoveRange(toRemove);
+            }
         }
         private void SearchParametersMaping(SearchParams searchParams, SearchParamsDA searchParamsDA)
         {
@@ -121,6 +136,7 @@ namespace BookShop.BusinessLogic.Services
             {
                 searchParamsDA.SortCriteria = searchParams.SortCriteria;
             }
+            searchParamsDA.KeyWord = searchParams.KeyWord;
         }
         public async Task<PrintedEditionModel> GetByIdAsync(int id)
         {
@@ -130,6 +146,10 @@ namespace BookShop.BusinessLogic.Services
         public async Task AddAuthorToBookAsync(AuthorInBookModel model)
         {
             await _authorInBookRepository.CreateAsync(new AuthorInBook { AuthorId = model.AuthorId, PrintedEditionId = model.PrintedEditionId });
+        }
+        public async Task RemoveAuthorFromBookAsync(AuthorInBookModel model)
+        {
+            await _authorInBookRepository.Remove(new AuthorInBook { AuthorId = model.AuthorId, PrintedEditionId = model.PrintedEditionId });
         }
     }
 }

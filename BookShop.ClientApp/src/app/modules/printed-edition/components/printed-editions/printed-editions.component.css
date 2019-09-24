@@ -1,0 +1,21 @@
+.description {
+    height: 80px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    width: calc(100%);
+}
+
+.authors {
+    height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    width: calc(100%);
+}
+
+.printed-title {
+    height: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

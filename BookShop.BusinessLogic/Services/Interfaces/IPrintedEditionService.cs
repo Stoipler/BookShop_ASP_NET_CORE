@@ -13,5 +13,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<IEnumerable<PrintedEditionModel>> GetAsync();
         Task<PrintedEditionModel> GetByIdAsync(int id);
         Task AddAuthorToBookAsync(AuthorInBookModel model);
+        Task RemoveAuthorFromBookAsync(AuthorInBookModel model);
     }
 }

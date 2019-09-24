@@ -32,10 +32,15 @@
     <tr *ngFor="let a of authors" class="table-secondary">
       <th scope="row">{{a.id}}</th>
       <td>{{a.name}}</td>
-      <td>There will books</td>
+      <td>
+        <div *ngFor="let p of a.printedEditionModels">
+          {{p.name}},
+        </div>
+      </td>
       <td>
         <button class="btn btn-sm btn-primary" (click)="editAuthor(a)" (click)="open(authorEditor)">Edit</button>
-        <button class="btn btn-sm btn-danger" (click)="delete(a)">Remove</button>
+        <!-- (click)="delete(a)" -->
+        <button class="btn btn-sm btn-danger">Remove</button>
       </td>
     </tr>
 

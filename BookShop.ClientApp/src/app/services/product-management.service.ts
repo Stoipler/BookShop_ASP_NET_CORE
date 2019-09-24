@@ -13,17 +13,17 @@ export class ProductManagementService {
 
   constructor(private http: HttpClient) {
   }
-  updatePrintedEdition(printedEditionModel:PrintedEditionModel){
-      return this.http.post(this.url+'/put',printedEditionModel);
+  updatePrintedEdition(printedEditionModel: PrintedEditionModel) {
+    return this.http.put(this.url + '/put/'+printedEditionModel.id, printedEditionModel);
   }
 
-  createPrintedEdition(printedEdition: PrintedEditionModel){
-    return this.http.post(this.url+'/post',printedEdition);
+  createPrintedEdition(printedEdition: PrintedEditionModel) {
+    return this.http.post(this.url + '/post', printedEdition);
   }
   get(searchParams?: SearchParams) {
-    return this.http.post(this.url+'/get',searchParams)
+    return this.http.post(this.url + '/get', searchParams)
   }
-  getById(id: number){
-    return this.http.get(this.url+'/getbyid/'+id);
+  getById(id: number) {
+    return this.http.get(this.url + '/getbyid/' + id);
   }
 }

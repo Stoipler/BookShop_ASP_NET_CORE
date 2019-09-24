@@ -2,6 +2,11 @@
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.EFRepsoitories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories
 {
@@ -9,6 +14,24 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
     {
         public AuthorInBookRepository(ApplicationContext context) : base(context)
         {
+        }
+        public override async Task Remove(AuthorInBook item)
+        {
+            _dbSet.Remove(item);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveRange(List<AuthorInBook> authorInBooks)
+        {
+            _dbSet.RemoveRange(authorInBooks);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddRange(List<AuthorInBook> authorInBooks)
+        {
+            _dbSet.AddRange(authorInBooks);
+            await _context.SaveChangesAsync();
         }
     }
 }

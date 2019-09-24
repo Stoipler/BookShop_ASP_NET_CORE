@@ -5,14 +5,6 @@ import { PrintedEditionDetailsComponent } from './components/printed-edition-det
 
 
 const routes: Routes = [
-  // {
-  //   path: 'printededition',
-  //   component: PrintedEditionsComponent,
-  //   children: [
-  //     { path: ':printedEditionId', component: PrintedEditionDetailsComponent },
-  //   ]
-  // },
-
   {
     path: 'printededition',component: PrintedEditionsComponent,
   },

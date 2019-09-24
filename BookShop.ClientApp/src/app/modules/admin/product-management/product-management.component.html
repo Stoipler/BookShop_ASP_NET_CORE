@@ -1,168 +1,161 @@
 <ng-template #additem let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add new Product</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add new Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="body">
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label for="printedEditionName">Title</label>
-          <input type="text" class="form-control" id="printedEditionName" placeholder="Title"
-            [(ngModel)]="printedEdition.name" name="name" #name="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control" id="description" rows="3" id="printedEditionDescription"
-            placeholder="Description" [(ngModel)]="printedEdition.description" name="description" #description="ngModel"
-            required>
-            </textarea>
-        </div>
-      </div>
-      <div class="col">
+    </div>
+    <div class="body">
         <div class="row">
-          <div class="form-group">
-            <label for="categorySelect">Category</label>
-            <select class="form-control" id="categorySelect" [(ngModel)]="printedEdition.type">
+            <div class="col">
+                <div class="form-group">
+                    <label for="printedEditionName">Title</label>
+                    <input type="text" class="form-control" id="printedEditionName" placeholder="Title" [(ngModel)]="printedEdition.name" name="name" #name="ngModel" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="3" id="printedEditionDescription" placeholder="Description" [(ngModel)]="printedEdition.description" name="description" #description="ngModel" required>
+            </textarea>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="categorySelect">Category</label>
+                        <select class="form-control" id="categorySelect" [(ngModel)]="printedEdition.type">
               <option *ngFor="let item of enumMap(printedEditionType,'Choose category')" [ngValue]="item.id">
                 {{item.name}}
               </option>
             </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group">
-            <label for="printedEditionPrice">Price</label>
-            <input type="number" min="0" class="form-control" id="printedEditionPrice"
-              [(ngModel)]="printedEdition.price" name="price" #price="ngModel" required>
-          </div>
-        </div>
-        <div class="row">
-          <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="printedEditionPrice">Price</label>
+                        <input type="number" min="0" class="form-control" id="printedEditionPrice" [(ngModel)]="printedEdition.price" name="price" #price="ngModel" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
               Choose author
               <input type="text" autocomplete="off" (keyup)="loadAuthors()" class="form-control" id="authorsSearch"
                 [(ngModel)]="authorSearchParams.name" name="authorName"
                 #authorName="ngModel">
             </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <div class="dropDownScrollable">
-                <button ngbDropdownItem *ngFor="let a of authors" (click)="addAuthorToList(a)">
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <div class="dropDownScrollable">
+                                <button ngbDropdownItem *ngFor="let a of authors" (click)="addAuthorToList(a)">
                   {{a.name}}
                 </button>
-              </div>
-              <div class="dropdown-divider"></div>
-              Selected authors
-              <div class="dropdown-divider"></div>
-              <div class="dropDownScrollable">
-                <div *ngFor="let a of authorSearchParams.authorsList">
-                  {{a.name}}
-                  <button class="btn" (click)="removeFromList(a)">
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            Selected authors
+                            <div class="dropdown-divider"></div>
+                            <div class="dropDownScrollable">
+                                <div *ngFor="let a of authorSearchParams.authorsList">
+                                    {{a.name}}
+                                    <button class="btn" (click)="removeFromList(a)">
                     <fa-icon [icon]="faTimes"></fa-icon>
                   </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group">
-            <label for="currencySelect">Currency</label>
-            <select class="form-control" id="currencySelect" [(ngModel)]="printedEdition.currency">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="currencySelect">Currency</label>
+                        <select class="form-control" id="currencySelect" [(ngModel)]="printedEdition.currency">
               <option *ngFor="let item of enumMap(currency,'Set currency')" [ngValue]="item.id">
                 {{item.name}}
               </option>
             </select>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="cancel()" (click)="modal.close()">Cancel</button>
-    <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid" ngbAutofocus
-      class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
-  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="cancel()" (click)="modal.close()">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid" ngbAutofocus class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
+    </div>
 </ng-template>
 
+<input type="text" autocomplete="off" (keyup)="loadPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="searchParams.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
 
 <div class="row mb-5 align-items-end justify-content-center">
-  <div class="col">
-    <label for="minPrice" class="m-0">Price from</label>
-    <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom"
-      name="priceFrom" #priceFrom="ngModel">
-  </div>
-  <div class="col">
-    <label for="maxPrice" class="m-0">Price to</label>
-    <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo"
-      #priceTo="ngModel">
-  </div>
-  <div class="col">
-    <label for="typeOfPrintedEdition" class="m-0">Type:</label>
-    <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
+    <div class="col">
+        <label for="minPrice" class="m-0">Price from</label>
+        <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom" name="priceFrom" #priceFrom="ngModel">
+    </div>
+    <div class="col">
+        <label for="maxPrice" class="m-0">Price to</label>
+        <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo" #priceTo="ngModel">
+    </div>
+    <div class="col">
+        <label for="typeOfPrintedEdition" class="m-0">Type:</label>
+        <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
       <option *ngFor="let item of enumMap(printedEditionType,'Choose category')" [ngValue]="item.id">{{item.name}}
       </option>
     </select>
-  </div>
+    </div>
 
-  <div class="col">
-    <label for="sortTypeSelect" class="m-0">Sort by:</label>
-    <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
+    <div class="col">
+        <label for="sortTypeSelect" class="m-0">Sort by:</label>
+        <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
       <option *ngFor="let item of enumMap(sortCriteria,'Please select sort type')" [ngValue]="item.id">
         {{item.name}}
       </option>
     </select>
-  </div>
+    </div>
 
-  <div class="col">
-    <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
-  </div>
-  <div class="col">
-    <label for="addProduct">Add new product</label>
-    <button id="addProduct" class="btn " (click)="open(additem)">
+    <div class="col">
+        <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+    </div>
+    <div class="col">
+        <label for="addProduct">Add new product</label>
+        <button id="addProduct" class="btn " (click)="open(additem)">
       <fa-icon [icon]="faPlusCircle"></fa-icon>
     </button>
-  </div>
+    </div>
 </div>
 
 <table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Category</th>
-      <th scope="col">Author</th>
-      <th scope="col">
-        Price
-      </th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of printedEditions" class="table-secondary">
-      <th scope="row">{{p.id}}</th>
-      <td>{{p.name}}</td>
-      <td> {{p.description}}</td>
-      <td>{{p.type}}</td>
-      <td>
-        <div *ngFor="let a of p.authorModels">
-          {{a.name}}
-        </div>
-      </td>
-      <td>{{p.price}}</td>
-      <td>
-        <button type="button" class="btn btn-primary btn-sm" (click)="editPrintedEdition(p)" (click)="open(additem)">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Author</th>
+            <th scope="col">
+                Price
+            </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of printedEditions" class="table-secondary">
+            <th scope="row">{{p.id}}</th>
+            <td>{{p.name}}</td>
+            <td> {{p.description}}</td>
+            <td>{{p.type}}</td>
+            <td>
+                <div *ngFor="let a of p.authorModels">
+                    {{a.name}}
+                </div>
+            </td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="editPrintedEdition(p)" (click)="open(additem)">
           <fa-icon [icon]="faPencilAlt"></fa-icon>
         </button>
-        <button type="button" class="btn btn-danger btn-sm">
+                <button type="button" class="btn btn-danger btn-sm">
           <fa-icon [icon]="faBookDead"></fa-icon>
         </button>
-      </td>
-    </tr>
-  </tbody>
+            </td>
+        </tr>
+    </tbody>
 </table>
-<ngb-pagination class="row justify-content-center" [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize"
-  [maxSize]="3" (pageChange)="goTo()"></ngb-pagination>
+<ngb-pagination class="row justify-content-center" [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize" [maxSize]="3" (pageChange)="goTo()"></ngb-pagination>

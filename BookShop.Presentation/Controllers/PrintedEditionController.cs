@@ -2,6 +2,7 @@
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
@@ -23,12 +24,12 @@ namespace BookShop.Presentation.Controllers
         [HttpPost]
         public async Task Post([FromBody]PrintedEditionModel model)
         {
-            model= await _printedEditionService.CreateAsync(model);
-            if(!(model.AuthorModels is null))
+            model = await _printedEditionService.CreateAsync(model);
+            if (!(model.AuthorModels is null))
             {
-                foreach(AuthorModel author in model.AuthorModels)
+                foreach (AuthorModel author in model.AuthorModels)
                 {
-                   await _printedEditionService.AddAuthorToBookAsync(new AuthorInBookModel { AuthorId = author.Id, PrintedEditionId = model.Id });
+                    await _printedEditionService.AddAuthorToBookAsync(new AuthorInBookModel { AuthorId = author.Id, PrintedEditionId = model.Id });
                 }
             }
         }
@@ -39,15 +40,11 @@ namespace BookShop.Presentation.Controllers
             return await _printedEditionService.GetByIdAsync(id);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Put([FromBody]PrintedEditionModel model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]PrintedEditionModel model)
         {
-            if (ModelState.IsValid)
-            {
-                await _printedEditionService.Update(model);
-                return Ok();
-            }
-            return BadRequest(ModelState);
+            await _printedEditionService.Update(model);
+            return Ok();
         }
     }
 }

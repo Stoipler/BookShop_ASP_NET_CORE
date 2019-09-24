@@ -10,6 +10,7 @@ namespace BookShop.BusinessLogic.Models
         public decimal PriceTo { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public string KeyWord { get; set; }
 
     }
 }

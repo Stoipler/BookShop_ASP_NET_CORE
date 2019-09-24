@@ -26,8 +26,6 @@ namespace BookShop.BusinessLogic.Models
             Type = printedEdition.Type;
             AuthorModels = printedEdition.AuthorInBooks.Select(item => new AuthorModel() { Id = item.AuthorId, Name = item.Author.Name }).ToList();
         }
-        public PrintedEditionModel()
-        {
-        }
+        public PrintedEditionModel() { }
     }
 }

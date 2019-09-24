@@ -100,7 +100,7 @@ export class ProductManagementComponent implements OnInit {
     this.printedEdition = new PrintedEditionModel();
   }
   save() {
-    if (this.printedEdition.id == null) {
+    if (!this.printedEdition.id) {
       this.productManagementService.createPrintedEdition(this.printedEdition)
         .subscribe((data: PrintedEditionModel) => this.loadPrintedEditions());
     }
@@ -153,6 +153,7 @@ class ParametersSetting {
     this.priceTo = 0;
     this.sortCriteria = SortCriteria.None;
     this.printedEditionType = PrintedEditionType.None;
+    
   }
 
 }

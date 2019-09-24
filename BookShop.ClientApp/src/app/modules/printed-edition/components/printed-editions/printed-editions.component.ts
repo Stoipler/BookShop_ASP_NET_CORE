@@ -6,6 +6,7 @@ import { SearchParams } from '../../../../models/searchParams';
 import { SortCriteria } from '../../../../enums/sortCriteria';
 import { PrintedEditionType } from '../../../../enums/printedEditionType';
 import { PageModel } from '../../../../models/pageModel';
+import { Currency } from 'src/app/enums/currency';
 
 @Component({
   selector: 'app-printed-editions',
@@ -22,7 +23,7 @@ export class PrintedEditionsComponent implements OnInit {
   currentPage: number;
   pageSize: number;
   count: number;
-
+  currency=Currency;
   sortCriteria = SortCriteria;
   printedEditionType = PrintedEditionType;
   constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) { }
