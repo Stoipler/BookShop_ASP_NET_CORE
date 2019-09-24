@@ -1,5 +1,5 @@
-import { SortCriteria } from '../enums/sortCriteria';
-import { PrintedEditionType } from '../enums/printedEditionType';
+import { SortCriteria } from 'src/app/enums/sortCriteria';
+import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 
 export class SearchParams {
     public priceFrom: number;

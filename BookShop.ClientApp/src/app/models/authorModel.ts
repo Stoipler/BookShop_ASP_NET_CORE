@@ -1,4 +1,4 @@
-import { PrintedEditionModel } from './printedEditionModel';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 
 export class AuthorModel {
     public id: number;

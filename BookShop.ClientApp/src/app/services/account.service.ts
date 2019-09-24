@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { SignUpModel } from '../models/signUpModel';
-import { SignInModel } from '../models/signInModel';
-import { ForgotPasswordModel } from '../models/forgotPasswordModel';
-import { ResetPasswordModel } from '../models/resetPasswordModel';
+import { SignUpModel } from 'src/app/models/signUpModel';
+import { SignInModel } from 'src/app/models/signInModel';
+import { ForgotPasswordModel } from 'src/app/models/forgotPasswordModel';
+import { ResetPasswordModel } from 'src/app/models/resetPasswordModel';
 
 @Injectable()
 export class AccountService {

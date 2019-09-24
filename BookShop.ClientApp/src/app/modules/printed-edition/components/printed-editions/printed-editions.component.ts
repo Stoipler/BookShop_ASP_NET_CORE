@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionService } from '../../../../services/printed-edition.service';
-import { PrintedEditionModel } from '../../../../models/printedEditionModel';
+import { PrintedEditionService } from 'src/app/services/printed-edition.service';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchParams } from '../../../../models/searchParams';
-import { SortCriteria } from '../../../../enums/sortCriteria';
-import { PrintedEditionType } from '../../../../enums/printedEditionType';
-import { PageModel } from '../../../../models/pageModel';
+import { SearchParams } from 'src/app/models/searchParams';
+import { SortCriteria } from 'src/app/enums/sortCriteria';
+import { PrintedEditionType } from 'src/app/enums/printedEditionType';
+import { PageModel } from 'src/app/models/pageModel';
 import { Currency } from 'src/app/enums/currency';
 
 @Component({

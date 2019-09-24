@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AuthorService } from '../../../../services/author.service';
-import { AuthorModel } from '../../../../models/authorModel';
+import { AuthorService } from 'src/app/services/author.service';
+import { AuthorModel } from 'src/app/models/authorModel';
 import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 
 @Component({

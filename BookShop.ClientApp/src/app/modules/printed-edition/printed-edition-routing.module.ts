@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PrintedEditionsComponent } from './components/printed-editions/printed-editions.component';
-import { PrintedEditionDetailsComponent } from './components/printed-edition-details/printed-edition-details.component';
+import { PrintedEditionsComponent } from 'src/app/modules/printed-edition/components/printed-editions/printed-editions.component';
+import { PrintedEditionDetailsComponent } from 'src/app/modules/printed-edition/components/printed-edition-details/printed-edition-details.component';
 
 
 const routes: Routes = [

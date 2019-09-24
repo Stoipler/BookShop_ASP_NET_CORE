@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PrintedEditionModel } from '../models/printedEditionModel';
-import { SearchParams } from '../models/searchParams';
-import { Observable } from 'rxjs';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
+import { SearchParams } from 'src/app/models/searchParams';
 
 @Injectable({
   providedIn: 'root'

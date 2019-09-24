@@ -1,5 +1,5 @@
-import { PrintedEditionType } from '../enums/printedEditionType';
-import { Currency } from '../enums/currency';
+import { PrintedEditionType } from 'src/app/enums/printedEditionType';
+import { Currency } from 'src/app/enums/currency';
 import { AuthorModel } from 'src/app/models/authorModel';
 
 export class PrintedEditionModel {
