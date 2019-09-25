@@ -1,30 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../../services/account.service';
+import { AccountService } from 'src/app/services/account.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SignInModel } from '../../../../models/signInModel';
+import { SignInModel } from 'src/app/models/signInModel';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
+import { first } from 'rxjs/operators';
+import { error } from 'util';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  providers: [AccountService]
+  providers: [AccountService, AuthenticationService]
 })
 export class SignInComponent implements OnInit {
 
-  angForm: FormGroup;
+  returnUrl: string;
+  error = '';
   user: SignInModel = new SignInModel();
-  constructor(private accountService: AccountService,private formBuilder: FormBuilder) { }
+  constructor(private accountService: AccountService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  logIn() {
-    this.accountService.logIn(this.user)
+  logIn() { debugger;
+    this.authenticationService.login(this.user)
+      .pipe(first())
       .subscribe(
-        (data: SignInModel) => {
+        data => {
+          this.router.navigate([this.returnUrl]);
         },
-        (error) => {
-
+        error => {
+          this.error = error;
         });
   }
 }

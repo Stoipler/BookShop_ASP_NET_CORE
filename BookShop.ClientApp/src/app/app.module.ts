@@ -8,6 +8,9 @@ import { PrintedEditionModule } from 'src/app/modules/printed-edition/printed-ed
 import { AdminModule } from 'src/app/modules/admin/admin.module';
 import { AccountModule } from 'src/app/modules/account/account.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     AppRoutingModule,
     NgbModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
