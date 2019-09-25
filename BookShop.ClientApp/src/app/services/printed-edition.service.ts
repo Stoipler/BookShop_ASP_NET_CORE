@@ -2,24 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { SearchParams } from 'src/app/models/searchParams';
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrintedEditionService {
 
-  private url = "https://localhost:44304/api/printededition";
-
   constructor(private http: HttpClient) {
   }
   
   createPrintedEdition(printedEdition: PrintedEditionModel){
-    return this.http.post(this.url+'/post',printedEdition);
+    return this.http.post(environment.apiUrl+'/api/printededition/post',printedEdition);
   }
   get(searchParams?: SearchParams) {
-    return this.http.post(this.url+'/get',searchParams)
+    return this.http.post(environment.apiUrl+'/api/printededition/get',searchParams)
   }
   getById(id: number){
-    return this.http.get(this.url+'/getbyid/'+id);
+    return this.http.get(environment.apiUrl+'/api/printededition/getbyid/'+id);
   }
 }

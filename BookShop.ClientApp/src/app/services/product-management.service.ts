@@ -2,28 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SearchParams } from 'src/app/models/searchParams';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
-
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductManagementService {
 
-  private url = "https://localhost:44304/api/printededition";
-
   constructor(private http: HttpClient) {
   }
   updatePrintedEdition(printedEditionModel: PrintedEditionModel) {
-    return this.http.put(this.url + '/put/'+printedEditionModel.id, printedEditionModel);
+    return this.http.put(environment.apiUrl + '/api/printededition/put/'+printedEditionModel.id, printedEditionModel);
   }
 
   createPrintedEdition(printedEdition: PrintedEditionModel) {
-    return this.http.post(this.url + '/post', printedEdition);
+    return this.http.post(environment.apiUrl + '/api/printededition/post', printedEdition);
   }
   get(searchParams?: SearchParams) {
-    return this.http.post(this.url + '/get', searchParams)
+    return this.http.post(environment.apiUrl + '/api/printededition/get', searchParams)
   }
   getById(id: number) {
-    return this.http.get(this.url + '/getbyid/' + id);
+    return this.http.get(environment.apiUrl + '/api/printededition/getbyid/' + id);
   }
 }

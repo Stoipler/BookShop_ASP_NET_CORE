@@ -4,28 +4,27 @@ import { SignUpModel } from 'src/app/models/signUpModel';
 import { SignInModel } from 'src/app/models/signInModel';
 import { ForgotPasswordModel } from 'src/app/models/forgotPasswordModel';
 import { ResetPasswordModel } from 'src/app/models/resetPasswordModel';
+import { environment } from 'src/environments/environment'
 
 @Injectable()
 export class AccountService {
-
-    private url = 'https://localhost:44304/api/account';
 
     constructor(private http: HttpClient) {
     }
 
     createUser(user: SignUpModel) {
-        return this.http.post(this.url+'/signup', user);
+        return this.http.post(environment.apiUrl+'/api/account/signup', user);
     }
 
     logIn(user: SignInModel){
-        return this.http.post(this.url+'/signin',user);
+        return this.http.post(environment.apiUrl+'/api/account/signin',user);
     }
 
     forgotPassword(user: ForgotPasswordModel){
-        return this.http.post(this.url+'/forgotpassword',user);
+        return this.http.post(environment.apiUrl+'/api/account/forgotpassword',user);
     }
 
     resetPassword(user: ResetPasswordModel){
-        return this.http.post(this.url+'/resetpassword',user);
+        return this.http.post(environment.apiUrl+'/api/account/resetpassword',user);
     }
 }
