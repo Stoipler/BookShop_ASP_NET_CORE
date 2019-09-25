@@ -3,16 +3,13 @@ import { AccountService } from 'src/app/services/account.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SignInModel } from 'src/app/models/signInModel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-
-import { first } from 'rxjs/operators';
-import { error } from 'util';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  providers: [AccountService, AuthenticationService]
+  providers: [AccountService]
 })
 export class SignInComponent implements OnInit {
 
@@ -21,22 +18,27 @@ export class SignInComponent implements OnInit {
   user: SignInModel = new SignInModel();
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
-    private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private router: Router) {
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  logIn() { debugger;
-    this.authenticationService.login(this.user)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.error = error;
-        });
+
+  logIn() {
+    this.accountService.logIn(this.user)
+    .subscribe(
+      (data: SignInModel) => {
+        localStorage.setItem('currentUser',JSON.stringify(data));
+        this.router.navigate([this.returnUrl]);
+      },
+      (error) => {
+
+      });
+    
   }
 }

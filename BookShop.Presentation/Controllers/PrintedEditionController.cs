@@ -16,7 +16,7 @@ namespace BookShop.Presentation.Controllers
         {
             _printedEditionService = printedEditionService;
         }
-        [Authorize]
+        
         [HttpPost]
         public async Task<PageModel> Get([FromBody]SearchParams searchParams)
         {

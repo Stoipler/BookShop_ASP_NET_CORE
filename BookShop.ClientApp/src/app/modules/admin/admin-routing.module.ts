@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductManagementComponent } from 'src/app/modules/admin/product-management/product-management.component';
+import { AuthGuard } from 'src/app/helpers/authentication.guard';
 
 
 const routes: Routes = [{
   path: 'admin',
   children: [
-    { path: 'productmanagement', component: ProductManagementComponent },
+    { path: 'productmanagement', component: ProductManagementComponent,canActivate:[AuthGuard] },
   ]
 },
 ];
