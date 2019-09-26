@@ -6,6 +6,7 @@ import { AuthorsComponent } from 'src/app/modules/author/components/authors/auth
 import { AuthorService } from 'src/app/services/author.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ], 
   providers: [AuthorService],
 })

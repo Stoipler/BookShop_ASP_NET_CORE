@@ -81,7 +81,6 @@
         <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid" ngbAutofocus class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
     </div>
 </ng-template>
-
 <div class="container">
     <input type="text" autocomplete="off" (keyup)="loadPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="searchParams.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
 

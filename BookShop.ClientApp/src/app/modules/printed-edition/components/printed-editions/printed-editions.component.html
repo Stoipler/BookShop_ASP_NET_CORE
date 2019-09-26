@@ -1,35 +1,36 @@
-<input type="text" autocomplete="off" (keyup)="loadPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="searchParams.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
+<div class="container">
+    <input type="text" autocomplete="off" (keyup)="loadPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="searchParams.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
 
-<div class="row mb-5 align-items-end justify-content-center">
-    <div class="col-sm">
-        <label for="minPrice" class="m-0">Price from</label>
-        <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom" name="priceFrom" #priceFrom="ngModel">
-    </div>
-    <div class="col-sm">
-        <label for="maxPrice" class="m-0">Price to</label>
-        <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo" #priceTo="ngModel">
-    </div>
-    <div class="col-sm">
-        <label for="typeOfPrintedEdition" class="m-0">Type:</label>
-        <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
+    <div class="row mb-5 align-items-end justify-content-center">
+        <div class="col-sm">
+            <label for="minPrice" class="m-0">Price from</label>
+            <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom" name="priceFrom" #priceFrom="ngModel">
+        </div>
+        <div class="col-sm">
+            <label for="maxPrice" class="m-0">Price to</label>
+            <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo" #priceTo="ngModel">
+        </div>
+        <div class="col-sm">
+            <label for="typeOfPrintedEdition" class="m-0">Type:</label>
+            <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
       <option *ngFor="let item of typeKeys()">{{item}}</option>
     </select>
-    </div>
+        </div>
 
-    <div class="col-sm">
-        <label for="sortTypeSelect" class="m-0">Sort by:</label>
-        <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
+        <div class="col-sm">
+            <label for="sortTypeSelect" class="m-0">Sort by:</label>
+            <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
       <option *ngFor="let item of sortingKeys()">
         {{item}}
       </option>
     </select>
-    </div>
+        </div>
 
-    <div class="col-sm">
-        <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+        <div class="col-sm">
+            <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+        </div>
     </div>
 </div>
-
 <div class="container">
     <div class="row">
         <div *ngFor="let p of printedEditions" class="col-sm-4">

@@ -11,6 +11,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FontAwesomeModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -11,17 +11,25 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EmailConfirmedComponent } from './components/email-confirmed/email-confirmed.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
 @NgModule({
-  declarations: [SignUpComponent, AccountComponent, SignInComponent, ForgotPasswordComponent, ResetPasswordComponent, EmailConfirmedComponent],
+  declarations: [
+    SignUpComponent,
+    AccountComponent,
+    SignInComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    EmailConfirmedComponent],
   imports: [
     CommonModule,
     AccountRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [AccountService]
 })
