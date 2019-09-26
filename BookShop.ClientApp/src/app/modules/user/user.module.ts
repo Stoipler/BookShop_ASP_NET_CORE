@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from 'src/app/modules/user/profile/profile.component';
+import { UserService } from 'src/app/services/user.service';
 
 
 @NgModule({
@@ -10,6 +11,8 @@ import { ProfileComponent } from './profile/profile.component';
   imports: [
     CommonModule,
     UserRoutingModule
-  ]
+  ],
+  providers:[UserService]
 })
 export class UserModule { }
+// smthing
