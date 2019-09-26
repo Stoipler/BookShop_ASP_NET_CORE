@@ -29,16 +29,10 @@ export class SignInComponent implements OnInit {
   }
 
 
-  logIn() {
-    this.accountService.logIn(this.user)
-    .subscribe(
-      (data: SignInModel) => {
-        localStorage.setItem('currentUser',JSON.stringify(data));
-        this.router.navigate([this.returnUrl]);
-      },
-      (error) => {
+  async logIn() {
+    const result: SignInModel = await this.accountService.logIn(this.user);
+    localStorage.setItem('currentUser', JSON.stringify(result));
+    this.router.navigate([this.returnUrl]);
 
-      });
-    
   }
 }

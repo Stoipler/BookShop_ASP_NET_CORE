@@ -1,22 +1,45 @@
-<div class="form-group">
-    <label>Your E-mail</label>
-    <input class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
-    <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
-        Please enter correct E-mail
+<div class="container">
+    <div class="text-center">
+        <h3>Sign-In</h3>
+    </div>
+    <div class="form-group">
+        <label>Your E-mail</label>
+        <input class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+            Please enter correct E-mail
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row m-0 justify-content-between align-items-center">
+            <label for="password">Password</label>
+            <a class="btn btn-link" href="/account/forgotpassword">Forgot your password?</a>
+        </div>
+        <input type="password" id="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required />
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+            Please enter correct password
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="user.rememberMe">
+                <label class="custom-control-label" for="rememberMe">Remember me</label>
+            </div>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-success" [disabled]=" email.invalid|| password.invalid " (click)="logIn()">Sign In</button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="row align-items-center justify-content-center">
+                <p>New to book publishing company?</p>
+            </div>
+            <div class="row align-items-center justify-content-center">
+                <a class="btn btn-info btn-lg btn-block" href="/account/signup">Sign Up</a>
+            </div>
+        </div>
     </div>
 </div>
-<div class="form-group">
-    <label>Password</label>
-    <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel"
-        required />
-    <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-        Please enter correct password
-    </div>
-</div>
-
-<div class="custom-control custom-checkbox">
-    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="user.rememberMe" >
-    <label class="custom-control-label" for="rememberMe">Remember me</label>
-</div>
-
-<button [disabled]=" email.invalid|| password.invalid " class="btn btn-default" (click)="logIn()">Log in</button>

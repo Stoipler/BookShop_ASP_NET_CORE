@@ -16,11 +16,11 @@ export class AccountService {
         return this.http.post(environment.apiUrl + '/api/account/signup', user);
     }
 
-    logIn(signInModel: SignInModel){
-        return this.http.post(environment.apiUrl+'/api/account/signin',signInModel);
+    async logIn(signInModel: SignInModel):Promise<SignInModel>{
+        return await this.http.post<SignInModel>(environment.apiUrl+'/api/account/signin',signInModel).toPromise();
     }
 
-    forgotPassword(user: ForgotPasswordModel) {
+    forgotPassword(user: ForgotPasswordModel){
         return this.http.post(environment.apiUrl + '/api/account/forgotpassword', user);
     }
 

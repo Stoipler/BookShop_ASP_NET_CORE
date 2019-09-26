@@ -11,22 +11,24 @@ import { ForgotPasswordModel } from '../../../../models/forgotPasswordModel';
 export class ForgotPasswordComponent implements OnInit {
 
   user: ForgotPasswordModel = new ForgotPasswordModel();
-  isEmailSended: boolean=false;
-  constructor(private accountService: AccountService) { 
-    this.user.redirectUrl='http://localhost:4200/account/resetpassword';
+  isEmailSended: boolean = false;
+  isCorrectEmail: boolean = true;
+  constructor(private accountService: AccountService) {
+    this.user.redirectUrl = 'http://localhost:4200/account/resetpassword';
   }
 
   ngOnInit() {
-    
+
   }
 
   forgotPassword() {
     this.accountService.forgotPassword(this.user)
       .subscribe(
-        (data: ForgotPasswordModel) => {this.isEmailSended=true
+        (data: ForgotPasswordModel) => {
+          this.isEmailSended = true
         },
         (error) => {
-
+          this.isCorrectEmail = false;
         });
   }
 }

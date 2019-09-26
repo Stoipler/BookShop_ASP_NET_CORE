@@ -34,6 +34,7 @@ export class ResetPasswordComponent implements OnInit {
       (data: ResetPasswordModel) => {this.isPasswordChanged=true
       },
       (error) => {
+        
 
       });
   }
