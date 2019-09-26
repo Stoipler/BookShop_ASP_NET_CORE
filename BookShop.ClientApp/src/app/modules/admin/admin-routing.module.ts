@@ -4,13 +4,9 @@ import { ProductManagementComponent } from 'src/app/modules/admin/product-manage
 import { AuthGuard } from 'src/app/helpers/authentication.guard';
 
 
-const routes: Routes = [{
-  path: 'admin',
-  children: [
+const routes: Routes = [
     { path: 'productmanagement', component: ProductManagementComponent,canActivate:[AuthGuard] },
-  ]
-},
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
