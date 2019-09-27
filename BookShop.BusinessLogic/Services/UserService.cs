@@ -11,34 +11,35 @@ namespace BookShop.BusinessLogic.Services
     public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserRepository _userRepository;
-        public UserService(UserManager<ApplicationUser> userManager, IUserRepository userRepository)
+        public UserService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IUserRepository userRepository)
         {
+            this._signInManager = signInManager;
             this._userManager = userManager;
             this._userRepository = userRepository;
         }
-        public async Task<IEnumerable<UserModel>> GetAsync()
+        public async Task<UserModel> GetByIdAsync(int id)
         {
-            var users = await _userRepository.GetAsync();
-            List<UserModel> userModels = new List<UserModel>();
-            foreach (ApplicationUser user in users)
-            {
-                userModels.Add(new UserModel(user));
-            }
-            return userModels;
+            ApplicationUser user = await _userRepository.GetByIdAsync(id);
+            UserModel model = new UserModel();
+            model.MapToModel(user);
+            return model;
         }
-        public async Task<IdentityResult> CreateAsync(UserCreateModel model)
+
+        public async Task UpdateAsync(UserModel model)
         {
-            ApplicationUser user = new ApplicationUser { Email = model.Email, UserName = model.Email };
-            return await _userManager.CreateAsync(user, model.Password);
-        }
-        public async Task UpdateAsync(ApplicationUser user)
-        {
+            ApplicationUser user = await _userRepository.GetByIdAsync(model.Id);
+            model.MapToEnity(user);
             await _userRepository.Update(user);
-        }
-        public async Task RemoveAsync(ApplicationUser user)
-        {
-            await _userRepository.Remove(user);
+            SignInResult signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.OldPassword, false, false);
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                if (signInResult.Succeeded && (model.NewPassword == model.NewPasswordConfirmation))
+                {
+                    await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                }
+            }
         }
     }
 }

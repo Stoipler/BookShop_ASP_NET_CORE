@@ -8,9 +8,8 @@ namespace BookShop.BusinessLogic.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserModel>> GetAsync();
-        Task<IdentityResult> CreateAsync(UserCreateModel model);
-        Task UpdateAsync(ApplicationUser user);
-        Task RemoveAsync(ApplicationUser user);
+
+        Task<UserModel> GetByIdAsync(int id);
+        Task UpdateAsync(UserModel model);
     }
 }

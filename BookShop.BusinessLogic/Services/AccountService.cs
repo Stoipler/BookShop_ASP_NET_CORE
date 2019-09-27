@@ -46,6 +46,7 @@ namespace BookShop.BusinessLogic.Services
                 return result;
             }
             ApplicationUser user = await _userManager.FindByEmailAsync(userModel.Email);
+            userModel.Id = user.Id;
             userModel.Password = null;
             userModel.Token = _jwtHelper.GenerateAccessToken(user);
             return result;

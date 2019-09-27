@@ -1,3 +1,45 @@
-<div class="container">
-    <p>profile works!</p>
+<div class="row container justify-content-around">
+    <div class="col-9">
+        <fieldset [disabled]="!isOnEditing">
+            <fa-icon [icon]="faUserCircle" size="9x"></fa-icon>
+            <h3>My profile</h3>
+            <div class="form-group">
+                <label for="firstName">Your First name</label>
+                <input id="firstName" class="form-control" placeholder="First name" [(ngModel)]="user.firstName" #firstName="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Your Last name</label>
+                <input id="lastName" class="form-control" placeholder="Last name" [(ngModel)]="user.lastName" #lastName="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="email">Your E-mail</label>
+                <input disabled="" id="email" class="form-control" placeholder="E-mail" [(ngModel)]="user.email" #email="ngModel">
+            </div>
+        </fieldset>
+        <div *ngIf="isOnEditing">
+            <div class="form-group">
+                <label for="password">Old password</label>
+                <input type="password" id="oldPassword" class="form-control" placeholder="Old password" [(ngModel)]="user.oldPassword" #oldPassword="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="password">New password</label>
+                <input type="password" id="newPassword" class="form-control" placeholder="New password" [(ngModel)]="user.newPassword" #newPassword="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirmation">New password confirmation</label>
+                <input type="password" id="newPasswordConfirmation" class="form-control" placeholder="New password confirmation" [(ngModel)]="user.newPasswordConfirmation" #newPasswordConfirmation="ngModel" pattern="user.newPasswordConfirmation">
+            </div>
+            <div class="d-flex btn-group">
+                <button class="btn btn-success" (click)="updateUserProfile()">
+                    Confrim changes   
+                </button>
+                <button class=" btn btn-danger" (click)="cancel()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 justify-content-center align-items-center">
+        <button type="button" class="btn btn-primary" (click)="setEditorMode()">Edit profile</button>
+    </div>
 </div>
