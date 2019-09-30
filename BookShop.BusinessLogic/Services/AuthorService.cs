@@ -17,7 +17,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task<IEnumerable<AuthorModel>> GetAsync(AuthorSearchParams authorSearchParams)
         {
-            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name };
+            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name , Page=authorSearchParams.Page, PageSize=authorSearchParams.PageSize};
             if (!(authorSearchParams.AuthorsList is null))
             {
                 authorSearchParamsDA.AuthorsList = new List<Author>();
@@ -54,6 +54,31 @@ namespace BookShop.BusinessLogic.Services
         {
             Author author = await _authorRepository.GetByIdAsync(id);
             return new AuthorModel(author);
+        }
+
+        public async Task<AuthorPageModel> GetWithPaginationAsync(AuthorSearchParams authorSearchParams)
+        {
+            AuthorPageModel authorPageModel = new AuthorPageModel();
+            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name, Page = authorSearchParams.Page, PageSize = authorSearchParams.PageSize };
+            if (!(authorSearchParams.AuthorsList is null))
+            {
+                authorSearchParamsDA.AuthorsList = new List<Author>();
+                foreach (AuthorModel authorModel in authorSearchParams.AuthorsList)
+                {
+                    authorSearchParamsDA.AuthorsList.Add(new Author { Id = authorModel.Id, Name = authorModel.Name });
+                }
+            }
+            var authors = await _authorRepository.GetWithParamsAsync(authorSearchParamsDA);
+            List<AuthorModel> authorModels = new List<AuthorModel>();
+            foreach (Author author in authors)
+            {
+                authorModels.Add(new AuthorModel(author));
+            }
+            authorPageModel.Count = await _authorRepository.GetCount(authorSearchParamsDA);
+            authorPageModel.CurrentPage = authorSearchParamsDA.Page;
+            authorPageModel.PageSize = authorSearchParamsDA.PageSize;
+            authorPageModel.AuthorModels = authorModels;
+            return authorPageModel;
         }
     }
 }

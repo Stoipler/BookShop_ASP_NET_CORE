@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
-using SearchParams = BookShop.BusinessLogic.Models.SearchParams;
-using SearchParamsDA = BookShop.DataAccess.Models.SearchParams;
+using PrintedEditionSearchParams = BookShop.BusinessLogic.Models.PrintedEditionSearchParams;
+using SearchParamsDA = BookShop.DataAccess.Models.PrintedEditionSearchParams;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -36,7 +36,7 @@ namespace BookShop.BusinessLogic.Services
             model.Id = result.Id;
             return model;
         }
-        public async Task<PageModel> GetSortedAsync(SearchParams searchParams)
+        public async Task<PrintedEditionPageModel> GetSortedAsync(PrintedEditionSearchParams searchParams)
         {
             SearchParamsDA searchParamsDA = new SearchParamsDA();
             SearchParametersMaping(searchParams, searchParamsDA);
@@ -46,7 +46,7 @@ namespace BookShop.BusinessLogic.Services
             {
                 printedEditionModels.Add(new PrintedEditionModel(printedEdition));
             }
-            PageModel pageModel = new PageModel
+            PrintedEditionPageModel pageModel = new PrintedEditionPageModel
             {
                 Count = await _printedEditionRepository.GetCollectionSizeAsync(searchParamsDA),
                 CurrentPage = searchParamsDA.Page,
@@ -110,7 +110,7 @@ namespace BookShop.BusinessLogic.Services
                 await _authorInBookRepository.RemoveRange(toRemove);
             }
         }
-        private void SearchParametersMaping(SearchParams searchParams, SearchParamsDA searchParamsDA)
+        private void SearchParametersMaping(PrintedEditionSearchParams searchParams, SearchParamsDA searchParamsDA)
         {
             if (searchParams.Page != 0)
             {

@@ -9,5 +9,6 @@ namespace BookShop.DataAccess.Repostories.Interfaces
     public interface IAuthorRepository : IGenericRepository<Author>
     {
         Task<IEnumerable<Author>> GetWithParamsAsync(AuthorSearchParams authorSearchParams);
+        Task<int> GetCount(AuthorSearchParams authorSearchParams);
     }
 }

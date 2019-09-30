@@ -30,7 +30,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             PrintedEdition printedEdition = await printedEditions.Where(p => (p.Id == id)).FirstAsync();
             return printedEdition;
         }
-        public async Task<IEnumerable<PrintedEdition>> GetSortedAsync(SearchParams searchParams)
+        public async Task<IEnumerable<PrintedEdition>> GetSortedAsync(PrintedEditionSearchParams searchParams)
         {
             IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.Author);
             printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));
@@ -64,7 +64,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             printedEditions = printedEditions.Skip((searchParams.Page - 1) * searchParams.PageSize).Take(searchParams.PageSize);
             return await printedEditions.AsNoTracking().ToListAsync();
         }
-        public async Task<int> GetCollectionSizeAsync(SearchParams searchParams)
+        public async Task<int> GetCollectionSizeAsync(PrintedEditionSearchParams searchParams)
         {
             IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks);
             printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));

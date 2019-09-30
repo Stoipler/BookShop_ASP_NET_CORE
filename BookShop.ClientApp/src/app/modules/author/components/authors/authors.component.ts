@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { AuthorService } from 'src/app/services/author.service';
 import { AuthorModel } from 'src/app/models/authorModel';
 import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
+import { AuthorPageModel } from 'src/app/models/authorPageModel';
 
 @Component({
   selector: 'app-authors',
@@ -12,20 +13,30 @@ import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 })
 export class AuthorsComponent implements OnInit {
 
-  closeResult: string;
-  author: AuthorModel = new AuthorModel();   // изменяемый товар
-  authors: AuthorModel[];                // массив товаров
-  tableMode: boolean = true;
-  searchParams:AuthorSearchParams=new AuthorSearchParams();
+  currentPage: number;
+  pageSize: number;
+  count: number;
+  author: AuthorModel = new AuthorModel();
+  authors: AuthorModel[];
+  searchParams: AuthorSearchParams = new AuthorSearchParams();
   constructor(private modalService: NgbModal, private authorService: AuthorService) { }
 
   ngOnInit() {
+    this.currentPage=1;
+    this.searchParams.pageSize=5;
     this.loadAuthors();
   }
 
-  loadAuthors() {
-    this.authorService.getAuthors(this.searchParams).subscribe((data: AuthorModel[]) => this.authors = data);
+  async loadAuthors() {
+    this.searchParams.page = this.currentPage;
+    const data:AuthorPageModel=await this.authorService.getAuthorsWithPagination(this.searchParams);
+        this.authors = data.authorModels;
+        this.currentPage = data.currentPage;
+        this.pageSize = data.pageSize;
+        this.count = data.count;
+      debugger;
   }
+
 
   save() {
     if (this.author.id == null) {
@@ -40,7 +51,6 @@ export class AuthorsComponent implements OnInit {
 
   cancel() {
     this.author = new AuthorModel();
-    this.tableMode = true;
   }
 
   open(content) {
@@ -51,10 +61,6 @@ export class AuthorsComponent implements OnInit {
       this.loadAuthors();
     });
   }
-  add() {
-    this.cancel();
-    this.tableMode = false;
-  }
   delete(author: AuthorModel) {
     this.authorService.deleteAuthor(author.id)
       .subscribe(data => this.loadAuthors());
@@ -62,10 +68,4 @@ export class AuthorsComponent implements OnInit {
   editAuthor(a: AuthorModel) {
     this.author = a;
   }
-
-  
-
-
-
-
 }

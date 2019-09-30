@@ -2,7 +2,7 @@
 
 namespace BookShop.DataAccess.Models
 {
-    public class SearchParams
+    public class PrintedEditionSearchParams
     {
         public PrintedEditionType PrintedEditionType { get; set; }
         public SortCriteria SortCriteria { get; set; }
@@ -11,7 +11,7 @@ namespace BookShop.DataAccess.Models
         public int Page { get; set; }
         public int PageSize { get; set; }
         public string KeyWord { get; set; }
-        public SearchParams()
+        public PrintedEditionSearchParams()
         {
             PrintedEditionType = PrintedEditionType.None;
             SortCriteria = SortCriteria.None;

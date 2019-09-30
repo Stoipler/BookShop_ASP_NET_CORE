@@ -42,8 +42,8 @@
                 </div>
             </td>
         </tr>
-
-
     </tbody>
 </table>
-<router-outlet></router-outlet>
+<div class="footer">
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize" [maxSize]="3" (pageChange)="loadAuthors()"></ngb-pagination>
+</div>

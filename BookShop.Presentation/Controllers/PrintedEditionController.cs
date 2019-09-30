@@ -18,7 +18,7 @@ namespace BookShop.Presentation.Controllers
         }
         
         [HttpPost]
-        public async Task<PageModel> Get([FromBody]SearchParams searchParams)
+        public async Task<PrintedEditionPageModel> Get([FromBody]PrintedEditionSearchParams searchParams)
         {
             return await _printedEditionService.GetSortedAsync(searchParams);
         }

@@ -2,7 +2,7 @@
 
 namespace BookShop.BusinessLogic.Models
 {
-    public class SearchParams
+    public class PrintedEditionSearchParams
     {
         public PrintedEditionType PrintedEditionType { get; set; }
         public SortCriteria SortCriteria { get; set; }

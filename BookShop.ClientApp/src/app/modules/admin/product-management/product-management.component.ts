@@ -5,7 +5,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PageModel } from 'src/app/models/pageModel';
+import { PrintedEditionPageModel } from 'src/app/models/printedEditionPageModel';
 import { SearchParams } from 'src/app/models/searchParams';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { SortCriteria } from 'src/app/enums/sortCriteria';
@@ -113,7 +113,7 @@ export class ProductManagementComponent implements OnInit {
 
   loadPrintedEditions() {
     this.productManagementService.get(this.searchParams)
-      .subscribe((data: PageModel) => {
+      .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
         this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;
@@ -125,7 +125,7 @@ export class ProductManagementComponent implements OnInit {
   goTo() {
     this.searchParams.page = this.currentPage;
     this.productManagementService.get(this.searchParams)
-      .subscribe((data: PageModel) => {
+      .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
         this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;

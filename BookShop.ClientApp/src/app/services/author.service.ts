@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthorModel } from 'src/app/models/authorModel';
 import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 import { environment } from 'src/environments/environment'
+import { AuthorPageModel } from 'src/app/models/authorPageModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +12,14 @@ export class AuthorService {
   constructor(private http: HttpClient) { 
   }
 
+  getAuthorsWithPagination(authorSearchParams: AuthorSearchParams):Promise<AuthorPageModel>{
+    return this.http.post<AuthorPageModel>(environment.apiUrl+'/api/author/getwithpagination',authorSearchParams).toPromise();
+  }
+
   getAuthors(authorSearchParams: AuthorSearchParams){
     return this.http.post(environment.apiUrl+'/api/author/get',authorSearchParams);
   }
+
   createAuthor(author: AuthorModel){
     return this.http.post(environment.apiUrl+'/api/author/post',author);
   } 

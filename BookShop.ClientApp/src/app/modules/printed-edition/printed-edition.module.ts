@@ -7,6 +7,7 @@ import { PrintedEditionService } from 'src/app/services/printed-edition.service'
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrintedEditionDetailsComponent } from 'src/app/modules/printed-edition/components/printed-edition-details/printed-edition-details.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [PrintedEditionsComponent, PrintedEditionDetailsComponent],
@@ -14,7 +15,8 @@ import { PrintedEditionDetailsComponent } from 'src/app/modules/printed-edition/
     CommonModule,
     PrintedEditionRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ],
   providers:[PrintedEditionService]
 })

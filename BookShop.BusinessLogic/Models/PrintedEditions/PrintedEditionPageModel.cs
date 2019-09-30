@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BookShop.BusinessLogic.Models
 {
-    public class PageModel
+    public class PrintedEditionPageModel
     {
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }

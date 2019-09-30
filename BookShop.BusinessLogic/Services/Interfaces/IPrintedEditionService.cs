@@ -6,7 +6,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
 {
     public interface IPrintedEditionService
     {
-        Task<PageModel> GetSortedAsync(SearchParams searchParams);
+        Task<PrintedEditionPageModel> GetSortedAsync(PrintedEditionSearchParams searchParams);
         Task<PrintedEditionModel> CreateAsync(PrintedEditionModel model);
         Task Update(PrintedEditionModel model);
         Task Remove(PrintedEditionModel model);

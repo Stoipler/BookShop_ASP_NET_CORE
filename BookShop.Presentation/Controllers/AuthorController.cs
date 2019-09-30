@@ -29,7 +29,15 @@ namespace BookShop.Presentation.Controllers
             }
             return await _authorService.GetAsync(searchParams);
         }
-
+        [HttpPost]
+        public async Task<AuthorPageModel> GetWithPagination([FromBody]AuthorSearchParams searchParams)
+        {
+            if (!string.IsNullOrWhiteSpace(searchParams.Name))
+            {
+                searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
+            }
+            return await _authorService.GetWithPaginationAsync(searchParams);
+        }
         // POST api/<controller>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AuthorModel model)

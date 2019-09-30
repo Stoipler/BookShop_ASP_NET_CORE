@@ -16,6 +16,22 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
         public AuthorRepository(ApplicationContext context) : base(context)
         {
         }
+
+        public async Task<int> GetCount(AuthorSearchParams authorSearchParams)
+        {
+            IQueryable<Author> authors = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.PrintedEdition);
+            if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
+            {
+                authors = authors.Where(a => a.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
+            }
+            if (authorSearchParams.AuthorsList != null)
+            {
+                IEnumerable<int> authorsToDelete = authorSearchParams.AuthorsList.Select(author => author.Id);
+                authors = authors.Where(a => !authorsToDelete.Contains(a.Id));
+            }
+            return await authors.CountAsync();
+        }
+
         public async Task<IEnumerable<Author>> GetWithParamsAsync(AuthorSearchParams authorSearchParams)
         {
             IQueryable<Author> authors = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.PrintedEdition);
@@ -28,7 +44,13 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                 IEnumerable<int> authorsToDelete = authorSearchParams.AuthorsList.Select(author => author.Id);
                 authors = authors.Where(a => !authorsToDelete.Contains(a.Id));
             }
+            if (authorSearchParams.PageSize != 0 && authorSearchParams.Page != 0)
+            {
+                int count = await authors.CountAsync();
+                authors = authors.Skip((authorSearchParams.Page - 1) * authorSearchParams.PageSize).Take(authorSearchParams.PageSize);
+            }
             return await authors.AsNoTracking().ToListAsync();
         }
+
     }
 }

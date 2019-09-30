@@ -8,7 +8,7 @@ namespace BookShop.DataAccess.Repostories.Interfaces
 {
     public interface IPrintedEditionRepository : IGenericRepository<PrintedEdition>
     {
-        Task<IEnumerable<PrintedEdition>> GetSortedAsync(SearchParams searchParams);
-        Task<int> GetCollectionSizeAsync(SearchParams searchParams);
+        Task<IEnumerable<PrintedEdition>> GetSortedAsync(PrintedEditionSearchParams searchParams);
+        Task<int> GetCollectionSizeAsync(PrintedEditionSearchParams searchParams);
     }
 }

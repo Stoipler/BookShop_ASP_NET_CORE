@@ -11,5 +11,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task Update(AuthorModel model);
         Task Remove(int id);
         Task<AuthorModel> GetByIdAsync(int id);
+        Task<AuthorPageModel> GetWithPaginationAsync(AuthorSearchParams searchParams);
     }
 }
