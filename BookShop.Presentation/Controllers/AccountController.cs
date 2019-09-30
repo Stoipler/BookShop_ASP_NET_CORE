@@ -26,7 +26,7 @@ namespace BookShop.Presentation.Controllers
         #endregion
 
         #region Public methods
-        [HttpPost("SignIn")]
+        [HttpPost(Name ="SignIn")]
         public async Task<IActionResult> SignIn([FromBody]UserSignInModel model)
         {
             if (!ModelState.IsValid)
@@ -41,7 +41,7 @@ namespace BookShop.Presentation.Controllers
             ModelState.AddModelError(string.Empty, "Wrong login or/and password");
             return BadRequest(ModelState);
         }
-        [HttpPost("SignUp")]
+        [HttpPost(Name = "SignUp")]
         public async Task<IActionResult> SignUp([FromBody]UserSignUpModel model)
         {
             if (!ModelState.IsValid)
@@ -73,13 +73,13 @@ namespace BookShop.Presentation.Controllers
             return Ok(model);
 
         }
-        [HttpGet("ConfirmEmail")]
+        [HttpGet(Name ="ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string code, string redirectUrl)
         {
             await _accountService.ConfirmEmailAsync(userId, code);
             return Redirect(redirectUrl);
         }
-        [HttpGet("ResetPassword")]
+        [HttpGet(Name ="ResetPassword")]
         public IActionResult ResetPassword([FromQuery]string redirectUrl, string email, string code = null)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -88,7 +88,7 @@ namespace BookShop.Presentation.Controllers
             }
             return Redirect(redirectUrl + "/?code=" + code + "&email=" + email);
         }
-        [HttpPost("ResetPassword")]
+        [HttpPost(Name ="ResetPassword")]
         public async Task<IActionResult> ResetPassword(UserResetPasswordModel model)
         {
             if (!ModelState.IsValid)
@@ -106,7 +106,7 @@ namespace BookShop.Presentation.Controllers
             }
             return BadRequest(model);
         }
-        [HttpPost("ForgotPassword")]
+        [HttpPost(Name ="ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody]UserForgotPasswordModel model)
         {
             if (ModelState.IsValid)

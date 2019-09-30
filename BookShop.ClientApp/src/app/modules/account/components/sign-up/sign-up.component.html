@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label>Your First name</label>
-            <input disabled="" lass="form-control" placeholder="First name" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" required />
+            <input class="form-control" placeholder="First name" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" required />
             <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
                 Please enter Your First name
             </div>

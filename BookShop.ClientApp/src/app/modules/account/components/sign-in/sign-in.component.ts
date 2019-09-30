@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { SignInModel } from 'src/app/models/signInModel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',

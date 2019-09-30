@@ -8,16 +8,18 @@ import { PrintedEditionModule } from 'src/app/modules/printed-edition/printed-ed
 import { AdminModule } from 'src/app/modules/admin/admin.module';
 import { AccountModule } from 'src/app/modules/account/account.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HomeComponent } from 'src/app/components/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    HomeComponent
   ],
   imports: [
     AccountModule,

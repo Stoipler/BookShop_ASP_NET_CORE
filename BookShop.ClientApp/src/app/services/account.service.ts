@@ -17,6 +17,7 @@ export class AccountService {
     }
 
     async logIn(signInModel: SignInModel):Promise<SignInModel>{
+        debugger;
         return await this.http.post<SignInModel>(environment.apiUrl+'/api/account/signin',signInModel).toPromise();
     }
 
