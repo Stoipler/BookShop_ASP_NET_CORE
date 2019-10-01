@@ -33,9 +33,13 @@ namespace BookShop.BusinessLogic.Services
                 LastName = userModel.LastName,
                 Email = userModel.Email
             };
-            var result = await _userManager.CreateAsync(user, userModel.Password);
-            userModel.Id = user.Id;
-            userModel.SignUpToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            IdentityResult result = await _userManager.CreateAsync(user, userModel.Password);
+            if (result.Succeeded)
+            {
+                userModel.Id = user.Id;
+                userModel.SignUpToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                return result;
+            }
             return result;
         }
         public async Task<SignInResult> SignInAsync(UserSignInModel userModel)

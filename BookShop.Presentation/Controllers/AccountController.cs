@@ -12,20 +12,20 @@ namespace BookShop.Presentation.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        #region Properties and variables
+        
         private readonly IAccountService _accountService;
         private readonly EmailHelper _emailHelper;
-        #endregion
+        
 
-        #region Constructors
+        
         public AccountController(IAccountService userService, EmailHelper emailHelper)
         {
             _accountService = userService;
             _emailHelper = emailHelper;
         }
-        #endregion
+       
 
-        #region Public methods
+        
         [HttpPost(Name ="SignIn")]
         public async Task<IActionResult> SignIn([FromBody]UserSignInModel model)
         {
@@ -114,7 +114,8 @@ namespace BookShop.Presentation.Controllers
                 model = await _accountService.ForgotPasswordAsync(model);
                 if (!model.IsPossibleToUseCurrentEmail)
                 {
-                    return BadRequest();
+                    ModelState.AddModelError(string.Empty, "It's impossible to use email that you provided");
+                    return BadRequest(ModelState);
                 }
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = model.Id, code = model.Code, redirectUrl = model.RedirectUrl, email = model.Email }, protocol: HttpContext.Request.Scheme);
                 await _emailHelper.SendEmailAsync(model.Email, "Reset Password",
@@ -123,6 +124,6 @@ namespace BookShop.Presentation.Controllers
             }
             return BadRequest(ModelState);
         }
-        #endregion
+        
     }
 }

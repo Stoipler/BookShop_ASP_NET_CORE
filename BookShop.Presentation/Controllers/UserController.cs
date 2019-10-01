@@ -24,10 +24,15 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task Update([FromBody]UserModel model)
+        public async Task<IActionResult> Update([FromBody]UserModel model)
         {
+            if (ModelState.IsValid)
+            {
+                await _userService.UpdateAsync(model);
+                return Ok();
+            }
+            return BadRequest(ModelState);
 
-            await _userService.UpdateAsync(model);
         }
     }
 }

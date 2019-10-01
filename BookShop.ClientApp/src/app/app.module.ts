@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { AppComponent } from 'src/app/components/app/app.component';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { AuthorModule } from 'src/app/modules/author/author.module';
@@ -13,13 +13,21 @@ import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from 'src/app/components/home/home.component';
+import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 
+class MyErrorHandler implements ErrorHandler{
+  handleError(error){
+    
+    console.log(error)
+  }
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    ToastContainerComponent
   ],
   imports: [
     AccountModule,
@@ -32,9 +40,11 @@ import { HomeComponent } from 'src/app/components/home/home.component';
     FontAwesomeModule,
   ],
   providers: [
+    {provide:ErrorHandler, useClass:MyErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
