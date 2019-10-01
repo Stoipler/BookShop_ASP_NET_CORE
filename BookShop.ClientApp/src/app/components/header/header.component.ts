@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faTools, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus,faTools, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +8,7 @@ import { faTools, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 })
 export class HeaderComponent implements OnInit {
 
+  faCartPlus=faCartPlus;
   faTools=faTools;
   faUserCircle=faUserCircle;
   constructor() { }

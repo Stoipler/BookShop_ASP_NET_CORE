@@ -148,12 +148,14 @@
             </td>
             <td>{{p.price}}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" (click)="editPrintedEdition(p)" (click)="open(additem)">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="editPrintedEdition(p)" (click)="open(additem)">
           <fa-icon [icon]="faPencilAlt"></fa-icon>
         </button>
-                <button type="button" class="btn btn-danger btn-sm">
+                    <button type="button" class="btn btn-danger btn-sm">
           <fa-icon [icon]="faBookDead"></fa-icon>
         </button>
+                </div>
             </td>
         </tr>
     </tbody>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {faUserCircle, faAtom} from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-account',
@@ -8,10 +9,9 @@ import {faUserCircle, faAtom} from '@fortawesome/free-solid-svg-icons';
 })
 export class AccountComponent implements OnInit {
   faUserCircle=faUserCircle;
-  faAtom=faAtom;
   constructor() { }
 
   ngOnInit() {
-  }
 
+  }
 }

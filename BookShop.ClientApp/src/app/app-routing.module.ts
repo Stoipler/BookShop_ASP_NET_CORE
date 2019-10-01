@@ -5,8 +5,8 @@ import { HomeComponent } from 'src/app/components/home/home.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:HomeComponent
+    path: '',
+    component: HomeComponent
   },
   {
     path: 'account',
@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('src/app/modules/user/user.module').then(mod => mod.UserModule),
   },
+  {
+    path: 'cart',
+    loadChildren: () => import('src/app/modules/cart/cart.module').then(mod => mod.CartModule),
+  }
 ];
 
 @NgModule({

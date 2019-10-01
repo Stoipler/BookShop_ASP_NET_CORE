@@ -11,16 +11,16 @@
                 </div>
                 <div class="card-body align-items-center justify-content-end">
                     <div class="form-group">
-                        <label for="exampleSelect1">Quantity</label>
-                        <select class="form-control" id="exampleSelect1">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                        <label for="select">Quantity</label>
+                        <select class="form-control" id="select" [(ngModel)]="quantity">
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
                                     </select>
                     </div>
-                    <button class="btn btn-success">
+                    <button class="btn btn-success" (click)="addToCart(printedEdition)">
                             <fa-icon [icon]="faCartPlus"></fa-icon> Add to cart
                         </button>
                 </div>

@@ -1,0 +1,37 @@
+<div class="container">
+    <h3>Checkout</h3>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Unit price</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Order amount</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems" class="table-secondary">
+                <th scope="row">{{item.product}}</th>
+                <td>{{item.unitPrice}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.orderAmount}}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" (click)="remove(item)">
+                        -
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row d-flex justify-content-end">
+        <div class="col-6 d-flex align-items-center justify-content-start">
+            <h4>Total price: {{totalPrice.toFixed(2)}}</h4>
+        </div>
+        <div class="col-3 d-flex align-items-center justify-content-end">
+            <button class="btn btn-success">
+                Buy now
+            </button>
+        </div>
+    </div>
+</div>

@@ -27,6 +27,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<EmailHelper>();
             services.AddTransient<JwtHelper>();
             services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();

@@ -34,7 +34,6 @@ export class AuthorsComponent implements OnInit {
         this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;
         this.count = data.count;
-      debugger;
   }
 
 

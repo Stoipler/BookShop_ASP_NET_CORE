@@ -12,7 +12,7 @@
     <div class="form-group">
         <div class="row m-0 justify-content-between align-items-center">
             <label for="password">Password</label>
-            <a class="btn btn-link" href="/account/forgotpassword">Forgot your password?</a>
+            <a class="btn btn-link" [routerLink]="'/account/forgotpassword'">Forgot your password?</a>
         </div>
         <input type="password" id="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required />
         <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
@@ -31,15 +31,10 @@
             <button type="button" class="btn btn-success" [disabled]=" email.invalid|| password.invalid " (click)="logIn()">Sign In</button>
         </div>
     </div>
-
     <div class="row justify-content-center">
-        <div class="col-6">
-            <div class="row align-items-center justify-content-center">
-                <p>New to book publishing company?</p>
-            </div>
-            <div class="row align-items-center justify-content-center">
-                <a class="btn btn-info btn-lg btn-block" href="/account/signup">Sign Up</a>
-            </div>
-        </div>
+        <p>
+            New to book publishing company?
+            <a [routerLink]="'account/signup'">Sign Up</a>
+        </p>
     </div>
 </div>

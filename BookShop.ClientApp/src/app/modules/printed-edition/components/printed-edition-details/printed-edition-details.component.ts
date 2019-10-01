@@ -3,6 +3,7 @@ import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { ActivatedRoute } from '@angular/router';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { CartItemModel } from 'src/app/models/cartItemModel';
 
 @Component({
   selector: 'app-printed-edition-details',
@@ -15,6 +16,8 @@ export class PrintedEditionDetailsComponent implements OnInit {
 
   faCartPlus = faCartPlus;
   printedEdition: PrintedEditionModel = new PrintedEditionModel();
+  quantity: number = 1;
+  orderAmount: number;
 
   constructor(private route: ActivatedRoute, private printedEditionService: PrintedEditionService) { }
 
@@ -23,6 +26,16 @@ export class PrintedEditionDetailsComponent implements OnInit {
       this.printedEditionService.getById(+params.get('printedEditionId'))
         .subscribe((data: PrintedEditionModel) => this.printedEdition = data);
     });
+  }
+
+  addToCart(printedEdition) {
+    const cartItem:CartItemModel=new CartItemModel();
+    cartItem.printedEditionId=printedEdition.id;
+    cartItem.product=printedEdition.name;
+    cartItem.unitPrice=printedEdition.price;
+    cartItem.quantity=this.quantity;
+    cartItem.orderAmount=cartItem.quantity*cartItem.unitPrice;
+    localStorage.setItem(printedEdition.id, JSON.stringify(cartItem))
   }
 
 }

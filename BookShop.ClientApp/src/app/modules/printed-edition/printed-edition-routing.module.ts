@@ -5,10 +5,8 @@ import { PrintedEditionDetailsComponent } from 'src/app/modules/printed-edition/
 
 
 const routes: Routes = [
-  {
-    path: 'printededition',component: PrintedEditionsComponent,
-  },
-  {path:'printededition/:printedEditionId', component:PrintedEditionDetailsComponent}
+  { path: 'printededition', component: PrintedEditionsComponent },
+  { path: 'printededition/:printedEditionId', component: PrintedEditionDetailsComponent }
 ];
 
 @NgModule({
