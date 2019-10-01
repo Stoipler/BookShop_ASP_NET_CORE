@@ -29,13 +29,18 @@ export class PrintedEditionDetailsComponent implements OnInit {
   }
 
   addToCart(printedEdition) {
+    let cartItems: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
+    if (!cartItems) {
+      cartItems = [];
+    }
     const cartItem:CartItemModel=new CartItemModel();
     cartItem.printedEditionId=printedEdition.id;
     cartItem.product=printedEdition.name;
     cartItem.unitPrice=printedEdition.price;
     cartItem.quantity=this.quantity;
     cartItem.orderAmount=cartItem.quantity*cartItem.unitPrice;
-    localStorage.setItem(printedEdition.id, JSON.stringify(cartItem))
+    cartItems.push(cartItem);
+    localStorage.setItem("cart", JSON.stringify(cartItems))
   }
 
 }
