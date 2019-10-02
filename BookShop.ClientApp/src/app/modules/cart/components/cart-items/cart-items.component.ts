@@ -29,8 +29,8 @@ export class CartItemsComponent implements OnInit {
     
   }
   remove(item: CartItemModel) {
-    localStorage.removeItem(item.printedEditionId.toString())
     this.cartItems = this.arrayRemove(this.cartItems, item);
+    localStorage.setItem("cart",JSON.stringify(this.cartItems))
     this.getAllOrderItems()
   }
 
@@ -48,8 +48,8 @@ export class CartItemsComponent implements OnInit {
     });
 
     handler.open({
-      name: 'Demo Site',
-      description: '2 widgets',
+      name: 'Payment service',
+      description: '',
       amount: amount * 100
     });
   }
