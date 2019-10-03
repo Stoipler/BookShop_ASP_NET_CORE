@@ -1,5 +1,4 @@
-﻿using BookShop.BusinessLogic.Models.CartModels;
-using BookShop.BusinessLogic.Models.Payments;
+﻿using BookShop.BusinessLogic.Models.Payments;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using System.Threading.Tasks;
@@ -39,20 +38,6 @@ namespace BookShop.Presentation.Controllers
                 return Ok();
             }
             return BadRequest(ModelState);
-        }
-        [HttpPost(Name = "GetOrderItems")]
-        public async Task<CartItemPageModel> GetOrderItems([FromBody]CartListItemModel model)
-        {
-            if (ModelState.IsValid)
-            {
-
-            }
-            Customer customer = await _customerService.CreateAsync(new CustomerCreateOptions
-            {
-                Email = "sdasda",
-                Source = "sdadsa"
-            });
-            return new CartItemPageModel();
         }
     }
 }

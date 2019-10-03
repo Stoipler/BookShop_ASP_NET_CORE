@@ -1,12 +1,11 @@
 ﻿using BookShop.BusinessLogic.Common;
-using BookShop.BusinessLogic.Models.User;
+using BookShop.BusinessLogic.Models.Account;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -24,76 +23,61 @@ namespace BookShop.BusinessLogic.Services
             _signInManager = signInManager;
             _jwtHelper = jwtHelper;
         }
-        public async Task<IdentityResult> SignUpAsync(UserSignUpModel userModel)
+        public async Task<SignInResponseModel> SignInAsync(SignInRequestModel requestModel)
         {
-            var user = new ApplicationUser
+            SignInResponseModel responseModel = new SignInResponseModel();
+            responseModel.SignInResult = await _signInManager.PasswordSignInAsync(requestModel.Email, requestModel.Password, false, false);
+            if (!responseModel.SignInResult.Succeeded)
             {
-                UserName = userModel.Email,
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                Email = userModel.Email
-            };
-            IdentityResult result = await _userManager.CreateAsync(user, userModel.Password);
-            if (result.Succeeded)
-            {
-                userModel.Id = user.Id;
-                userModel.SignUpToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                return result;
+                return responseModel;
             }
-            return result;
+            ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
+            responseModel.Id = user.Id;
+            responseModel.Token = _jwtHelper.GenerateAccessToken(user);
+            return responseModel;
         }
-        public async Task<SignInResult> SignInAsync(UserSignInModel userModel)
+        public async Task<SignUpResponseModel> SignUpAsync(SignUpRequestModel requestModel)
         {
-            SignInResult result = await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, false, false);
-            if (!result.Succeeded)
+            ApplicationUser user = requestModel.MapToEntity();
+            SignUpResponseModel responseModel = new SignUpResponseModel();
+            responseModel.IdentityResult = await _userManager.CreateAsync(user, requestModel.Password);
+            if (responseModel.IdentityResult.Succeeded)
             {
-                return result;
+                responseModel.Id = user.Id;
+                responseModel.SignUpToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                return responseModel;
             }
-            ApplicationUser user = await _userManager.FindByEmailAsync(userModel.Email);
-            userModel.Id = user.Id;
-            userModel.Password = null;
-            userModel.Token = _jwtHelper.GenerateAccessToken(user);
-            return result;
+            return responseModel;
         }
         public async Task ConfirmEmailAsync(string userId, string code)
         {
             ApplicationUser user = await _userManager.FindByIdAsync(userId);
             await _userManager.ConfirmEmailAsync(user, code);
         }
-        public async Task<UserTransportModel> IsEmailConfirmedAsync(UserForgotPasswordModel model)
+        public async Task<ForgotPasswordResponseModel> ForgotPasswordAsync(ForgotPasswordRequestModel requestModel)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-
-            await _userManager.IsEmailConfirmedAsync(user);
-
-            var userModel = new UserTransportModel { Id = user.Id };
-            userModel.Code = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            return userModel;
-        }
-        public async Task<UserForgotPasswordModel> ForgotPasswordAsync(UserForgotPasswordModel model)
-        {
-            ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
-            if(user== null|| !(await _userManager.IsEmailConfirmedAsync(user)))
+            ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
+            ForgotPasswordResponseModel responseModel = new ForgotPasswordResponseModel();
+            if (user is null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
-                model.IsPossibleToUseCurrentEmail = false;
-                return model;
+                responseModel.IsPossibleToUseCurrentEmail = false;
+                return responseModel;
             }
-            model.Id = user.Id;
-            model.IsPossibleToUseCurrentEmail = true;
+            responseModel.Id = user.Id;
+            responseModel.IsPossibleToUseCurrentEmail = true;
             string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            model.Code = Base64UrlEncoder.Encode(code);
-            return model;
+            responseModel.Code = Base64UrlEncoder.Encode(code);
+            return responseModel;
         }
-        public async Task<IdentityResult> ResetPasswordAsync(UserResetPasswordModel model)
+        public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordRequestModel requestModel)
         {
-            ApplicationUser user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null)
+            ApplicationUser user = await _userManager.FindByNameAsync(requestModel.Email);
+            if (user is null)
             {
                 return null;
             }
-            string code = Base64UrlEncoder.Decode(model.Code);
-            var result=await _userManager.ResetPasswordAsync(user,code , model.Password);
+            string code = Base64UrlEncoder.Decode(requestModel.Code);
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, code, requestModel.Password);
             return result;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using BookShop.DataAccess.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace BookShop.BusinessLogic.Models.User
+namespace BookShop.BusinessLogic.Models.Account
 {
     public class UserModel
     {

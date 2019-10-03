@@ -1,4 +1,4 @@
-﻿namespace BookShop.BusinessLogic.Models.User
+﻿namespace BookShop.BusinessLogic.Models.Account
 {
     public class UserEditModel
     {

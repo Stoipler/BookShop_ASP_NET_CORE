@@ -1,4 +1,4 @@
-﻿using BookShop.BusinessLogic.Models.User;
+﻿using BookShop.BusinessLogic.Models.Account;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,4 @@
-﻿using BookShop.BusinessLogic.Models.User;
-using BookShop.DataAccess.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+﻿using BookShop.BusinessLogic.Models.Account;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces

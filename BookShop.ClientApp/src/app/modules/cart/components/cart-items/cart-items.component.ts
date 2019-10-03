@@ -29,7 +29,6 @@ export class CartItemsComponent implements OnInit {
     const items: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
     if (items) {
       this.isAnyItemsInCart = true;
-      this.orderService.getCartItems({ items: items }).then(response => { }, errors => { });
     }
 
   }
@@ -44,8 +43,6 @@ export class CartItemsComponent implements OnInit {
       key: environment.publishableKey,
       locale: 'auto',
       token: (token: { id: string, email: string }) => {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
         let paymentData: PaymentDataModel = new PaymentDataModel();
         paymentData.stripeEmail = token.email;
         paymentData.stripeToken = token.id;
