@@ -13,18 +13,18 @@ export class AccountService {
     }
 
     createUser(user: SignUpModel) {
-        return this.http.post(environment.apiUrl + '/api/account/signup', user);
+        return this.http.post(environment.apiUrl + 'account/signup', user);
     }
 
     async logIn(signInModel: SignInModel):Promise<SignInModel>{
-        return await this.http.post<SignInModel>(environment.apiUrl+'/api/account/signin',signInModel).toPromise();
+        return await this.http.post<SignInModel>(environment.apiUrl+'account/signin',signInModel).toPromise();
     }
 
     forgotPassword(user: ForgotPasswordModel){
-        return this.http.post(environment.apiUrl + '/api/account/forgotpassword', user);
+        return this.http.post(environment.apiUrl + 'account/forgotpassword', user);
     }
 
     resetPassword(user: ResetPasswordModel) {
-        return this.http.post(environment.apiUrl + '/api/account/resetpassword', user);
+        return this.http.post(environment.apiUrl + 'account/resetpassword', user);
     }
 }

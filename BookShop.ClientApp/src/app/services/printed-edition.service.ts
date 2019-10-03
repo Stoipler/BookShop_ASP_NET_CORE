@@ -13,12 +13,12 @@ export class PrintedEditionService {
   }
   
   createPrintedEdition(printedEdition: PrintedEditionModel){
-    return this.http.post(environment.apiUrl+'/api/printededition/post',printedEdition);
+    return this.http.post(environment.apiUrl+'printededition/post',printedEdition);
   }
   get(searchParams?: SearchParams) {
-    return this.http.post(environment.apiUrl+'/api/printededition/get',searchParams)
+    return this.http.post(environment.apiUrl+'printededition/get',searchParams)
   }
   getById(id: number){
-    return this.http.get(environment.apiUrl+'/api/printededition/getbyid/'+id);
+    return this.http.get(environment.apiUrl+'printededition/getbyid/'+id);
   }
 }

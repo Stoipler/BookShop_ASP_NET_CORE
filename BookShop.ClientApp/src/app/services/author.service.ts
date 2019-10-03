@@ -13,20 +13,20 @@ export class AuthorService {
   }
 
   getAuthorsWithPagination(authorSearchParams: AuthorSearchParams):Promise<AuthorPageModel>{
-    return this.http.post<AuthorPageModel>(environment.apiUrl+'/api/author/getwithpagination',authorSearchParams).toPromise();
+    return this.http.post<AuthorPageModel>(environment.apiUrl+'author/getwithpagination',authorSearchParams).toPromise();
   }
 
   getAuthors(authorSearchParams: AuthorSearchParams){
-    return this.http.post(environment.apiUrl+'/api/author/get',authorSearchParams);
+    return this.http.post(environment.apiUrl+'author/get',authorSearchParams);
   }
 
   createAuthor(author: AuthorModel){
-    return this.http.post(environment.apiUrl+'/api/author/post',author);
+    return this.http.post(environment.apiUrl+'author/post',author);
   } 
   deleteAuthor(id: number){
-      return this.http.delete(environment.apiUrl + '/api/author/delete/' + id);
+      return this.http.delete(environment.apiUrl + 'author/delete/' + id);
   }
   updateAuthor(author: AuthorModel){
-    return this.http.put(environment.apiUrl + '/api/author/put/' + author.id, author);
+    return this.http.put(environment.apiUrl + 'author/put/' + author.id, author);
   }
 }

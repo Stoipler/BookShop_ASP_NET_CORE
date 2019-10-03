@@ -1,9 +1,8 @@
 export class CartItemModel {
-    product: string;
-    unitPrice: number;
     quantity: number;
-    orderAmount: number;
     printedEditionId:number;
+    price:number;
+    orderAmount:number;
     constructor() {
 
     }

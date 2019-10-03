@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="isAnyItemsInCart">
     <h3>Checkout</h3>
     <table class="table table-hover">
         <thead class="thead-dark">
@@ -35,8 +35,6 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <p class="mt-5">
-        Try it out using the test card number <b>4242 4242 4242 4242</b>, a random three-digit CVC number, any expiration date in the future, and a random five-digit U.S. ZIP code.
-    </p>
+<div class="container d-flex justify-content-center" *ngIf="!isAnyItemsInCart">
+    <h3>There is no any items in cart. You can go to <a [routerLink]="'/printededition'">catalog</a> and choose some books</h3>
 </div>

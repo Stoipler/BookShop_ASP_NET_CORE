@@ -11,9 +11,9 @@ export class UserService {
     private http: HttpClient
   ) { }
   async getUser(id: number): Promise<UserProfileModel> {
-    return await this.http.get<UserProfileModel>(environment.apiUrl + '/api/user/getbyid/' + id).toPromise();
+    return await this.http.get<UserProfileModel>(environment.apiUrl + 'user/getbyid/' + id).toPromise();
   }
   updateUser(user: UserProfileModel) { 
-    return this.http.post(environment.apiUrl + '/api/user/update', user);
+    return this.http.post(environment.apiUrl + 'user/update', user);
   }
 }

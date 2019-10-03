@@ -17,7 +17,6 @@ export class PrintedEditionDetailsComponent implements OnInit {
   faCartPlus = faCartPlus;
   printedEdition: PrintedEditionModel = new PrintedEditionModel();
   quantity: number = 1;
-  orderAmount: number;
 
   constructor(private route: ActivatedRoute, private printedEditionService: PrintedEditionService) { }
 
@@ -33,14 +32,23 @@ export class PrintedEditionDetailsComponent implements OnInit {
     if (!cartItems) {
       cartItems = [];
     }
-    const cartItem:CartItemModel=new CartItemModel();
-    cartItem.printedEditionId=printedEdition.id;
-    cartItem.product=printedEdition.name;
-    cartItem.unitPrice=printedEdition.price;
-    cartItem.quantity=this.quantity;
-    cartItem.orderAmount=cartItem.quantity*cartItem.unitPrice;
-    cartItems.push(cartItem);
-    localStorage.setItem("cart", JSON.stringify(cartItems))
+    const cartItem: CartItemModel = new CartItemModel();
+    let isItemPresentInCart: boolean = false;
+    cartItem.printedEditionId = printedEdition.id;
+    cartItem.quantity = this.quantity;
+    cartItems.forEach((value: CartItemModel, index: number) => {
+      if (cartItem.printedEditionId === value.printedEditionId) {
+        cartItems[index] = cartItem;
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        isItemPresentInCart = true;
+        return;
+      }
+    })
+
+    if (!isItemPresentInCart) {
+      cartItems.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cartItems))
+    }
   }
 
 }

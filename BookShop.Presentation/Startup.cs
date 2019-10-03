@@ -3,13 +3,11 @@ using BookShop.BusinessLogic.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System;
-using System.IO;
 using System.Text;
 
 namespace BookShop.Presentation
@@ -30,6 +28,8 @@ namespace BookShop.Presentation
             services.AddMvc();
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+            services.AddTransient<CustomerService>();
+            services.AddTransient<ChargeService>();
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
@@ -64,6 +64,7 @@ namespace BookShop.Presentation
                 app.UseHsts();
             }
 
+            StripeConfiguration.ApiKey= Configuration.GetSection("Stripe")["SecretKey"];
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();

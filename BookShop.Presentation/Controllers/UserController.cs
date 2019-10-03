@@ -2,12 +2,12 @@
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
-{   
+{
     [Authorize]
+    [ApiController]
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {

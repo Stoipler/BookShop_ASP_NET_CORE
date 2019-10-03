@@ -1,13 +1,11 @@
 ﻿using BookShop.BusinessLogic.Models;
 using BookShop.BusinessLogic.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
-{ 
+{
+    [ApiController]
     [Route("api/[controller]/[action]")]
     public class PrintedEditionController : Controller
     {
