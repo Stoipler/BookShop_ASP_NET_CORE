@@ -1,5 +1,5 @@
 ﻿using BookShop.BusinessLogic.Common;
-using BookShop.BusinessLogic.Models.Account;
+using BookShop.BusinessLogic.Models.AccountModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

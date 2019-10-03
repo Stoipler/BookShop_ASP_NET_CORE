@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BookShop.BusinessLogic.Models.Account
+namespace BookShop.BusinessLogic.Models.AccountModels
 {
     public class SignUpResponseModel
     {

@@ -1,4 +1,5 @@
 ﻿using BookShop.BusinessLogic.Models;
+using BookShop.BusinessLogic.PrintedEditionModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

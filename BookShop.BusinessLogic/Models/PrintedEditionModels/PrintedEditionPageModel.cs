@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BookShop.BusinessLogic.Models
+namespace BookShop.BusinessLogic.PrintedEditionModels
 {
     public class PrintedEditionPageModel
     {

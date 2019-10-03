@@ -1,4 +1,4 @@
-﻿namespace BookShop.BusinessLogic.Models.Account
+﻿namespace BookShop.BusinessLogic.Models.AccountModels
 {
     public class ForgotPasswordResponseModel
     {

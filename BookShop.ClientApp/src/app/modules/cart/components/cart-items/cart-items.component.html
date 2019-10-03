@@ -11,8 +11,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of cartItems" class="table-secondary">
-                <th scope="row">{{item.product}}</th>
+            <tr *ngFor="let item of checkout.checkoutItemModels" class="table-secondary">
+                <th scope="row">{{item.printedEditionName}}</th>
                 <td>{{item.unitPrice}}</td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.orderAmount}}</td>
@@ -26,10 +26,10 @@
     </table>
     <div class="row d-flex justify-content-end">
         <div class="col-6 d-flex align-items-center justify-content-start">
-            <h4>Total price: {{totalPrice.toFixed(2)}}</h4>
+            <h4>Total price: {{checkout.totalPrice.toFixed(2)}}</h4>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-end">
-            <button class="btn btn-success" (click)="pay(totalPrice)">
+            <button class="btn btn-success" (click)="pay(checkout.totalPrice)">
                 Buy now
             </button>
         </div>
@@ -37,4 +37,12 @@
 </div>
 <div class="container d-flex justify-content-center" *ngIf="!isAnyItemsInCart">
     <h3>There is no any items in cart. You can go to <a [routerLink]="'/printededition'">catalog</a> and choose some books</h3>
+</div>
+<div>
+    <div class="btn btn-primary btn-block" (click)="addTestItems()">
+        Add test data to table
+    </div>
+    <div class="btn btn-danger btn-block" (click)="clearCart()">
+        Clear cart
+    </div>
 </div>

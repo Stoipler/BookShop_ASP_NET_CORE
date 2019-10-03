@@ -1,4 +1,4 @@
-﻿using BookShop.BusinessLogic.Models.Account;
+﻿using BookShop.BusinessLogic.Models.AccountModels;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 

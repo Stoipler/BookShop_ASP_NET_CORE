@@ -11,14 +11,14 @@ export class PrintedEditionService {
 
   constructor(private http: HttpClient) {
   }
-  
-  createPrintedEdition(printedEdition: PrintedEditionModel){
-    return this.http.post(environment.apiUrl+'printededition/post',printedEdition);
+
+  createPrintedEdition(printedEdition: PrintedEditionModel) {
+    return this.http.post(environment.apiUrl + 'PrintedEdition/Post', printedEdition);
   }
   get(searchParams?: SearchParams) {
-    return this.http.post(environment.apiUrl+'printededition/get',searchParams)
+    return this.http.post(environment.apiUrl + 'PrintedEdition/Get', searchParams)
   }
-  getById(id: number){
-    return this.http.get(environment.apiUrl+'printededition/getbyid/'+id);
+  getById(id: number) {
+    return this.http.get(environment.apiUrl + 'PrintedEdition/GetbyId/' + id);
   }
 }

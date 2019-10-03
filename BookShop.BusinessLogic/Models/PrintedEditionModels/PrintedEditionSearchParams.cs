@@ -1,6 +1,6 @@
 ﻿using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
-namespace BookShop.BusinessLogic.Models
+namespace BookShop.BusinessLogic.PrintedEditionModels
 {
     public class PrintedEditionSearchParams
     {

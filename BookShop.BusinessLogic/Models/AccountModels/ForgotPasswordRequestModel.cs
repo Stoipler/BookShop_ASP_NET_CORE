@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookShop.BusinessLogic.Models.Account
+namespace BookShop.BusinessLogic.Models.AccountModels
 {
     public class ForgotPasswordRequestModel
     {

@@ -1,4 +1,6 @@
-﻿using BookShop.BusinessLogic.Models;
+﻿using BookShop.BusinessLogic.AuthorModels;
+using BookShop.BusinessLogic.Models;
+using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

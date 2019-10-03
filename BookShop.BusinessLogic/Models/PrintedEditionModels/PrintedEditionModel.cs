@@ -1,9 +1,10 @@
-﻿using BookShop.DataAccess.Entities;
+﻿using BookShop.BusinessLogic.AuthorModels;
+using BookShop.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
-namespace BookShop.BusinessLogic.Models
+namespace BookShop.BusinessLogic.PrintedEditionModels
 {
     public class PrintedEditionModel
     {

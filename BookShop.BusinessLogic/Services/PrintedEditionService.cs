@@ -1,4 +1,5 @@
 ﻿using BookShop.BusinessLogic.Models;
+using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
-using PrintedEditionSearchParams = BookShop.BusinessLogic.Models.PrintedEditionSearchParams;
+using PrintedEditionSearchParams = BookShop.BusinessLogic.PrintedEditionModels.PrintedEditionSearchParams;
 using SearchParamsDA = BookShop.DataAccess.Models.PrintedEditionSearchParams;
 
 namespace BookShop.BusinessLogic.Services
@@ -32,7 +33,7 @@ namespace BookShop.BusinessLogic.Services
                     Type = model.Type,
                     Price = model.Price
                 };
-            PrintedEdition result= await _printedEditionRepository.CreateAsync(printedEdition);
+            PrintedEdition result = await _printedEditionRepository.CreateAsync(printedEdition);
             model.Id = result.Id;
             return model;
         }

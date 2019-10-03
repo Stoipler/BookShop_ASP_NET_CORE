@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PaymentDataModel } from 'src/app/models/paymentDataModel';
-import { CartItemModel } from 'src/app/models/cartItemModel';
+import { CartModel } from 'src/app/models/cartModel';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class OrderService {
   sendPaymentData(model: PaymentDataModel) {
     return this.http.post(environment.apiUrl + 'Order/SendPaymentData', model);
   }
-  getCartItems(items: CartItemModel[]) {
-    return this.http.post(environment.apiUrl + 'Order/GetOrderItems', items);
+  getCheckout(items: CartModel) {
+    return this.http.post(environment.apiUrl + 'Order/GetCheckout', items);
   }
 }

@@ -1,4 +1,4 @@
-﻿using BookShop.BusinessLogic.Models;
+﻿using BookShop.BusinessLogic.AuthorModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
@@ -17,7 +17,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task<IEnumerable<AuthorModel>> GetAsync(AuthorSearchParams authorSearchParams)
         {
-            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name , Page=authorSearchParams.Page, PageSize=authorSearchParams.PageSize};
+            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name, Page = authorSearchParams.Page, PageSize = authorSearchParams.PageSize };
             if (!(authorSearchParams.AuthorsList is null))
             {
                 authorSearchParamsDA.AuthorsList = new List<Author>();
@@ -37,7 +37,7 @@ namespace BookShop.BusinessLogic.Services
         public async Task CreateAsync(AuthorModel model)
         {
             Author author = new Author { Name = model.Name };
-             await _authorRepository.CreateAsync(author);
+            await _authorRepository.CreateAsync(author);
         }
         public async Task Update(AuthorModel model)
         {
@@ -55,7 +55,6 @@ namespace BookShop.BusinessLogic.Services
             Author author = await _authorRepository.GetByIdAsync(id);
             return new AuthorModel(author);
         }
-
         public async Task<AuthorPageModel> GetWithPaginationAsync(AuthorSearchParams authorSearchParams)
         {
             AuthorPageModel authorPageModel = new AuthorPageModel();

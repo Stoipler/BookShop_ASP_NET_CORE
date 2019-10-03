@@ -1,10 +1,9 @@
-﻿using BookShop.BusinessLogic.Models;
+﻿using BookShop.BusinessLogic.AuthorModels;
+using BookShop.BusinessLogic.Models;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BookShop.Presentation.Controllers
 {
@@ -18,7 +17,6 @@ namespace BookShop.Presentation.Controllers
             this._authorService = authorService;
         }
 
-        // GET: api/<controller>
         [HttpPost]
         public async Task<IEnumerable<AuthorModel>> Get([FromBody]AuthorSearchParams searchParams)
         {
@@ -37,7 +35,6 @@ namespace BookShop.Presentation.Controllers
             }
             return await _authorService.GetWithPaginationAsync(searchParams);
         }
-        // POST api/<controller>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AuthorModel model)
         {
@@ -49,8 +46,6 @@ namespace BookShop.Presentation.Controllers
             await _authorService.CreateAsync(model);
             return Ok();
         }
-
-        // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]AuthorModel model)
         {
@@ -61,8 +56,6 @@ namespace BookShop.Presentation.Controllers
             }
             return BadRequest(ModelState);
         }
-
-        // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BookShop.BusinessLogic.Models
+namespace BookShop.BusinessLogic.AuthorModels
 {
     public class AuthorSearchParams
     {

@@ -1,7 +1,7 @@
 ﻿using BookShop.DataAccess.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace BookShop.BusinessLogic.Models.Account
+namespace BookShop.BusinessLogic.Models.AccountModels
 {
     public class SignUpRequestModel
     {

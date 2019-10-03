@@ -1,5 +1,5 @@
 ﻿using BookShop.BusinessLogic.Common;
-using BookShop.BusinessLogic.Models.Account;
+using BookShop.BusinessLogic.Models.AccountModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;

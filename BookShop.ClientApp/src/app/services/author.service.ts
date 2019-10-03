@@ -9,24 +9,24 @@ import { AuthorPageModel } from 'src/app/models/authorPageModel';
 })
 export class AuthorService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
-  getAuthorsWithPagination(authorSearchParams: AuthorSearchParams):Promise<AuthorPageModel>{
-    return this.http.post<AuthorPageModel>(environment.apiUrl+'author/getwithpagination',authorSearchParams).toPromise();
+  getAuthorsWithPagination(authorSearchParams: AuthorSearchParams): Promise<AuthorPageModel> {
+    return this.http.post<AuthorPageModel>(environment.apiUrl + 'Author/GetWithPagination', authorSearchParams).toPromise();
   }
 
-  getAuthors(authorSearchParams: AuthorSearchParams){
-    return this.http.post(environment.apiUrl+'author/get',authorSearchParams);
+  getAuthors(authorSearchParams: AuthorSearchParams) {
+    return this.http.post(environment.apiUrl + 'Author/Get', authorSearchParams);
   }
 
-  createAuthor(author: AuthorModel){
-    return this.http.post(environment.apiUrl+'author/post',author);
-  } 
-  deleteAuthor(id: number){
-      return this.http.delete(environment.apiUrl + 'author/delete/' + id);
+  createAuthor(author: AuthorModel) {
+    return this.http.post(environment.apiUrl + 'Author/Post', author);
   }
-  updateAuthor(author: AuthorModel){
-    return this.http.put(environment.apiUrl + 'author/put/' + author.id, author);
+  deleteAuthor(id: number) {
+    return this.http.delete(environment.apiUrl + 'Author/Delete/' + id);
+  }
+  updateAuthor(author: AuthorModel) {
+    return this.http.put(environment.apiUrl + 'Author/Put/' + author.id, author);
   }
 }
