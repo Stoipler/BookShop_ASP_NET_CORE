@@ -21,7 +21,6 @@ namespace BookShop.BusinessLogic.Services
 
         public Task CreateOrderAsync(PaymentDataRequestModel requestModel)
         {
-            Order order= new Order { }
             throw new System.NotImplementedException();
         }
 
