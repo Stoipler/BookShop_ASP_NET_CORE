@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Folder Include="Models\UserModels\" />
+    <Folder Include="Models\_etc\Payments\" />
   </ItemGroup>
 
 </Project>

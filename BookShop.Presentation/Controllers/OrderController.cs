@@ -23,23 +23,29 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost(Name = "SendPaymentData")]
-        public async Task<IActionResult> SendPaymentData([FromBody]PaymentDataModel model)
+        public async Task<IActionResult> SendPaymentData([FromBody]PaymentDataRequestModel requestModel)
         {
             if (ModelState.IsValid)
             {
                 Customer customer = await _customerService.CreateAsync(new CustomerCreateOptions
                 {
-                    Email = model.StripeEmail,
-                    Source = model.StripeToken
+                    Email = requestModel.StripeEmail,
+                    Source = requestModel.StripeToken
                 });
-                var charge = await _chargeService.CreateAsync(new ChargeCreateOptions
+                decimal totalPrice = await _orderService.GetTotalPriceAsync(requestModel.CartItemModels);
+                Charge charge = await _chargeService.CreateAsync(new ChargeCreateOptions
                 {
-                    Amount = 500,
-                    Description = "Sample Charge",
+                    Amount = ConvertToStripeAmount(totalPrice),
+                    Description = string.Format("Charge for {0} user", requestModel.StripeEmail),
                     Currency = "usd",
                     CustomerId = customer.Id
                 });
-                return Ok();
+                if (charge.StripeResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    await _orderService.CreateOrderAsync(requestModel);
+                    return Ok();
+                }
+                return BadRequest();
             }
             return BadRequest(ModelState);
         }
@@ -47,6 +53,11 @@ namespace BookShop.Presentation.Controllers
         public async Task<CartResponseModel> GetCheckout([FromBody]CartRequestModel requestModel)
         {
             return await _orderService.GetCheckoutAsync(requestModel);
+        }
+
+        private long ConvertToStripeAmount(decimal price)
+        {
+            return (long)(price * 100);
         }
     }
 }

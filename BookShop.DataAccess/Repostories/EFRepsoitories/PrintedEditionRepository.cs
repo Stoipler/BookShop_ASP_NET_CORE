@@ -94,5 +94,9 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             return await printedEditions.CountAsync();
         }
 
+        public async Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds)
+        {
+            return await _dbSet.Where(p => printedEditionIds.Contains(p.Id)).ToListAsync();
+        }
     }
 }

@@ -28,7 +28,6 @@ export class CartItemsComponent implements OnInit {
   getCartItemsList() {
     const cartItems: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
     if (!cartItems) {
-
       this.isAnyItemsInCart = false;
       return;
     }
@@ -37,6 +36,7 @@ export class CartItemsComponent implements OnInit {
     cartModel.cartItemModels = cartItems;
     this.orderService.getCheckout(cartModel).subscribe((data: CartModel) => {
       this.checkout = data;
+      this.checkout.cartItemModels = cartItems;
     })
   }
 
@@ -53,15 +53,20 @@ export class CartItemsComponent implements OnInit {
 
 
   pay(amount) {
+    const currentUser: { id: number } = JSON.parse(localStorage.getItem("currentUser"));
     const handler = (<any>window).StripeCheckout.configure({
       key: environment.publishableKey,
       locale: 'auto',
       token: (token: { id: string, email: string }) => {
         const paymentData: PaymentDataModel = {
+          userId: currentUser.id,
           stripeEmail: token.email,
           stripeToken: token.id,
+          cartItemModels: this.checkout.cartItemModels
         };
-        this.orderService.sendPaymentData(paymentData).subscribe();
+        this.orderService.sendPaymentData(paymentData).subscribe((success) => {
+          this.clearCart();
+        });
       }
     });
 

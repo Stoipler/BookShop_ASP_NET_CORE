@@ -38,11 +38,11 @@
 <div class="container d-flex justify-content-center" *ngIf="!isAnyItemsInCart">
     <h3>There is no any items in cart. You can go to <a [routerLink]="'/printededition'">catalog</a> and choose some books</h3>
 </div>
-<div>
-    <div class="btn btn-primary btn-block" (click)="addTestItems()">
+<div class="container btn-group btn-block justify-content-center d-flex">
+    <div class="btn btn-primary " (click)="addTestItems()">
         Add test data to table
     </div>
-    <div class="btn btn-danger btn-block" (click)="clearCart()">
+    <div class="btn btn-danger " (click)="clearCart()">
         Clear cart
     </div>
 </div>

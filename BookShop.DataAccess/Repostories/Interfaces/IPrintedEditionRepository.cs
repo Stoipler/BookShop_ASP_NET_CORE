@@ -10,5 +10,6 @@ namespace BookShop.DataAccess.Repostories.Interfaces
     {
         Task<IEnumerable<PrintedEdition>> GetSortedAsync(PrintedEditionSearchParams searchParams);
         Task<int> GetCollectionSizeAsync(PrintedEditionSearchParams searchParams);
+        Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds);
     }
 }
