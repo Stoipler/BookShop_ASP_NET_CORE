@@ -11,12 +11,10 @@ namespace BookShop.BusinessLogic.AuthorModels
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public List<PrintedEditionModel> PrintedEditionModels { get; set; }
-        public AuthorModel(Author author)
+        internal AuthorModel(Author author)
         {
             Id = author.Id;
             Name = author.Name;
-            PrintedEditionModels = author.AuthorInBooks.Select(item => new PrintedEditionModel(item.PrintedEdition)).ToList();
         }
         public AuthorModel()
         {

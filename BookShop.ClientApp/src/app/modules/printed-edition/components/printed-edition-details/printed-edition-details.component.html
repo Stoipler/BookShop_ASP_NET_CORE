@@ -7,7 +7,12 @@
             <div class="card" style="height: 100%">
                 <div class="card-header">
                     <h3>{{printedEdition.name}}</h3>
-                    <p>By some author</p>
+                    <p>By :</p>
+                    <p *ngFor="let author of printedEdition.authorModels">
+                        <strong>
+                        {{author.name}}
+                    </strong>
+                    </p>
                 </div>
                 <div class="card-body align-items-center justify-content-end">
                     <div class="form-group">

@@ -1,19 +1,14 @@
-﻿using BookShop.BusinessLogic.Models;
-using BookShop.BusinessLogic.PrintedEditionModels;
-using System.Collections.Generic;
+﻿using BookShop.BusinessLogic.PrintedEditionModels;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces
 {
     public interface IPrintedEditionService
     {
-        Task<PrintedEditionPageModel> GetSortedAsync(PrintedEditionSearchParams searchParams);
+        Task<PrintedEditionPageModel> GetAsync(PrintedEditionSearchParams searchParams);
         Task<PrintedEditionModel> CreateAsync(PrintedEditionModel model);
         Task Update(PrintedEditionModel model);
         Task Remove(PrintedEditionModel model);
-        Task<IEnumerable<PrintedEditionModel>> GetAsync();
         Task<PrintedEditionModel> GetByIdAsync(int id);
-        Task AddAuthorToBookAsync(AuthorInBookModel model);
-        Task RemoveAuthorFromBookAsync(AuthorInBookModel model);
     }
 }

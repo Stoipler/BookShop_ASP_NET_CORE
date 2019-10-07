@@ -33,12 +33,14 @@ namespace BookShop.BusinessLogic.Services
             foreach (CartItemModel cartItem in requestModel.CartItemModels)
             {
                 PrintedEdition printedEdition = printedEditions.Where(item => item.Id == cartItem.PrintedEditionId).FirstOrDefault();
-                CheckoutItemModel checkoutItem = new CheckoutItemModel();
-                checkoutItem.PrintedEditionId = printedEdition.Id;
-                checkoutItem.PrintedEditionName = printedEdition.Name;
-                checkoutItem.Quantity = cartItem.Quantity;
-                checkoutItem.UnitPrice = printedEdition.Price;
-                checkoutItem.OrderAmount = printedEdition.Price * cartItem.Quantity;
+                CheckoutItemModel checkoutItem = new CheckoutItemModel
+                {
+                    PrintedEditionId = printedEdition.Id,
+                    PrintedEditionName = printedEdition.Name,
+                    Quantity = cartItem.Quantity,
+                    UnitPrice = printedEdition.Price,
+                    OrderAmount = printedEdition.Price * cartItem.Quantity
+                };
                 totalPrice += checkoutItem.OrderAmount;
                 responseModel.CheckoutItemModels.Add(checkoutItem);
             }

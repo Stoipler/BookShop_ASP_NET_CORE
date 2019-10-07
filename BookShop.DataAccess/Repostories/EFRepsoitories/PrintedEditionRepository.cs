@@ -1,6 +1,7 @@
 ﻿using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Models;
+using BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects;
 using BookShop.DataAccess.Repostories.EFRepsoitories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -18,82 +19,66 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
         {
         }
 
-        public override async Task<IEnumerable<PrintedEdition>> GetAsync()
+        public async Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(int id)
         {
-            IQueryable<PrintedEdition> printedEditions = _dbSet;
-            return await printedEditions.AsNoTracking().ToListAsync();
-        }
-
-        public override async Task<PrintedEdition> GetByIdAsync(int id)
-        {
-            IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.Author);
-            PrintedEdition printedEdition = await printedEditions.Where(p => (p.Id == id)).FirstAsync();
+            PrintedEditionWithNestedObjects printedEdition = await _dbSet.Where(p => (p.Id == id)).GroupJoin(_context.AuthorInBooks.Include(item => item.Author),
+               outerKeySelector => outerKeySelector.Id,
+               innerKeySelector => innerKeySelector.PrintedEditionId,
+               (product, authorInBooks) => new PrintedEditionWithNestedObjects
+               {
+                   PrintedEdition = product,
+                   AuthorInBooks = authorInBooks.ToList()
+               }).FirstAsync();
             return printedEdition;
         }
-        public async Task<IEnumerable<PrintedEdition>> GetSortedAsync(PrintedEditionSearchParams searchParams)
+        public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionSearchParams searchParams)
         {
-            IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.Author);
-            printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));
+            IQueryable<PrintedEditionWithNestedObjects> printedEditions = _dbSet.GroupJoin(_context.AuthorInBooks.Include(item => item.Author),
+               outerKeySelector => outerKeySelector.Id,
+               innerKeySelector => innerKeySelector.PrintedEditionId,
+               (printedEdition, authorInBooks) => new PrintedEditionWithNestedObjects
+               {
+                   PrintedEdition = printedEdition,
+                   AuthorInBooks = authorInBooks.ToList()
+               });
+            printedEditions = printedEditions.Where(item => (item.PrintedEdition.Price >= searchParams.PriceFrom && item.PrintedEdition.Price <= searchParams.PriceTo));
+
             if (!string.IsNullOrWhiteSpace(searchParams.KeyWord))
             {
-                printedEditions = printedEditions.Where(p => (p.Name.Contains(searchParams.KeyWord) || p.Description.Contains(searchParams.KeyWord)));
+                printedEditions = printedEditions.Where(item => (item.PrintedEdition.Name.Contains(searchParams.KeyWord) || item.PrintedEdition.Description.Contains(searchParams.KeyWord)));
             }
             if (searchParams.PrintedEditionType != 0)
             {
-                printedEditions = printedEditions.Where(p => p.Type == searchParams.PrintedEditionType);
+                printedEditions = printedEditions.Where(item => item.PrintedEdition.Type == searchParams.PrintedEditionType);
             }
-            switch (searchParams.SortCriteria)
-            {
-                case SortCriteria.PriceAsc:
-                    printedEditions = printedEditions.OrderBy(s => s.Price);
-                    break;
-                case SortCriteria.PriceDesc:
-                    printedEditions = printedEditions.OrderByDescending(s => s.Price);
-                    break;
-                case SortCriteria.CurrencyAsc:
-                    printedEditions = printedEditions.OrderBy(s => s.Currency);
-                    break;
-                case SortCriteria.CurrencyDesc:
-                    printedEditions = printedEditions.OrderByDescending(s => s.Currency);
-                    break;
-                default:
-                    printedEditions = printedEditions.OrderBy(s => s.Name);
-                    break;
-            }
-            int count = await printedEditions.CountAsync();
-            printedEditions = printedEditions.Skip((searchParams.Page - 1) * searchParams.PageSize).Take(searchParams.PageSize);
-            return await printedEditions.AsNoTracking().ToListAsync();
-        }
-        public async Task<int> GetCollectionSizeAsync(PrintedEditionSearchParams searchParams)
-        {
-            IQueryable<PrintedEdition> printedEditions = _dbSet.Include(x => x.AuthorInBooks);
-            printedEditions = printedEditions.Where(p => (p.Price >= searchParams.PriceFrom && p.Price <= searchParams.PriceTo));
-            if (searchParams.PrintedEditionType != 0)
-            {
-                printedEditions = printedEditions.Where(p => p.Type == searchParams.PrintedEditionType);
-            }
-            switch (searchParams.SortCriteria)
-            {
-                case SortCriteria.PriceAsc:
-                    printedEditions = printedEditions.OrderBy(s => s.Price);
-                    break;
-                case SortCriteria.PriceDesc:
-                    printedEditions = printedEditions.OrderByDescending(s => s.Price);
-                    break;
-                case SortCriteria.CurrencyAsc:
-                    printedEditions = printedEditions.OrderBy(s => s.Currency);
-                    break;
-                case SortCriteria.CurrencyDesc:
-                    printedEditions = printedEditions.OrderByDescending(s => s.Currency);
-                    break;
-                default:
-                    printedEditions = printedEditions.OrderBy(s => s.Name);
-                    break;
-            }
-            int count = await printedEditions.CountAsync();
-            return await printedEditions.CountAsync();
-        }
 
+            if (searchParams.SortCriteria == SortCriteria.PriceAsc)
+            {
+                printedEditions = printedEditions.OrderBy(item => item.PrintedEdition.Price);
+            }
+            if (searchParams.SortCriteria == SortCriteria.PriceDesc)
+            {
+                printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.Price);
+            }
+            if (searchParams.SortCriteria == SortCriteria.CurrencyAsc)
+            {
+                printedEditions = printedEditions.OrderBy(item => item.PrintedEdition.Currency);
+            }
+            if (searchParams.SortCriteria == SortCriteria.CurrencyDesc)
+            {
+                printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.Currency);
+            }
+            if (searchParams.SortCriteria == SortCriteria.None)
+            {
+                printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.CreationDate);
+            }
+
+            int count = await printedEditions.CountAsync();
+            int countToSkip = (--searchParams.Page) * searchParams.PageSize;
+            printedEditions = printedEditions.Skip(countToSkip).Take(searchParams.PageSize);
+            List<PrintedEditionWithNestedObjects> result = await printedEditions.AsNoTracking().ToListAsync();
+            return (result, count);
+        }
         public async Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds)
         {
             return await _dbSet.Where(p => printedEditionIds.Contains(p.Id)).ToListAsync();

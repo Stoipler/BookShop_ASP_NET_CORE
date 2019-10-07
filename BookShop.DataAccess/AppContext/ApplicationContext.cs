@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.DataAccess.AppContext
 {
@@ -36,12 +35,9 @@ namespace BookShop.DataAccess.AppContext
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AuthorInBook>()
-                .HasOne(e => e.Author)
-                .WithMany(p => p.AuthorInBooks);
+                .HasOne(e => e.Author);
             modelBuilder.Entity<AuthorInBook>()
-               .HasOne(e => e.PrintedEdition)
-               .WithMany(p => p.AuthorInBooks)
-               .IsRequired(true);
+               .HasOne(e => e.PrintedEdition);
         }
     }
 }

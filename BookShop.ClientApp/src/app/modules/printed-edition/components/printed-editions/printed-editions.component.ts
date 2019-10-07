@@ -29,7 +29,6 @@ export class PrintedEditionsComponent implements OnInit {
   constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) { }
 
   ngOnInit() {
-
     this.loadPrintedEditions();
   }
   sortingKeys(): Array<string> {
@@ -56,7 +55,7 @@ export class PrintedEditionsComponent implements OnInit {
     this.printedEditionService.get(this.searchParams)
       .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
-        this.currentPage = data.currentPage;
+        // this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;
         this.count = data.count;
       });

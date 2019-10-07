@@ -127,7 +127,7 @@ export class ProductManagementComponent implements OnInit {
     this.productManagementService.get(this.searchParams)
       .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
-        this.currentPage = data.currentPage;
+        // this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;
         this.count = data.count;
       });

@@ -21,7 +21,6 @@ export class CartItemsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.paymentHelper.loadStripe();
     this.getCartItemsList();
   }
 
@@ -53,6 +52,7 @@ export class CartItemsComponent implements OnInit {
 
 
   pay(amount) {
+    this.paymentHelper.loadStripe();
     const currentUser: { id: number } = JSON.parse(localStorage.getItem("currentUser"));
     const handler = (<any>window).StripeCheckout.configure({
       key: environment.publishableKey,

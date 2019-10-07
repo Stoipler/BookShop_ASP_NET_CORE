@@ -19,7 +19,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
 
         public async Task<int> GetCount(AuthorSearchParams authorSearchParams)
         {
-            IQueryable<Author> authors = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.PrintedEdition);
+            IQueryable<Author> authors = _dbSet;
             if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
             {
                 authors = authors.Where(a => a.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
@@ -34,7 +34,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
 
         public async Task<IEnumerable<Author>> GetWithParamsAsync(AuthorSearchParams authorSearchParams)
         {
-            IQueryable<Author> authors = _dbSet.Include(x => x.AuthorInBooks).ThenInclude(i => i.PrintedEdition);
+            IQueryable<Author> authors = _dbSet;
             if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
             {
                 authors = authors.Where(a => a.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));

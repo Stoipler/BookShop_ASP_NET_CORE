@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.Interfaces
 {
-    public interface IAuthorInBookRepository:IGenericRepository<AuthorInBook>
+    public interface IAuthorInBookRepository : IGenericRepository<AuthorInBook>
     {
-        Task AddRange(List<AuthorInBook> authorInBooks);
-        Task RemoveRange(List<AuthorInBook> authorInBooks);
+        Task AddRangeAsync(List<AuthorInBook> authorInBooks);
+        Task RemoveRangeAsync(List<AuthorInBook> listToRemove);
     }
 }

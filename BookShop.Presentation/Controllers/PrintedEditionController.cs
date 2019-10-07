@@ -16,11 +16,12 @@ namespace BookShop.Presentation.Controllers
         {
             _printedEditionService = printedEditionService;
         }
-        
+
         [HttpPost]
         public async Task<PrintedEditionPageModel> Get([FromBody]PrintedEditionSearchParams searchParams)
         {
-            return await _printedEditionService.GetSortedAsync(searchParams);
+            PrintedEditionPageModel result = await _printedEditionService.GetAsync(searchParams);
+            return result;
         }
 
 
@@ -28,13 +29,6 @@ namespace BookShop.Presentation.Controllers
         public async Task Post([FromBody]PrintedEditionModel model)
         {
             model = await _printedEditionService.CreateAsync(model);
-            if (!(model.AuthorModels is null))
-            {
-                foreach (AuthorModel author in model.AuthorModels)
-                {
-                    await _printedEditionService.AddAuthorToBookAsync(new AuthorInBookModel { AuthorId = author.Id, PrintedEditionId = model.Id });
-                }
-            }
         }
 
         [HttpGet("{id}")]
