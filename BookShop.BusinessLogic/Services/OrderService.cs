@@ -3,6 +3,8 @@ using BookShop.BusinessLogic.Models.Payments;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,17 +15,34 @@ namespace BookShop.BusinessLogic.Services
     {
         private readonly IPrintedEditionRepository _printedEditionRepository;
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IPrintedEditionRepository printedEditionRepository, IOrderRepository orderRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public OrderService(IPrintedEditionRepository printedEditionRepository,
+            IOrderRepository orderRepository,
+            IUserRepository userRepository,
+            IHttpContextAccessor httpContextAccessor,
+            UserManager<ApplicationUser> userManager)
         {
             _printedEditionRepository = printedEditionRepository;
             _orderRepository = orderRepository;
+            _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
-        public Task CreateOrderAsync(PaymentDataRequestModel requestModel)
+        public async Task CreateOrderAsync(PaymentDataRequestModel requestModel)
         {
+            string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
+            ApplicationUser user = await _userManager.FindByNameAsync(userName);
+            var description= requestModel.CartItemModels.Select(item => item.
+            //Order order = new Order
+            //{
+            //    Description=
+            //};
+            ;
             throw new System.NotImplementedException();
         }
-
         public async Task<CartResponseModel> GetCheckoutAsync(CartRequestModel requestModel)
         {
             CartResponseModel responseModel = new CartResponseModel();
@@ -47,7 +66,6 @@ namespace BookShop.BusinessLogic.Services
             responseModel.TotalPrice = totalPrice;
             return responseModel;
         }
-
         public async Task<decimal> GetTotalPriceAsync(List<CartItemModel> cartItemModels)
         {
             decimal totalPrice = 0;

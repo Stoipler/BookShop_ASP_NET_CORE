@@ -1,5 +1,4 @@
 ﻿using BookShop.BusinessLogic.AuthorModels;
-using BookShop.BusinessLogic.Models;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,13 +17,14 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IEnumerable<AuthorModel>> Get([FromBody]AuthorSearchParams searchParams)
+        public async Task<List<AuthorModel>> Get([FromBody]AuthorSearchParams searchParams)
         {
             if (!string.IsNullOrWhiteSpace(searchParams.Name))
             {
                 searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
             }
-            return await _authorService.GetAsync(searchParams);
+            List<AuthorModel> result = await _authorService.GetAsync(searchParams);
+            return result;
         }
         [HttpPost]
         public async Task<AuthorPageModel> GetWithPagination([FromBody]AuthorSearchParams searchParams)
@@ -33,7 +33,8 @@ namespace BookShop.Presentation.Controllers
             {
                 searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
             }
-            return await _authorService.GetWithPaginationAsync(searchParams);
+            AuthorPageModel result = await _authorService.GetWithPaginationAsync(searchParams);
+            return result;
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AuthorModel model)
@@ -64,7 +65,8 @@ namespace BookShop.Presentation.Controllers
 
         private string RemoveWhiteSpacesFromStart(string input)
         {
-            if(input.IndexOf(' ')==0) {
+            if (input.IndexOf(' ') == 0)
+            {
                 return RemoveWhiteSpacesFromStart(input.TrimStart());
             }
             return input;

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookShop.DataAccess.AppContext;
+﻿using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Models;
+using BookShop.DataAccess.ObjectModels.AuthorWithNestedObjects;
 using BookShop.DataAccess.Repostories.EFRepsoitories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories
 {
@@ -17,39 +18,34 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
         {
         }
 
-        public async Task<int> GetCount(AuthorSearchParams authorSearchParams)
+        public async Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorSearchParams authorSearchParams)
         {
-            IQueryable<Author> authors = _dbSet;
+            IQueryable<AuthorWithNestedObjects> authors = _dbSet.GroupJoin(_context.AuthorInBooks.Include(item => item.PrintedEdition),
+                outerKeySelector => outerKeySelector.Id,
+              innerKeySelector => innerKeySelector.AuthorId,
+              (author, authorInBooks) => new AuthorWithNestedObjects
+              {
+                  Author = author,
+                  AuthorInBooks = authorInBooks.ToList()
+              });
             if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
             {
-                authors = authors.Where(a => a.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
+                authors = authors.Where(item => item.Author.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
             }
-            if (authorSearchParams.AuthorsList != null)
+            if (!(authorSearchParams.AuthorsList is null))
             {
                 IEnumerable<int> authorsToDelete = authorSearchParams.AuthorsList.Select(author => author.Id);
-                authors = authors.Where(a => !authorsToDelete.Contains(a.Id));
+                authors = authors.Where(item => !authorsToDelete.Contains(item.Author.Id));
             }
-            return await authors.CountAsync();
-        }
-
-        public async Task<IEnumerable<Author>> GetWithParamsAsync(AuthorSearchParams authorSearchParams)
-        {
-            IQueryable<Author> authors = _dbSet;
-            if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
-            {
-                authors = authors.Where(a => a.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
-            }
-            if (authorSearchParams.AuthorsList != null)
-            {
-                IEnumerable<int> authorsToDelete = authorSearchParams.AuthorsList.Select(author => author.Id);
-                authors = authors.Where(a => !authorsToDelete.Contains(a.Id));
-            }
+            int count = 0;
             if (authorSearchParams.PageSize != 0 && authorSearchParams.Page != 0)
             {
-                int count = await authors.CountAsync();
-                authors = authors.Skip((authorSearchParams.Page - 1) * authorSearchParams.PageSize).Take(authorSearchParams.PageSize);
+                count = await authors.CountAsync();
+                int skipCount = (--authorSearchParams.Page) * authorSearchParams.PageSize;
+                authors = authors.Skip(skipCount).Take(authorSearchParams.PageSize);
             }
-            return await authors.AsNoTracking().ToListAsync();
+            List<AuthorWithNestedObjects> result = await authors.AsNoTracking().ToListAsync();
+            return (result, count);
         }
 
     }

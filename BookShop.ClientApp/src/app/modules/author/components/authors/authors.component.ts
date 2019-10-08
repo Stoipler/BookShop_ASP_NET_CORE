@@ -31,7 +31,6 @@ export class AuthorsComponent implements OnInit {
     this.searchParams.page = this.currentPage;
     const data:AuthorPageModel=await this.authorService.getAuthorsWithPagination(this.searchParams);
         this.authors = data.authorModels;
-        this.currentPage = data.currentPage;
         this.pageSize = data.pageSize;
         this.count = data.count;
   }

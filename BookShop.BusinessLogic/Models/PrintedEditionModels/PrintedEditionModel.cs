@@ -29,15 +29,8 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             Type = entity.Type;
         }
 
-        public PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition)
+        public PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition):this(printedEdition.PrintedEdition)
         {
-            Id = printedEdition.PrintedEdition.Id;
-            Name = printedEdition.PrintedEdition.Name;
-            Description = printedEdition.PrintedEdition.Description;
-            Price = printedEdition.PrintedEdition.Price;
-            IsRemoved = printedEdition.PrintedEdition.IsRemoved;
-            Currency = printedEdition.PrintedEdition.Currency;
-            Type = printedEdition.PrintedEdition.Type;
             if(!(printedEdition.AuthorInBooks is null))
             {
                 AuthorModels = printedEdition.AuthorInBooks.Select(item => new AuthorModel(item.Author)).ToList();

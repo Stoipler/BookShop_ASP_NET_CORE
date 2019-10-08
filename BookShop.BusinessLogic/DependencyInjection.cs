@@ -5,6 +5,7 @@ using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.EFRepsoitories;
 using BookShop.DataAccess.Repostories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
             services.Configure<IdentityOptions>(options =>
