@@ -14,6 +14,7 @@ import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
+import { OrdersComponent } from './user/components/orders/orders.component';
 
 class MyErrorHandler implements ErrorHandler{
   handleError(error){
@@ -27,7 +28,8 @@ class MyErrorHandler implements ErrorHandler{
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    ToastContainerComponent
+    ToastContainerComponent,
+    OrdersComponent
   ],
   imports: [
     AccountModule,

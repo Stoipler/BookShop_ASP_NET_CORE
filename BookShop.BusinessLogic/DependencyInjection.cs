@@ -49,8 +49,12 @@ namespace BookShop.BusinessLogic
                 options.Lockout.AllowedForNewUsers = true;
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
             });
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            Initialization.IdentityInitalization.Seed(serviceProvider);
+
         }
     }
 }

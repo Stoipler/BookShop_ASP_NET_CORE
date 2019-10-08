@@ -25,6 +25,7 @@ namespace BookShop.DataAccess.AppContext
                 _connectionString = sqlServerOptionsExtension.ConnectionString;
             }
             Database.EnsureCreated();
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,6 +39,7 @@ namespace BookShop.DataAccess.AppContext
                 .HasOne(e => e.Author);
             modelBuilder.Entity<AuthorInBook>()
                .HasOne(e => e.PrintedEdition);
+            Initialization.InitialData.Seed(modelBuilder);
         }
     }
 }

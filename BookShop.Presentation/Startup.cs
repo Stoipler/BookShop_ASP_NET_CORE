@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Stripe;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookShop.Presentation
 {
@@ -32,6 +33,7 @@ namespace BookShop.Presentation
             services.AddTransient<ChargeService>();
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            
 
             services.AddAuthentication(x =>
             {

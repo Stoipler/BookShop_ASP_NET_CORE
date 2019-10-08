@@ -24,7 +24,7 @@ namespace BookShop.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 string result = await _orderService.CreateOrderAsync(requestModel);
-                if (string.IsNullOrWhiteSpace(result))
+                if (!string.IsNullOrWhiteSpace(result))
                 {
                     ModelState.AddModelError(string.Empty, result);
                     return BadRequest(ModelState);

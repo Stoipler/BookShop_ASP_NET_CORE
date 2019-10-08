@@ -83,6 +83,7 @@ namespace BookShop.BusinessLogic.Services
                 Description = description,
                 OrderAmount = totalPrice,
             };
+            await _orderRepository.CreateAsync(order);
             return string.Empty;
         }
         public async Task<CartResponseModel> GetCheckoutAsync(CartRequestModel requestModel)
