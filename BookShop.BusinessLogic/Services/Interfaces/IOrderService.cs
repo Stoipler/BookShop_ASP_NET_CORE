@@ -8,7 +8,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
     public interface IOrderService
     {
         Task<CartResponseModel> GetCheckoutAsync(CartRequestModel requestModel);
-        Task<decimal> GetTotalPriceAsync(List<CartItemModel> cartItemModels);
-        Task CreateOrderAsync(PaymentDataRequestModel requestModel);
+        Task<string> CreateOrderAsync(PaymentDataRequestModel requestModel);
+        Task<UserOrdersModel> GetOrdersForUser();
     }
 }

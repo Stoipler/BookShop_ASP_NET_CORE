@@ -1,51 +1,35 @@
 ﻿using BookShop.BusinessLogic.Models.OrderModels;
 using BookShop.BusinessLogic.Models.Payments;
 using BookShop.BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Stripe;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class OrderController : Controller
     {
-        private readonly CustomerService _customerService;
-        private readonly ChargeService _chargeService;
         private readonly IOrderService _orderService;
 
-        public OrderController(CustomerService customerService, ChargeService chargeService, IOrderService orderService)
+        public OrderController(IOrderService orderService)
         {
-            _customerService = customerService;
-            _chargeService = chargeService;
             _orderService = orderService;
         }
-
         [HttpPost(Name = "SendPaymentData")]
         public async Task<IActionResult> SendPaymentData([FromBody]PaymentDataRequestModel requestModel)
         {
             if (ModelState.IsValid)
             {
-                Customer customer = await _customerService.CreateAsync(new CustomerCreateOptions
+                string result = await _orderService.CreateOrderAsync(requestModel);
+                if (string.IsNullOrWhiteSpace(result))
                 {
-                    Email = requestModel.StripeEmail,
-                    Source = requestModel.StripeToken
-                });
-                decimal totalPrice = await _orderService.GetTotalPriceAsync(requestModel.CartItemModels);
-                Charge charge = await _chargeService.CreateAsync(new ChargeCreateOptions
-                {
-                    Amount = ConvertToStripeAmount(totalPrice),
-                    Description = string.Format("Charge for {0} user", requestModel.StripeEmail),
-                    Currency = "usd",
-                    CustomerId = customer.Id
-                });
-                if (charge.StripeResponse.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    await _orderService.CreateOrderAsync(requestModel);
-                    return Ok();
+                    ModelState.AddModelError(string.Empty, result);
+                    return BadRequest(ModelState);
                 }
-                return BadRequest();
+                return Ok();
             }
             return BadRequest(ModelState);
         }
@@ -54,10 +38,11 @@ namespace BookShop.Presentation.Controllers
         {
             return await _orderService.GetCheckoutAsync(requestModel);
         }
-
-        private long ConvertToStripeAmount(decimal price)
+        [HttpGet(Name ="GetOrdersForUser")]
+        public async Task<UserOrdersModel> GetOrdersForUser()
         {
-            return (long)(price * 100);
+            UserOrdersModel result = await _orderService.GetOrdersForUser();
+            return result;
         }
     }
 }

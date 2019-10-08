@@ -6,8 +6,6 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
 {
     public class PrintedEditionPageModel
     {
-        private List<PrintedEditionWithNestedObjects> printedEditions;
-
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int Count { get; set; }

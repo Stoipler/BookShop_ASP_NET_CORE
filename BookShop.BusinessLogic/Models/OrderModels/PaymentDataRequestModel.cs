@@ -7,8 +7,6 @@ namespace BookShop.BusinessLogic.Models.Payments
     public class PaymentDataRequestModel
     {
         [Required]
-        public int UserId { get; set; }
-        [Required]
         public string StripeEmail { get; set; }
         [Required]
         public string StripeToken { get; set; }
