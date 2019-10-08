@@ -18,4 +18,7 @@ export class OrderService {
   getCheckout(items: CartModel) {
     return this.http.post(environment.apiUrl + 'Order/GetCheckout', items);
   }
+  getOrdersForUser() {
+    return this.http.get(environment.apiUrl + 'Order/GetOrdersForUser');
+  }
 }

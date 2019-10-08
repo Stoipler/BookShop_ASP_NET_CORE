@@ -1,0 +1,18 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Order time</th>
+            <th scope="col">Description</th>
+            <th scope="col">Order Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary" *ngFor="let order of userOrders.orderModels">
+            <th scope="row">{{order.id}}</th>
+            <td>{{order.creationDate | date: 'medium' }}</td>
+            <td>{{order.description}}</td>
+            <td>{{order.orderAmount.toFixed(2)}}</td>
+        </tr>
+    </tbody>
+</table>

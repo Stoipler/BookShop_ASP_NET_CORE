@@ -6,10 +6,11 @@ import { ProfileComponent } from 'src/app/modules/user/profile/profile.component
 import { UserService } from 'src/app/services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileComponent, OrdersComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

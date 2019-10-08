@@ -41,6 +41,7 @@
                         </div>
                         <div *ngIf="isUserLogedOn()">
                             <a class="dropdown-item" [routerLink]="'user/profile'">My profile</a>
+                            <a class="dropdown-item" [routerLink]="'user/orders'">My orders</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item btn" *ngIf="isUserLogedOn()" (click)="logout()">Logout</a>
                         </div>
