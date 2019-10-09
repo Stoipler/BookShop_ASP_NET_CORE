@@ -4,18 +4,18 @@ using System.Linq;
 
 namespace BookShop.BusinessLogic.PrintedEditionModels
 {
-    public class PrintedEditionPageModel
+    public class PrintedEditionResponseModel
     {
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int Count { get; set; }
         public List<PrintedEditionModel> PrintedEditionModels { get; set; }
-        public PrintedEditionPageModel()
+        public PrintedEditionResponseModel()
         {
             PrintedEditionModels = new List<PrintedEditionModel>();
         }
 
-        public PrintedEditionPageModel(int count, int page, int pageSize, List<PrintedEditionWithNestedObjects> printedEditions)
+        public PrintedEditionResponseModel(int count, int page, int pageSize, List<PrintedEditionWithNestedObjects> printedEditions)
         {
             CurrentPage = page;
             Count = count;

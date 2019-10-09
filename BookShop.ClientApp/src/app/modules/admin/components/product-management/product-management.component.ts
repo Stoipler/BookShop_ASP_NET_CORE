@@ -14,7 +14,7 @@ import { AuthorModel } from 'src/app/models/authorModel';
 import { AuthorService } from 'src/app/services/author.service';
 import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
-import { ProductManagementService } from 'src/app/services/product-management.service';
+import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 
 
 @Component({
@@ -42,7 +42,7 @@ export class ProductManagementComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private productManagementService: ProductManagementService,
+    private printedEditionService: PrintedEditionService,
     private authorService: AuthorService,
     private config:NgbDropdownConfig) { 
       config.autoClose = false;
@@ -101,18 +101,18 @@ export class ProductManagementComponent implements OnInit {
   }
   save() {
     if (!this.printedEdition.id) {
-      this.productManagementService.createPrintedEdition(this.printedEdition)
+      this.printedEditionService.createPrintedEdition(this.printedEdition)
         .subscribe((data: PrintedEditionModel) => this.loadPrintedEditions());
     }
      else {
-      this.productManagementService.updatePrintedEdition(this.printedEdition)
+      this.printedEditionService.updatePrintedEdition(this.printedEdition)
         .subscribe(data => this.loadPrintedEditions());
     }
     this.cancel();
   }
 
   loadPrintedEditions() {
-    this.productManagementService.get(this.searchParams)
+    this.printedEditionService.get(this.searchParams)
       .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
         this.currentPage = data.currentPage;
@@ -124,7 +124,7 @@ export class ProductManagementComponent implements OnInit {
 
   goTo() {
     this.searchParams.page = this.currentPage;
-    this.productManagementService.get(this.searchParams)
+    this.printedEditionService.get(this.searchParams)
       .subscribe((data: PrintedEditionPageModel) => {
         this.printedEditions = data.printedEditionModels;
         // this.currentPage = data.currentPage;

@@ -1,5 +1,4 @@
-﻿using BookShop.BusinessLogic.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BookShop.BusinessLogic.AuthorModels
 {
@@ -8,7 +7,6 @@ namespace BookShop.BusinessLogic.AuthorModels
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int Count { get; set; }
-        public PageModel PageModel { get; set; }
         public List<AuthorModel> AuthorModels { get; set; }
     }
 }

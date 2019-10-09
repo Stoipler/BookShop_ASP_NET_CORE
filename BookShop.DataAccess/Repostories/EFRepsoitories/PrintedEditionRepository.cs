@@ -31,7 +31,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                }).FirstAsync();
             return printedEdition;
         }
-        public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionSearchParams searchParams)
+        public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionRequestParameters requestParameters)
         {
             IQueryable<PrintedEditionWithNestedObjects> printedEditions = _dbSet.GroupJoin(_context.AuthorInBooks.Include(item => item.Author),
                outerKeySelector => outerKeySelector.Id,
@@ -41,41 +41,41 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                    PrintedEdition = printedEdition,
                    AuthorInBooks = authorInBooks.ToList()
                });
-            printedEditions = printedEditions.Where(item => (item.PrintedEdition.Price >= searchParams.PriceFrom && item.PrintedEdition.Price <= searchParams.PriceTo));
 
-            if (!string.IsNullOrWhiteSpace(searchParams.KeyWord))
-            {
-                printedEditions = printedEditions.Where(item => (item.PrintedEdition.Name.Contains(searchParams.KeyWord) || item.PrintedEdition.Description.Contains(searchParams.KeyWord)));
-            }
-            if (searchParams.PrintedEditionType != 0)
-            {
-                printedEditions = printedEditions.Where(item => item.PrintedEdition.Type == searchParams.PrintedEditionType);
-            }
+            printedEditions = printedEditions.Where(item => (item.PrintedEdition.Price >= requestParameters.PriceFrom && item.PrintedEdition.Price <= requestParameters.PriceTo));
 
-            if (searchParams.SortCriteria == SortCriteria.PriceAsc)
+            if (!string.IsNullOrWhiteSpace(requestParameters.KeyWord))
+            {
+                printedEditions = printedEditions.Where(item => (item.PrintedEdition.Name.Contains(requestParameters.KeyWord) || item.PrintedEdition.Description.Contains(requestParameters.KeyWord)));
+            }
+            if (requestParameters.PrintedEditionType != 0)
+            {
+                printedEditions = printedEditions.Where(item => item.PrintedEdition.Type == requestParameters.PrintedEditionType);
+            }
+            if (requestParameters.SortCriteria == SortCriteria.PriceAsc)
             {
                 printedEditions = printedEditions.OrderBy(item => item.PrintedEdition.Price);
             }
-            if (searchParams.SortCriteria == SortCriteria.PriceDesc)
+            if (requestParameters.SortCriteria == SortCriteria.PriceDesc)
             {
                 printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.Price);
             }
-            if (searchParams.SortCriteria == SortCriteria.CurrencyAsc)
+            if (requestParameters.SortCriteria == SortCriteria.CurrencyAsc)
             {
                 printedEditions = printedEditions.OrderBy(item => item.PrintedEdition.Currency);
             }
-            if (searchParams.SortCriteria == SortCriteria.CurrencyDesc)
+            if (requestParameters.SortCriteria == SortCriteria.CurrencyDesc)
             {
                 printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.Currency);
             }
-            if (searchParams.SortCriteria == SortCriteria.None)
+            if (requestParameters.SortCriteria == SortCriteria.None)
             {
                 printedEditions = printedEditions.OrderByDescending(item => item.PrintedEdition.CreationDate);
             }
 
             int count = await printedEditions.CountAsync();
-            int countToSkip = (--searchParams.Page) * searchParams.PageSize;
-            printedEditions = printedEditions.Skip(countToSkip).Take(searchParams.PageSize);
+            int countToSkip = (--requestParameters.Page) * requestParameters.PageSize;
+            printedEditions = printedEditions.Skip(countToSkip).Take(requestParameters.PageSize);
             List<PrintedEditionWithNestedObjects> result = await printedEditions.AsNoTracking().ToListAsync();
             return (result, count);
         }

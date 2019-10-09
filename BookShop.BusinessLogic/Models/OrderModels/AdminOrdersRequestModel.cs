@@ -6,6 +6,6 @@ namespace BookShop.BusinessLogic.Models.OrderModels
 {
     public class AdminOrdersRequestModel
     {
-        public PageModel PageModel { get; set; }
+        
     }
 }

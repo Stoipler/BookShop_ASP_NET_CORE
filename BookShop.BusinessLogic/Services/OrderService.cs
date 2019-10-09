@@ -110,9 +110,9 @@ namespace BookShop.BusinessLogic.Services
             return responseModel;
         }
 
-        public Task<AdminOrdersResponseModel> GetOrdersForAdmin(AdminOrdersRequestModel requestModel)
+        public /*async*/ Task<AdminOrdersResponseModel> GetOrdersForAdmin(AdminOrdersRequestModel requestModel)
         {
-            //List<Order> orders = await _orderRepository.GetWithPagination();
+            //List<Order> orders = await _orderRepository.GetWithPagination(requestModel.PageModel);
             throw new System.NotImplementedException();
         }
 

@@ -1,6 +1,4 @@
-﻿using BookShop.BusinessLogic.AuthorModels;
-using BookShop.BusinessLogic.Models;
-using BookShop.BusinessLogic.PrintedEditionModels;
+﻿using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -18,27 +16,23 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<PrintedEditionPageModel> Get([FromBody]PrintedEditionSearchParams searchParams)
+        public async Task<PrintedEditionResponseModel> Get([FromBody]PrintedEditionRequestModel requestModel)
         {
-            PrintedEditionPageModel result = await _printedEditionService.GetAsync(searchParams);
-            return result;
+            PrintedEditionResponseModel responseModel = await _printedEditionService.GetAsync(requestModel);
+            return responseModel;
         }
-
-
         [HttpPost]
         public async Task Post([FromBody]PrintedEditionModel model)
         {
             model = await _printedEditionService.CreateAsync(model);
         }
-
         [HttpGet("{id}")]
         public async Task<PrintedEditionModel> GetById(int id)
         {
             return await _printedEditionService.GetByIdAsync(id);
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]PrintedEditionModel model)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]PrintedEditionModel model)
         {
             await _printedEditionService.Update(model);
             return Ok();

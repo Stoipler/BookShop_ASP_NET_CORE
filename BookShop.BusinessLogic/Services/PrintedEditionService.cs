@@ -1,14 +1,13 @@
 ﻿using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models;
 using BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
-using PrintedEditionSearchParams = BookShop.BusinessLogic.PrintedEditionModels.PrintedEditionSearchParams;
-using SearchParamsDA = BookShop.DataAccess.Models.PrintedEditionSearchParams;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -16,22 +15,19 @@ namespace BookShop.BusinessLogic.Services
     {
         private readonly IPrintedEditionRepository _printedEditionRepository;
         private readonly IAuthorInBookRepository _authorInBookRepository;
-        private readonly IAuthorRepository _authorRepository;
 
-        public PrintedEditionService(IPrintedEditionRepository printedEditionRepository, IAuthorInBookRepository authorInBookRepository, IAuthorRepository authorRepository)
+        public PrintedEditionService(IPrintedEditionRepository printedEditionRepository, IAuthorInBookRepository authorInBookRepository)
         {
-            _authorRepository = authorRepository;
             this._printedEditionRepository = printedEditionRepository;
             this._authorInBookRepository = authorInBookRepository;
         }
 
-        public async Task<PrintedEditionPageModel> GetAsync(PrintedEditionSearchParams searchParams)
+        public async Task<PrintedEditionResponseModel> GetAsync(PrintedEditionRequestModel requestModel)
         {
-            SearchParamsDA searchParamsDA = new SearchParamsDA();
-            SearchParametersMaping(searchParams, searchParamsDA);
-            (List<PrintedEditionWithNestedObjects> printedEditions, int count) = await _printedEditionRepository.GetWithNestedObjectsAsync(searchParamsDA);
-            PrintedEditionPageModel pageModel = new PrintedEditionPageModel(count, searchParamsDA.Page, searchParamsDA.PageSize, printedEditions);
-            return pageModel;
+            PrintedEditionRequestParameters parameters = requestModel.MapToRequestParameters();
+            (List<PrintedEditionWithNestedObjects> printedEditions, int count) = await _printedEditionRepository.GetWithNestedObjectsAsync(parameters);
+            PrintedEditionResponseModel responseModel = new PrintedEditionResponseModel(count, parameters.Page, parameters.PageSize, printedEditions);
+            return responseModel;
         }
         public async Task<PrintedEditionModel> GetByIdAsync(int id)
         {
@@ -77,36 +73,5 @@ namespace BookShop.BusinessLogic.Services
             PrintedEdition printedEdition = await _printedEditionRepository.GetByIdAsync(model.Id);
             await _printedEditionRepository.Remove(printedEdition);
         }
-
-        private void SearchParametersMaping(PrintedEditionSearchParams searchParams, SearchParamsDA searchParamsDA)
-        {
-            if (searchParams.Page != 0)
-            {
-                searchParamsDA.Page = searchParams.Page;
-            }
-            if (searchParams.PageSize != 0)
-            {
-                searchParamsDA.PageSize = searchParams.PageSize;
-            }
-            if (searchParams.PriceFrom != 0)
-            {
-                searchParamsDA.PriceFrom = searchParams.PriceFrom;
-            }
-            if (searchParams.PriceTo != 0)
-            {
-                searchParamsDA.PriceTo = searchParams.PriceTo;
-            }
-            if (searchParams.PrintedEditionType != PrintedEditionType.None)
-            {
-                searchParamsDA.PrintedEditionType = searchParams.PrintedEditionType;
-            }
-            if (searchParams.SortCriteria != SortCriteria.None)
-            {
-                searchParamsDA.SortCriteria = searchParams.SortCriteria;
-            }
-            searchParamsDA.KeyWord = searchParams.KeyWord;
-        }
-
-
     }
 }
