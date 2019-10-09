@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
-import { ProfileComponent } from 'src/app/modules/user/profile/profile.component';
 import { UserService } from 'src/app/services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { OrdersComponent } from './components/orders/orders.component';
+import { ProfileComponent } from 'src/app/modules/user/components/profile/profile.component';
 
 
 @NgModule({
@@ -17,6 +17,6 @@ import { OrdersComponent } from './components/orders/orders.component';
     FontAwesomeModule,
     FormsModule
   ],
-  providers:[UserService]
+  providers: [UserService]
 })
 export class UserModule { }

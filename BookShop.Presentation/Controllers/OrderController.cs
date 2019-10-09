@@ -38,10 +38,16 @@ namespace BookShop.Presentation.Controllers
         {
             return await _orderService.GetCheckoutAsync(requestModel);
         }
-        [HttpGet(Name ="GetOrdersForUser")]
+        [HttpGet(Name = "GetOrdersForUser")]
         public async Task<UserOrdersModel> GetOrdersForUser()
         {
             UserOrdersModel result = await _orderService.GetOrdersForUser();
+            return result;
+        }
+        [HttpPost(Name = "GetOrdersForAdmin")]
+        public async Task<AdminOrdersResponseModel> GetOrdersForAdmin([FromBody] AdminOrdersRequestModel requestModel)
+        {
+            AdminOrdersResponseModel result = await _orderService.GetOrdersForAdmin(requestModel);
             return result;
         }
     }

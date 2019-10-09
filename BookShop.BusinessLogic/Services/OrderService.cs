@@ -109,6 +109,13 @@ namespace BookShop.BusinessLogic.Services
             responseModel.TotalPrice = totalPrice;
             return responseModel;
         }
+
+        public Task<AdminOrdersResponseModel> GetOrdersForAdmin(AdminOrdersRequestModel requestModel)
+        {
+            //List<Order> orders = await _orderRepository.GetWithPagination();
+            throw new System.NotImplementedException();
+        }
+
         public async Task<UserOrdersModel> GetOrdersForUser()
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;

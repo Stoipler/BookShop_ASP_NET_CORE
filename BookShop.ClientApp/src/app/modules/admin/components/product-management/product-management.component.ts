@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductManagementService } from '../../../services/product-management.service';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +14,7 @@ import { AuthorModel } from 'src/app/models/authorModel';
 import { AuthorService } from 'src/app/services/author.service';
 import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { ProductManagementService } from 'src/app/services/product-management.service';
 
 
 @Component({
