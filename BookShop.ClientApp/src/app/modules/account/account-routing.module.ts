@@ -10,7 +10,7 @@ import { ResetPasswordComponent } from 'src/app/modules/account/components/reset
 
 const routes: Routes = [
   {
-    path: 'account', component: AccountComponent,
+    path: 'account', component: AccountComponent, 
     children: [
       { path: 'signup', component: SignUpComponent },
       { path: 'signin', component: SignInComponent },

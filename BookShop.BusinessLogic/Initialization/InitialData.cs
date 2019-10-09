@@ -14,8 +14,7 @@ namespace BookShop.BusinessLogic.Initialization
         {
             ApplicationContext _context = provider.GetRequiredService<ApplicationContext>();
             UserManager<ApplicationUser> _userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
-            int count = _context.Users.Count();
-            if (count!=0)
+            if (_context.Users.Any())
             {
                 return;
             }

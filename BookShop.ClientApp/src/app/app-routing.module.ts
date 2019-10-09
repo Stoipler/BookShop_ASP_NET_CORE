@@ -10,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    loadChildren: () => import('src/app/modules/account/account.module').then(mod => mod.AccountModule)
+    loadChildren: () => import('src/app/modules/account/account.module').then(mod => mod.AccountModule),
+    pathMatch: 'full'
   },
   {
     path: 'author',
