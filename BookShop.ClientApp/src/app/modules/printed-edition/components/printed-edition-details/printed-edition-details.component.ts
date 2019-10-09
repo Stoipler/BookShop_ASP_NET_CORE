@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
 import { ActivatedRoute } from '@angular/router';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';

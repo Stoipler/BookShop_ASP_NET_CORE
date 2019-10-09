@@ -15,12 +15,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 
-class MyErrorHandler implements ErrorHandler{
-  handleError(error){
-    
-    console.log(error)
-  }
-}
 
 @NgModule({
   declarations: [
@@ -40,7 +34,6 @@ class MyErrorHandler implements ErrorHandler{
     FontAwesomeModule,
   ],
   providers: [
-    {provide:ErrorHandler, useClass:MyErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

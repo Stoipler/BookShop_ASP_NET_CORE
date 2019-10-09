@@ -1,58 +1,61 @@
 <div class="container">
-    <input type="text" autocomplete="off" (keyup)="loadPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="searchParams.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
+    <input type="text" autocomplete="off" (keyup)="getPrintedEditions()" class="form-control" id="authorsSearch" [(ngModel)]="printedEditionsRequestModel.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search by printed edition title, description">
 
-    <div class="row mb-5 align-items-end justify-content-center">
+    <div class="row mb-5 align-items-end justify-content-around d-flex">
         <div class="col-sm">
-            <label for="minPrice" class="m-0">Price from</label>
-            <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="parametersSetting.priceFrom" name="priceFrom" #priceFrom="ngModel">
+            <label for="minPrice" class="m-0">Price from:</label>
+            <input type="number" min="0" class="form-control" id="minPrice" [(ngModel)]="filterForm.priceFrom" name="priceFrom" #priceFrom="ngModel">
         </div>
         <div class="col-sm">
-            <label for="maxPrice" class="m-0">Price to</label>
-            <input type="number" class="form-control" id="maxPrice" [(ngModel)]="parametersSetting.priceTo" name="priceTo" #priceTo="ngModel">
-        </div>
-        <div class="col-sm">
-            <label for="typeOfPrintedEdition" class="m-0">Type:</label>
-            <select class="form-control" id="typeOfPrintedEdition" [(ngModel)]="parametersSetting.printedEditionType">
-      <option *ngFor="let item of typeKeys()">{{item}}</option>
-    </select>
+            <label for="maxPrice" class="m-0">Price to:</label>
+            <input type="number" class="form-control" id="maxPrice" [(ngModel)]="filterForm.priceTo" name="priceTo" #priceTo="ngModel">
         </div>
 
         <div class="col-sm">
             <label for="sortTypeSelect" class="m-0">Sort by:</label>
-            <select class="form-control" id="sortTypeSelect" [(ngModel)]="parametersSetting.sortCriteria">
-      <option *ngFor="let item of sortingKeys()">
-        {{item}}
+            <select class="form-control" id="sortTypeSelect" [(ngModel)]="filterForm.sortCriteria">
+      <option *ngFor="let item of enumMap(SortCriteria,'None')" [ngValue]="item.id">
+        {{item.name}}
+      </option>
+    </select>
+        </div>
+        <div class="col-sm">
+            <label for="printedEditionTypeSelect" class="m-0">Printed edition type:</label>
+            <select class="form-control" id="printedEditionTypeSelect" [(ngModel)]="filterForm.printedEditionType">
+      <option *ngFor="let item of enumMap(PrintedEditionType,'All types')" [ngValue]="item.id">
+        {{item.name}}
       </option>
     </select>
         </div>
 
-        <div class="col-sm">
-            <button type="button" class="btn btn-danger" (click)="setSearchParams()">search</button>
+        <div class="col-sm d-flex justify-content-end">
+            <button type="button" class="btn btn-danger" (click)="setSearchParameters()">search</button>
         </div>
     </div>
 </div>
+
 <div class="container">
     <div class="row">
-        <div *ngFor="let p of printedEditions" class="col-sm-4">
+        <div *ngFor="let printedEdition of printedEditionsResponseModel.printedEditionModels" class="col-sm-4">
             <div>
                 <div class="card">
-                    <a [title]="p.name + ' details'" [routerLink]="[p.id]">
+                    <a [title]="printedEdition.name + ' details'" [routerLink]="[printedEdition.id]">
                         <img class="card-img-top" src="assets/book.png" alt="Card image cap">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title printed-title">{{p.name}}</h5>
-                        <p class="card-text description">{{p.description}}</p>
-                        <p class="card-text authors" *ngFor="let a of p.authorModels">
-                            {{a.name}}
+                        <h5 class="card-title printed-title">{{printedEdition.name}}</h5>
+                        <p class="card-text description">{{printedEdition.description}}</p>
+                        <p class="card-text authors" *ngFor="let author of printedEdition.authorModels">
+                            {{author.name}}
                         </p>
                         <div class="row">
                             <div class="col">
-                                {{p.price}}
+                                {{printedEdition.price}}
                             </div>
                             <div class="col">
-                                <div *ngIf="p.currency==1">$ </div>
-                                <div *ngIf="p.currency==2"> ₴</div>
-                                <div *ngIf="p.currency==3">€</div>
+                                <div *ngIf="printedEdition.currency==1">$ </div>
+                                <div *ngIf="printedEdition.currency==2"> ₴</div>
+                                <div *ngIf="printedEdition.currency==3">€</div>
                             </div>
                         </div>
                     </div>
@@ -63,5 +66,5 @@
 </div>
 
 <div class="footer">
-    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize" [maxSize]="3" (pageChange)="goTo()"></ngb-pagination>
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="printedEditionsResponseModel.count" [(page)]="printedEditionsRequestModel.page" [pageSize]="printedEditionsRequestModel.pageSize" [maxSize]="3" (pageChange)="getPrintedEditions()"></ngb-pagination>
 </div>

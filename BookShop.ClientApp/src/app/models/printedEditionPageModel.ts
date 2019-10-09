@@ -1,4 +1,4 @@
-import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
 
 export class PrintedEditionPageModel {
     public currentPage: number;

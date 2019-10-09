@@ -15,8 +15,8 @@ namespace BookShop.Presentation.Controllers
             _printedEditionService = printedEditionService;
         }
 
-        [HttpPost]
-        public async Task<PrintedEditionResponseModel> Get([FromBody]PrintedEditionRequestModel requestModel)
+        [HttpPost(Name = "GetPrintedEditions")]
+        public async Task<PrintedEditionResponseModel> GetPrintedEditions([FromBody]PrintedEditionRequestModel requestModel)
         {
             PrintedEditionResponseModel responseModel = await _printedEditionService.GetAsync(requestModel);
             return responseModel;

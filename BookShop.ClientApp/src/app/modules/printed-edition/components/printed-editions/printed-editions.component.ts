@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
-import { PrintedEditionModel } from 'src/app/models/printedEditionModel';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchParams } from 'src/app/models/searchParams';
+import { PrintedEditionResponseModel } from 'src/app/models/printedEditionModels/printedEditionResponseModel';
+import { PrintedEditionRequestModel } from 'src/app/models/printedEditionModels/printedEditionRequestModel';
 import { SortCriteria } from 'src/app/enums/sortCriteria';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
-import { PrintedEditionPageModel } from 'src/app/models/printedEditionPageModel';
-import { Currency } from 'src/app/enums/currency';
+
 
 @Component({
   selector: 'app-printed-editions',
@@ -16,71 +15,63 @@ import { Currency } from 'src/app/enums/currency';
 })
 export class PrintedEditionsComponent implements OnInit {
 
-  printedEdition: PrintedEditionModel = new PrintedEditionModel();
-  printedEditions: PrintedEditionModel[];
-  searchParams: SearchParams = new SearchParams();
-  parametersSetting: ParametersSetting = new ParametersSetting();
-  currentPage: number;
-  pageSize: number;
-  count: number;
-  currency = Currency;
-  sortCriteria = SortCriteria;
-  printedEditionType = PrintedEditionType;
-  constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) { }
+  printedEditionsRequestModel: PrintedEditionRequestModel;
+  printedEditionsResponseModel: PrintedEditionResponseModel;
+  filterForm: FilterForm;
+  SortCriteria = SortCriteria;
+  PrintedEditionType = PrintedEditionType;
+
+  constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) {
+    this.printedEditionsRequestModel = new PrintedEditionRequestModel();
+    this.printedEditionsResponseModel = new PrintedEditionResponseModel();
+    this.filterForm = new FilterForm();
+  }
 
   ngOnInit() {
-    this.loadPrintedEditions();
-  }
-  sortingKeys(): Array<string> {
-    var keys = Object.keys(this.sortCriteria);
-    return keys.slice(keys.length / 2);
-  }
-  typeKeys(): Array<string> {
-    var keys = Object.keys(this.printedEditionType);
-    return keys.slice(keys.length / 2);
+    this.getPrintedEditions();
   }
 
-  loadPrintedEditions() {
-    this.printedEditionService.get(this.searchParams)
-      .subscribe((data: PrintedEditionPageModel) => {
-        this.printedEditions = data.printedEditionModels;
-        this.currentPage = data.currentPage;
-        this.pageSize = data.pageSize;
-        this.count = data.count;
-      });
+  async getPrintedEditions() {
+    this.printedEditionsResponseModel = await this.printedEditionService.getPrintedEditions(this.printedEditionsRequestModel);
   }
-
-  goTo() {
-    this.searchParams.page = this.currentPage;
-    this.printedEditionService.get(this.searchParams)
-      .subscribe((data: PrintedEditionPageModel) => {
-        this.printedEditions = data.printedEditionModels;
-        // this.currentPage = data.currentPage;
-        this.pageSize = data.pageSize;
-        this.count = data.count;
-      });
+  setSearchParameters() {
+    this.printedEditionsRequestModel.priceFrom = this.filterForm.priceFrom;
+    this.printedEditionsRequestModel.priceTo = this.filterForm.priceTo;
+    this.printedEditionsRequestModel.printedEditionType = this.filterForm.printedEditionType;
+    this.printedEditionsRequestModel.sortCriteria = this.filterForm.sortCriteria;
+    this.getPrintedEditions();
   }
-  setSearchParams() {
-    this.searchParams.priceFrom = this.parametersSetting.priceFrom;
-    this.searchParams.priceTo = this.parametersSetting.priceTo;
-    this.searchParams.printedEditionType = this.parametersSetting.printedEditionType;
-    this.searchParams.sortCriteria = this.parametersSetting.sortCriteria;
-    this.loadPrintedEditions();
+  enumMap(typeEnum: any, defaultOptionText: string): Array<EnumParams> {
+    let keys = Object.keys(typeEnum);
+    let startIndexWithoutDefault: number = (keys.length / 2) + 1;
+    keys = keys.slice(startIndexWithoutDefault);
+    let items = new Array();
+    items.push(new EnumParams(0, defaultOptionText))
+    keys.forEach(function (value, index) {
+      let item = new EnumParams((index + 1), value);
+      items.push(item);
+    })
+    return items;
   }
 }
 
-class ParametersSetting {
-  public priceFrom: number;
-  public priceTo: number;
-  public sortCriteria: SortCriteria;
-  public printedEditionType: PrintedEditionType;
-
-  constructor(
-  ) {
+class FilterForm {
+  priceFrom: number;
+  priceTo: number;
+  sortCriteria: SortCriteria;
+  printedEditionType: PrintedEditionType;
+  constructor() {
     this.priceFrom = 0;
     this.priceTo = 0;
     this.sortCriteria = SortCriteria.None;
     this.printedEditionType = PrintedEditionType.None;
   }
-
+}
+class EnumParams {
+  id: number;
+  name: string;
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  }
 }

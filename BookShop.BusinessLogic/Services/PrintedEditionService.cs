@@ -26,7 +26,7 @@ namespace BookShop.BusinessLogic.Services
         {
             PrintedEditionRequestParameters parameters = requestModel.MapToRequestParameters();
             (List<PrintedEditionWithNestedObjects> printedEditions, int count) = await _printedEditionRepository.GetWithNestedObjectsAsync(parameters);
-            PrintedEditionResponseModel responseModel = new PrintedEditionResponseModel(count, parameters.Page, parameters.PageSize, printedEditions);
+            PrintedEditionResponseModel responseModel = new PrintedEditionResponseModel(count, printedEditions);
             return responseModel;
         }
         public async Task<PrintedEditionModel> GetByIdAsync(int id)
