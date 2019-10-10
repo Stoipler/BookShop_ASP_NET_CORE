@@ -62,7 +62,7 @@ export class ProductManagementComponent implements OnInit {
     );
   }
   getAuthors() {
-    this.authorRequestModel.ignoreAuthorList = this.printedEdition.authorModels;
+    this.authorRequestModel.ignoreAuthorsList = this.printedEdition.authorModels;
     this.authorService.getAuthors(this.authorRequestModel).subscribe(
       (data: AuthorResponseModel) => {
         this.authorResponseModel = data;
@@ -75,7 +75,7 @@ export class ProductManagementComponent implements OnInit {
     this.getAuthors();
   }
   removeFromList(author: AuthorModel) {
-    this.printedEdition.authorModels.splice(this.authorRequestModel.ignoreAuthorList.indexOf(author), 1)
+    this.printedEdition.authorModels.splice(this.authorRequestModel.ignoreAuthorsList.indexOf(author), 1)
     this.getAuthors();
   }
 
@@ -84,6 +84,8 @@ export class ProductManagementComponent implements OnInit {
   }
   cancel() {
     this.printedEdition = new PrintedEditionModel();
+    this.authorRequestModel = new AuthorRequestModel();
+    this.getPrintedEditions();
   }
   save() {
     if (this.printedEdition.id) {

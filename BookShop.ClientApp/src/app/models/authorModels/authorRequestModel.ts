@@ -5,13 +5,13 @@ export class AuthorRequestModel {
     pageSize: number;
     name: string;
     withPagination: boolean;
-    ignoreAuthorList: AuthorModel[];
+    ignoreAuthorsList: AuthorModel[];
 
     constructor() {
         this.page = 1;
         this.pageSize = 10;
         this.name = '';
         this.withPagination = false;
-        this.ignoreAuthorList = [];
+        this.ignoreAuthorsList = [];
     }
 }
