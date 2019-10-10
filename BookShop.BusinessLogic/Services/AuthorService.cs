@@ -1,12 +1,13 @@
 ﻿using BookShop.BusinessLogic.AuthorModels;
+using BookShop.BusinessLogic.Models.AuthorModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models;
 using BookShop.DataAccess.ObjectModels.AuthorWithNestedObjects;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuthorSearchParamsDA = BookShop.DataAccess.Models.AuthorSearchParams;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -17,36 +18,21 @@ namespace BookShop.BusinessLogic.Services
         {
             this._authorRepository = authorRepository;
         }
-        public async Task<List<AuthorModel>> GetAsync(AuthorSearchParams authorSearchParams)
+        public async Task<AuthorResponseModel> GetAsync(AuthorRequestModel requestModel)
         {
-            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name, Page = authorSearchParams.Page, PageSize = authorSearchParams.PageSize };
-            if (!(authorSearchParams.AuthorsList is null))
-            {
-                authorSearchParamsDA.AuthorsList = authorSearchParams.AuthorsList.Select(item => new Author { Id = item.Id, Name = item.Name }).ToList();
-            }
-            (List<AuthorWithNestedObjects> authors, int count) = await _authorRepository.GetWithParamsAsync(authorSearchParamsDA);
+            AuthorRequestParameters parameters = requestModel.MapToRequestParameters();
+            (List<AuthorWithNestedObjects> authors, int count) = await _authorRepository.GetWithParamsAsync(parameters);
             List<AuthorModel> authorModels = authors.Select(item => new AuthorModel(item)).ToList();
-            return authorModels;
-        }
-        public async Task<AuthorPageModel> GetWithPaginationAsync(AuthorSearchParams authorSearchParams)
-        {
-            AuthorPageModel authorPageModel = new AuthorPageModel();
-            AuthorSearchParamsDA authorSearchParamsDA = new AuthorSearchParamsDA { Name = authorSearchParams.Name, Page = authorSearchParams.Page, PageSize = authorSearchParams.PageSize };
-            if (!(authorSearchParams.AuthorsList is null))
+            AuthorResponseModel responseModel = new AuthorResponseModel
             {
-                authorSearchParamsDA.AuthorsList = authorSearchParams.AuthorsList.Select(item => new Author { Id = item.Id, Name = item.Name }).ToList();
-            }
-            (List<AuthorWithNestedObjects> authors, int count) = await _authorRepository.GetWithParamsAsync(authorSearchParamsDA);
-            List<AuthorModel> authorModels = authors.Select(item => new AuthorModel(item)).ToList();
-            authorPageModel.Count = count;
-            authorPageModel.CurrentPage = authorSearchParamsDA.Page;
-            authorPageModel.PageSize = authorSearchParamsDA.PageSize;
-            authorPageModel.AuthorModels = authorModels;
-            return authorPageModel;
+                Count = count,
+                AuthorsList = authorModels
+            };
+            return responseModel;
         }
-        public async Task CreateAsync(AuthorModel model)
+        public async Task CreateAsync(AuthorModel requestModel)
         {
-            Author author = new Author { Name = model.Name };
+            Author author =requestModel.MapToEntity();
             await _authorRepository.CreateAsync(author);
         }
         public async Task Update(AuthorModel model)

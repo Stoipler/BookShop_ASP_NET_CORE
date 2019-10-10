@@ -5,6 +5,7 @@ import { PrintedEditionResponseModel } from 'src/app/models/printedEditionModels
 import { PrintedEditionRequestModel } from 'src/app/models/printedEditionModels/printedEditionRequestModel';
 import { SortCriteria } from 'src/app/enums/sortCriteria';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
+import { Currency } from 'src/app/enums/currency';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class PrintedEditionsComponent implements OnInit {
 
   printedEditionsRequestModel: PrintedEditionRequestModel;
   printedEditionsResponseModel: PrintedEditionResponseModel;
+  Currency = Currency;
   filterForm: FilterForm;
+
   SortCriteria = SortCriteria;
   PrintedEditionType = PrintedEditionType;
 
@@ -29,10 +32,15 @@ export class PrintedEditionsComponent implements OnInit {
 
   ngOnInit() {
     this.getPrintedEditions();
+
   }
 
-  async getPrintedEditions() {
-    this.printedEditionsResponseModel = await this.printedEditionService.getPrintedEditions(this.printedEditionsRequestModel);
+  getPrintedEditions() {
+    this.printedEditionService.getPrintedEditions(this.printedEditionsRequestModel).subscribe(
+      (data: PrintedEditionResponseModel) => {
+        this.printedEditionsResponseModel = data;
+      }
+    );
   }
   setSearchParameters() {
     this.printedEditionsRequestModel.priceFrom = this.filterForm.priceFrom;

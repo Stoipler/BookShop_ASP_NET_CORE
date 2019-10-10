@@ -5,4 +5,9 @@ export class CartModel {
     cartItemModels: CartItemModel[];
     checkoutItemModels:CheckoutItemModel[]
     totalPrice: number;
+
+    constructor(){
+        this.checkoutItemModels=[];
+        this.totalPrice=0;
+    }
 }

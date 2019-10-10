@@ -1,7 +1,7 @@
 ﻿using BookShop.BusinessLogic.AuthorModels;
+using BookShop.BusinessLogic.Models.AuthorModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
@@ -16,39 +16,24 @@ namespace BookShop.Presentation.Controllers
             this._authorService = authorService;
         }
 
-        [HttpPost]
-        public async Task<List<AuthorModel>> Get([FromBody]AuthorSearchParams searchParams)
+        [HttpPost(Name = "GetAuthors")]
+        public async Task<AuthorResponseModel> GetAuthors([FromBody]AuthorRequestModel requestModel)
         {
-            if (!string.IsNullOrWhiteSpace(searchParams.Name))
-            {
-                searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
-            }
-            List<AuthorModel> result = await _authorService.GetAsync(searchParams);
-            return result;
+            AuthorResponseModel responseModel = await _authorService.GetAsync(requestModel);
+            return responseModel;
         }
-        [HttpPost]
-        public async Task<AuthorPageModel> GetWithPagination([FromBody]AuthorSearchParams searchParams)
-        {
-            if (!string.IsNullOrWhiteSpace(searchParams.Name))
-            {
-                searchParams.Name = RemoveWhiteSpacesFromStart(searchParams.Name);
-            }
-            AuthorPageModel result = await _authorService.GetWithPaginationAsync(searchParams);
-            return result;
-        }
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody]AuthorModel model)
+        [HttpPost(Name = "CreateAuthor")]
+        public async Task<IActionResult> CreateAuthor([FromBody]AuthorModel requestModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            await _authorService.CreateAsync(model);
+            await _authorService.CreateAsync(requestModel);
             return Ok();
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]AuthorModel model)
+        [HttpPost(Name = "UpdateAuthor")]
+        public async Task<IActionResult> UpdateAuthor([FromBody]AuthorModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,15 +46,6 @@ namespace BookShop.Presentation.Controllers
         public async Task Delete(int id)
         {
             await _authorService.Remove(id);
-        }
-
-        private string RemoveWhiteSpacesFromStart(string input)
-        {
-            if (input.IndexOf(' ') == 0)
-            {
-                return RemoveWhiteSpacesFromStart(input.TrimStart());
-            }
-            return input;
         }
     }
 }

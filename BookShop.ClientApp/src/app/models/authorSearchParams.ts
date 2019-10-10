@@ -1,4 +1,4 @@
-import { AuthorModel } from 'src/app/models/authorModel';
+import { AuthorModel } from 'src/app/models/authorModels/authorModel';
 
 export class AuthorSearchParams {
     name: string;

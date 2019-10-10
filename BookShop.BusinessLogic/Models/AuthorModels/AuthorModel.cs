@@ -28,5 +28,10 @@ namespace BookShop.BusinessLogic.AuthorModels
         public AuthorModel()
         {
         }
+        internal Author MapToEntity()
+        {
+            Author entity = new Author { Id = Id, Name = Name };
+            return entity;
+        }
     }
 }

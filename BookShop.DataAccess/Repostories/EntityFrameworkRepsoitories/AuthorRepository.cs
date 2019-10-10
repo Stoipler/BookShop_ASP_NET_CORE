@@ -18,7 +18,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
         {
         }
 
-        public async Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorSearchParams authorSearchParams)
+        public async Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorRequestParameters parameters)
         {
             IQueryable<AuthorWithNestedObjects> authors = _dbSet.GroupJoin(_context.AuthorInBooks.Include(item => item.PrintedEdition),
                 outerKeySelector => outerKeySelector.Id,
@@ -28,21 +28,22 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                   Author = author,
                   AuthorInBooks = authorInBooks.ToList()
               });
-            if (!string.IsNullOrWhiteSpace(authorSearchParams.Name))
+            if (!string.IsNullOrWhiteSpace(parameters.Name))
             {
-                authors = authors.Where(item => item.Author.Name.Contains(authorSearchParams.Name, StringComparison.OrdinalIgnoreCase));
+                authors = authors.Where(item => item.Author.Name.Contains(parameters.Name, StringComparison.OrdinalIgnoreCase));
             }
-            if (!(authorSearchParams.AuthorsList is null))
+            if (!(parameters.IgnoreAuthorsList is null))
             {
-                IEnumerable<int> authorsToDelete = authorSearchParams.AuthorsList.Select(author => author.Id);
+                IEnumerable<int> authorsToDelete = parameters.IgnoreAuthorsList.Select(author => author.Id);
                 authors = authors.Where(item => !authorsToDelete.Contains(item.Author.Id));
             }
+            authors = authors.OrderByDescending(item => item.Author.CreationDate);
             int count = 0;
-            if (authorSearchParams.PageSize != 0 && authorSearchParams.Page != 0)
+            if (parameters.WithPagination)
             {
                 count = await authors.CountAsync();
-                int skipCount = (--authorSearchParams.Page) * authorSearchParams.PageSize;
-                authors = authors.Skip(skipCount).Take(authorSearchParams.PageSize);
+                int skipCount = (--parameters.Page) * parameters.PageSize;
+                authors = authors.Skip(skipCount).Take(parameters.PageSize);
             }
             List<AuthorWithNestedObjects> result = await authors.AsNoTracking().ToListAsync();
             return (result, count);

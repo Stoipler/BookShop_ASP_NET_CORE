@@ -50,12 +50,7 @@
                         </p>
                         <div class="row">
                             <div class="col">
-                                {{printedEdition.price}}
-                            </div>
-                            <div class="col">
-                                <div *ngIf="printedEdition.currency==1">$ </div>
-                                <div *ngIf="printedEdition.currency==2"> ₴</div>
-                                <div *ngIf="printedEdition.currency==3">€</div>
+                                {{printedEdition.price.toFixed(2)}} {{Currency[printedEdition.currency]}}
                             </div>
                         </div>
                     </div>

@@ -13,19 +13,18 @@ export class PrintedEditionService {
   constructor(private http: HttpClient) {
   }
 
-  async getPrintedEditions(requestModel: PrintedEditionRequestModel): Promise<PrintedEditionResponseModel> {
-    return await this.http.post<PrintedEditionResponseModel>(environment.apiUrl + 'PrintedEdition/GetPrintedEditions', requestModel).toPromise();
+  getPrintedEditions(requestModel: PrintedEditionRequestModel) {
+    return this.http.post<PrintedEditionResponseModel>(environment.apiUrl + 'PrintedEdition/GetPrintedEditions', requestModel);
   }
 
-
   updatePrintedEdition(printedEditionModel: PrintedEditionModel) {
-    return this.http.put(environment.apiUrl + 'printededition/put/' + printedEditionModel.id, printedEditionModel);
+    return this.http.post(environment.apiUrl + 'PrintedEdition/UpdatePrintedEdition', printedEditionModel);
   }
 
   createPrintedEdition(printedEdition: PrintedEditionModel) {
-    return this.http.post(environment.apiUrl + 'printededition/post', printedEdition);
+    return this.http.post(environment.apiUrl + 'PrintedEdition/CreatePrintedEditon', printedEdition);
   }
   getById(id: number) {
-    return this.http.get(environment.apiUrl + 'printededition/getbyid/' + id);
+    return this.http.get(environment.apiUrl + 'PrintedEdition/GetById/' + id);
   }
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { CartItemModel } from 'src/app/models/cartItemModel';
+import { Currency } from 'src/app/enums/currency';
 
 @Component({
   selector: 'app-printed-edition-details',
@@ -13,7 +14,7 @@ import { CartItemModel } from 'src/app/models/cartItemModel';
 })
 
 export class PrintedEditionDetailsComponent implements OnInit {
-
+  Currency=Currency;
   faCartPlus = faCartPlus;
   printedEdition: PrintedEditionModel = new PrintedEditionModel();
   quantity: number = 1;

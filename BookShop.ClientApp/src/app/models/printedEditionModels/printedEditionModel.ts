@@ -1,6 +1,6 @@
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 import { Currency } from 'src/app/enums/currency';
-import { AuthorModel } from 'src/app/models/authorModel';
+import { AuthorModel } from 'src/app/models/authorModels/authorModel';
 
 export class PrintedEditionModel {
     id: number;
@@ -13,9 +13,8 @@ export class PrintedEditionModel {
     authorModels: AuthorModel[];
 
     constructor() {
-
-        this.type = PrintedEditionType.None as number;
-        this.currency = Currency.None as number;
+        this.type = PrintedEditionType.None;
+        this.currency = Currency.None;
         this.authorModels = [];
     }
 }

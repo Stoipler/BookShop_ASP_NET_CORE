@@ -9,6 +9,6 @@ namespace BookShop.DataAccess.Repostories.Interfaces
 {
     public interface IAuthorRepository : IGenericRepository<Author>
     {
-        Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorSearchParams authorSearchParams);
+        Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorRequestParameters authorSearchParams);
     }
 }

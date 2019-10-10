@@ -21,8 +21,8 @@ namespace BookShop.Presentation.Controllers
             PrintedEditionResponseModel responseModel = await _printedEditionService.GetAsync(requestModel);
             return responseModel;
         }
-        [HttpPost]
-        public async Task Post([FromBody]PrintedEditionModel model)
+        [HttpPost(Name = "CreatePrintedEditon")]
+        public async Task CreatePrintedEditon([FromBody]PrintedEditionModel model)
         {
             model = await _printedEditionService.CreateAsync(model);
         }
@@ -31,8 +31,8 @@ namespace BookShop.Presentation.Controllers
         {
             return await _printedEditionService.GetByIdAsync(id);
         }
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody]PrintedEditionModel model)
+        [HttpPost(Name = "UpdatePrintedEdition")]
+        public async Task<IActionResult> UpdatePrintedEdition([FromBody]PrintedEditionModel model)
         {
             await _printedEditionService.Update(model);
             return Ok();

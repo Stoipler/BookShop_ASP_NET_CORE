@@ -18,6 +18,7 @@ export class CartItemsComponent implements OnInit {
   isAnyItemsInCart: boolean = true;
   checkout: CartModel;
   constructor(private paymentHelper: PaymentHelper, private orderService: OrderService) {
+    this.checkout=new CartModel();
   }
 
   ngOnInit() {
