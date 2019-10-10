@@ -1,4 +1,4 @@
-﻿using BookShop.BusinessLogic.Models.Account;
+﻿using BookShop.BusinessLogic.Models.UserModels;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces
@@ -6,7 +6,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
     public interface IUserService
     {
 
-        Task<UserModel> GetByIdAsync(int id);
-        Task UpdateAsync(UserModel model);
+        Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel);
     }
 }

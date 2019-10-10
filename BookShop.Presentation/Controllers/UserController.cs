@@ -1,4 +1,5 @@
 ﻿using BookShop.BusinessLogic.Models.Account;
+using BookShop.BusinessLogic.Models.UserModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,22 +18,12 @@ namespace BookShop.Presentation.Controllers
             this._userService = userService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<UserModel> GetById(int id)
+        [AllowAnonymous]
+        [HttpPost(Name = "GetUsers")]
+        public async Task<UserResponseModel> GetUsers([FromBody]UserRequestModel requestModel)
         {
-            return await this._userService.GetByIdAsync(id);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Update([FromBody]UserModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                await _userService.UpdateAsync(model);
-                return Ok();
-            }
-            return BadRequest(ModelState);
-
+            UserResponseModel responseModel = await _userService.GetUsersAsync(requestModel);
+            return responseModel;
         }
     }
 }

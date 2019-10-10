@@ -9,9 +9,10 @@ import { AuthorService } from 'src/app/services/author.service';
 import { ProductManagementComponent } from 'src/app/modules/admin/components/product-management/product-management.component';
 import { OrderManagementComponent } from 'src/app/modules/admin/components/order-management/order-management.component';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 
 @NgModule({
-  declarations: [ProductManagementComponent, OrderManagementComponent],
+  declarations: [ProductManagementComponent, OrderManagementComponent, UserManagementComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

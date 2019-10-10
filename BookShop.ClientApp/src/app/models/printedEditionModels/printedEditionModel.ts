@@ -16,5 +16,6 @@ export class PrintedEditionModel {
         this.type = PrintedEditionType.None;
         this.currency = Currency.None;
         this.authorModels = [];
+        this.price = 0;
     }
 }

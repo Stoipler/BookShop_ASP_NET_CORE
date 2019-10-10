@@ -1,8 +1,11 @@
-﻿using BookShop.BusinessLogic.Models.Account;
+﻿using BookShop.BusinessLogic.Models.UserModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services
@@ -18,27 +21,16 @@ namespace BookShop.BusinessLogic.Services
             this._userManager = userManager;
             this._userRepository = userRepository;
         }
-        public async Task<UserModel> GetByIdAsync(int id)
+        public async Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel)
         {
-            ApplicationUser user = await _userRepository.GetByIdAsync(id);
-            UserModel model = new UserModel();
-            model.MapToModel(user);
-            return model;
+            UserRequestParameters parameters = requestModel.MapToRequestParameters();
+            (List<ApplicationUser> users,int count) = await _userRepository.GetUsersAsync(parameters);
+            List<UserModel> userModels = users.Select(item => new UserModel(item)).ToList();
+            UserResponseModel responseModel = new UserResponseModel() {Count=count, UserModels=userModels};
+            return responseModel;
         }
 
-        public async Task UpdateAsync(UserModel model)
-        {
-            ApplicationUser user = await _userRepository.GetByIdAsync(model.Id);
-            model.MapToEnity(user);
-            await _userRepository.Update(user);
-            SignInResult signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.OldPassword, false, false);
-            if (!string.IsNullOrWhiteSpace(model.NewPassword))
-            {
-                if (signInResult.Succeeded && (model.NewPassword == model.NewPasswordConfirmation))
-                {
-                    await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                }
-            }
-        }
+
+
     }
 }

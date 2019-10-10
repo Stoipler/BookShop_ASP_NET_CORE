@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthorModel } from 'src/app/models/authorModels/authorModel';
-import { AuthorSearchParams } from 'src/app/models/authorSearchParams';
 import { environment } from 'src/environments/environment';
 import { AuthorRequestModel } from 'src/app/models/authorModels/authorRequestModel';
 import { AuthorResponseModel } from 'src/app/models/authorModels/authorResponseModel';

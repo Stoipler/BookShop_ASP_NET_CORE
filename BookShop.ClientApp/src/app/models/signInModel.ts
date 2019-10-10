@@ -3,5 +3,5 @@ export class SignInModel {
     public password: string;
     public rememberMe: boolean;
     constructor() {
-        }
+    }
 }

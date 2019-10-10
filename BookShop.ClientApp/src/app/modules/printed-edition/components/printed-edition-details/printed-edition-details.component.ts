@@ -14,12 +14,14 @@ import { Currency } from 'src/app/enums/currency';
 })
 
 export class PrintedEditionDetailsComponent implements OnInit {
-  Currency=Currency;
+  Currency = Currency;
   faCartPlus = faCartPlus;
-  printedEdition: PrintedEditionModel = new PrintedEditionModel();
+  printedEdition: PrintedEditionModel;
   quantity: number = 1;
 
-  constructor(private route: ActivatedRoute, private printedEditionService: PrintedEditionService) { }
+  constructor(private route: ActivatedRoute, private printedEditionService: PrintedEditionService) {
+    this.printedEdition = new PrintedEditionModel();
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
