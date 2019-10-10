@@ -4,6 +4,7 @@ import { AuthorService } from 'src/app/services/author.service';
 import { AuthorModel } from 'src/app/models/authorModels/authorModel';
 import { AuthorRequestModel } from 'src/app/models/authorModels/authorRequestModel';
 import { AuthorResponseModel } from 'src/app/models/authorModels/authorResponseModel';
+import { faPencilAlt, faBackspace, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-authors',
@@ -16,16 +17,20 @@ export class AuthorsComponent implements OnInit {
   authorRequestModel: AuthorRequestModel;
   authorResponseModel: AuthorResponseModel;
   author: AuthorModel;
+  faPencilAlt = faPencilAlt;
+  faBackspace = faBackspace;
+  faPlusCircle = faPlusCircle;
   constructor(private modalService: NgbModal, private authorService: AuthorService) {
     this.authorRequestModel = new AuthorRequestModel();
     this.authorResponseModel = new AuthorResponseModel();
+    this.author = new AuthorModel();
     this.authorRequestModel.pageSize = 10;
     this.authorRequestModel.withPagination = true;
   }
 
   ngOnInit() {
     this.getAuthors();
-    
+
   }
   getAuthors() {
     this.authorService.getAuthors(this.authorRequestModel).subscribe(
@@ -59,7 +64,7 @@ export class AuthorsComponent implements OnInit {
     }
   }
   openModal(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static' }).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then((result) => {
     }, (reason) => {
     });
   }

@@ -1,1 +1,29 @@
-<p>order-management works!</p>
+<div class="container">
+    <input type="text" autocomplete="off" (keyup)="getOrders()" class="form-control" id="authorsSearch" [(ngModel)]="orderRequestModel.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search order by user first name, last name or email">
+
+    <table class="container table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">User name</th>
+                <th scope="col">User e-mail</th>
+                <th scope="col">Description</th>
+                <th scope="col">Order amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orderResponseModel.orderModels">
+                <th scope="col">{{order.id}}</th>
+                <th scope="col">{{order.creationDate | date: 'short'}}</th>
+                <th scope="col">{{order.firstName}} {{order.lastName}}</th>
+                <th scope="col">{{order.email}}</th>
+                <th scope="col">{{order.description}}</th>
+                <th scope="col">{{order.orderAmount}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="footer">
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="orderResponseModel.count" [(page)]="orderRequestModel.page" [pageSize]="orderRequestModel.pageSize" [maxSize]="3" (pageChange)="getOrders()"></ngb-pagination>
+</div>

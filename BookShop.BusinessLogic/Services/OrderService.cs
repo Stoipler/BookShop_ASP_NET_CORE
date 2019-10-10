@@ -2,6 +2,7 @@
 using BookShop.BusinessLogic.Models.Payments;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -110,20 +111,22 @@ namespace BookShop.BusinessLogic.Services
             return responseModel;
         }
 
-        public /*async*/ Task<AdminOrdersResponseModel> GetOrdersForAdmin(AdminOrdersRequestModel requestModel)
+        public async Task<OrdersResponseModel> GetOrdersForAdmin(OrdersRequestModel requestModel)
         {
-            //List<Order> orders = await _orderRepository.GetWithPagination(requestModel.PageModel);
-            throw new System.NotImplementedException();
+            OrderRequestParameters parameters = requestModel.MapToRequestParameters();
+            (List<Order> orders, int count) = await _orderRepository.GetByParmeters(parameters);
+            List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();
+            OrdersResponseModel response = new OrdersResponseModel() { OrderModels = orderModels, Count = count };
+            return response;
         }
-
-        public async Task<UserOrdersModel> GetOrdersForUser()
+        public async Task<OrdersResponseModel> GetOrdersForUser()
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-            var user = await _userManager.FindByNameAsync(userName);
+            ApplicationUser user = await _userManager.FindByNameAsync(userName);
             int id = user.Id;
             List<Order> orders = await _orderRepository.GetByUserId(id);
             List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();
-            UserOrdersModel response = new UserOrdersModel() { OrderModels = orderModels };
+            OrdersResponseModel response = new OrdersResponseModel() { OrderModels = orderModels };
             return response;
         }
 

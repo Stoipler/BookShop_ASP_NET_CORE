@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faPencilAlt, faBookDead, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faBookDead, faPlusCircle, faBackspace } from '@fortawesome/free-solid-svg-icons';
 import { Currency } from 'src/app/enums/currency';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 import { AuthorService } from 'src/app/services/author.service';
@@ -32,9 +32,8 @@ export class ProductManagementComponent implements OnInit {
   SortCriteria = SortCriteria;
   PrintedEditionType = PrintedEditionType;
   faPencilAlt = faPencilAlt;
-  faBookDead = faBookDead;
+  faBackspace = faBackspace;
   faPlusCircle = faPlusCircle;
-  faTimes = faTimes;
 
   constructor(
     private printedEditionService: PrintedEditionService,
@@ -106,11 +105,13 @@ export class ProductManagementComponent implements OnInit {
 
   openModal(content) {
     this.getAuthors();
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then((result) => {
-      this.cancel();
-    }, (reason) => {
-      this.cancel();
-    });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
+      (result) => {
+        this.cancel();
+      },
+      (reason) => {
+        this.cancel();
+      });
   }
   setSearchParameters() {
     this.printedEditionsRequestModel.priceFrom = this.filterForm.priceFrom;

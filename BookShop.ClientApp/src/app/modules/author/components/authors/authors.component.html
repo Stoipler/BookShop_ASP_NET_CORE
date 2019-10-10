@@ -1,6 +1,6 @@
 <ng-template #authorEditor let-modal data-backdrop='static'>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Add author</h4>
+        <h4 class="modal-title" id="modal-basic-title">Author editor</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -16,7 +16,13 @@
     </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="cancel()" (click)="openModal(authorEditor)">Add author</button>
+<div class=" container d-flex justify-content-end align-items-center">
+    <label for="addProduct">Add new author</label>
+    <button id="addProduct" class="btn " (click)="openModal(authorEditor)">
+          <fa-icon [icon]="faPlusCircle"></fa-icon>
+        </button>
+</div>
+
 <table class="container table table-hover">
     <thead class="thead-dark">
         <tr>
@@ -37,8 +43,12 @@
             </td>
             <td>
                 <div class="btn-group">
-                    <button class="btn btn-sm btn-primary" (click)="editAuthor(author)" (click)="openModal(authorEditor)">Edit</button>
-                    <button class="btn btn-sm btn-danger">Remove</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="editAuthor(author)" (click)="openModal(authorEditor)">
+              <fa-icon [icon]="faPencilAlt"></fa-icon>
+            </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+              <fa-icon [icon]="faBackspace"></fa-icon>
+            </button>
                 </div>
             </td>
         </tr>

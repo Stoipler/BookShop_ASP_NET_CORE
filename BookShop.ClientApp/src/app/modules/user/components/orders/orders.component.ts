@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { UserOrdersModel } from 'src/app/models/userOrdersModel';
+import { OrderResponseModel } from 'src/app/models/orderModels/orderResponseModel';
 
 @Component({
   selector: 'app-orders',
@@ -9,17 +9,19 @@ import { UserOrdersModel } from 'src/app/models/userOrdersModel';
   providers: [OrderService]
 })
 export class OrdersComponent implements OnInit {
-  userOrders: UserOrdersModel = new UserOrdersModel();
+  orderResponseModel: OrderResponseModel;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService) {
+    this.orderResponseModel = new OrderResponseModel();
+  }
 
   ngOnInit() {
     this.getOrders();
   }
 
   getOrders() {
-    this.orderService.getOrdersForUser().subscribe((data: UserOrdersModel) => {
-      this.userOrders = data;
+    this.orderService.getOrdersForUser().subscribe((data: OrderResponseModel) => {
+      this.orderResponseModel = data;
     })
   }
 }

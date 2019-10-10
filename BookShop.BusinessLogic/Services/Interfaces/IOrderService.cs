@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
     {
         Task<CartResponseModel> GetCheckoutAsync(CartRequestModel requestModel);
         Task<string> CreateOrderAsync(PaymentDataRequestModel requestModel);
-        Task<UserOrdersModel> GetOrdersForUser();
-        Task<AdminOrdersResponseModel> GetOrdersForAdmin(AdminOrdersRequestModel requestModel);
+        Task<OrdersResponseModel> GetOrdersForUser();
+        Task<OrdersResponseModel> GetOrdersForAdmin(OrdersRequestModel requestModel);
     }
 }

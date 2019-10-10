@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BookShop.BusinessLogic.Models.OrderModels
 {
-    public class UserOrdersModel
+    public class OrdersResponseModel
     {
-
+        public int Count { get; set; }
         public List<OrderModel> OrderModels;
 
-        public UserOrdersModel()
+        public OrdersResponseModel()
         {
+            Count = 0;
             OrderModels = new List<OrderModel>();
         }
     }

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PaymentDataModel } from 'src/app/models/paymentDataModel';
 import { CartModel } from 'src/app/models/cartModel';
+import { OrderRequestModel } from 'src/app/models/orderModels/orderRequestModel';
+import { Observable } from 'rxjs';
+import { OrderResponseModel } from 'src/app/models/orderModels/orderResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,9 @@ export class OrderService {
     return this.http.post(environment.apiUrl + 'Order/GetCheckout', items);
   }
   getOrdersForUser() {
-    return this.http.get(environment.apiUrl + 'Order/GetOrdersForUser');
+    return this.http.get<OrderResponseModel>(environment.apiUrl + 'Order/GetOrdersForUser');
+  }
+  getOrdersForAdmin(requestModel: OrderRequestModel): Observable<OrderResponseModel> {
+    return this.http.post<OrderResponseModel>(environment.apiUrl + 'Order/GetOrdersForAdmin', requestModel);
   }
 }
