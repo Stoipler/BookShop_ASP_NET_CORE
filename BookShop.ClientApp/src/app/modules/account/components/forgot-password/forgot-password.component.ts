@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ForgotPasswordRequestModel } from 'src/app/models/accountModels/forgotPasswordRequestModel';
 import { AccountService } from 'src/app/services/account.service';
-import { ForgotPasswordModel } from 'src/app/models/forgotPasswordModel';
 
 @Component({
   selector: 'app-forgot-password',
@@ -26,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPassword() {
     this.accountService.forgotPassword(this.requestModel)
       .subscribe(
-        (data: ForgotPasswordModel) => {
+        (success) => {
           this.isEmailSended = true
         });
   }

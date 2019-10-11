@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../../services/account.service';
-import { ResetPasswordModel } from '../../../../models/resetPasswordModel';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResetPasswordRequestModel } from 'src/app/models/accountModels/resetPasswordRequestModel';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -34,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
 
   resetPassword() {
     this.accountService.resetPassword(this.requestModel).subscribe(
-      (data: ResetPasswordModel) => {
+      (sucess) => {
         this.isPasswordChanged = true
       });
   }

@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SignUpModel } from 'src/app/models/signUpModel';
-import { SignInModel } from 'src/app/models/signInModel';
-import { ForgotPasswordModel } from 'src/app/models/forgotPasswordModel';
-import { ResetPasswordModel } from 'src/app/models/resetPasswordModel';
 import { environment } from 'src/environments/environment'
 import { SignInRequestModel } from 'src/app/models/accountModels/signInRequestModel';
 import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
@@ -30,20 +26,4 @@ export class AccountService {
     resetPassword(requestModel: ResetPasswordRequestModel) {
         return this.http.post(environment.apiUrl + 'Account/ResetPassword', requestModel);
     }
-
-
-
-
-
-    createUser(user: SignUpModel) {
-        return this.http.post(environment.apiUrl + 'Account/SignUp', user);
-    }
-
-    async logIn(signInModel: SignInModel): Promise<SignInModel> {
-        return await this.http.post<SignInModel>(environment.apiUrl + 'Account/SignIn', signInModel).toPromise();
-    }
-
-
-
-
 }
