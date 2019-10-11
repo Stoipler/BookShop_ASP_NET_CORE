@@ -54,10 +54,14 @@
                             <div class="dropdown-divider"></div>
                             <div class="dropDownScrollable">
                                 <div *ngFor="let a of authorRequestModel.ignoreAuthorsList">
-                                    {{a.name}}
-                                    <button class="btn" (click)="removeFromList(a)">
-                    <fa-icon [icon]="faTimes"></fa-icon>
-                  </button>
+                                    <div class="row align-items-center">
+                                        <div class="col-9">
+                                            {{a.name}}
+                                        </div>
+                                        <div class="col-2" (click)="removeFromList(a)">
+                                            <fa-icon [icon]="faTimes"></fa-icon>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -164,4 +168,4 @@
         </tr>
     </tbody>
 </table>
-<ngb-pagination class="row justify-content-center" [collectionSize]="printedEditionsResponseModel.count" [(page)]="printedEditionsRequestModel.page" [pageSize]="printedEditionsRequestModel.pageSize" [maxSize]="3" (pageChange)="getPrintedEditions()"></ngb-pagination>
+<ngb-pagination class="row justify-content-center" [collectionSize]="printedEditionsResponseModel.count" [(page)]="printedEditionsRequestModel.page" [pageSize]="printedEditionsRequestModel.pageSize" [maxSize]="3" (pageChange)="getPrintedEditions()"></ngb-pagination>z

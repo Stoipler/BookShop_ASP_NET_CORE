@@ -4,7 +4,7 @@
     </div>
     <div class="form-group">
         <label>Your E-mail</label>
-        <input class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+        <input class="form-control" name="email" [(ngModel)]="signInRequestModel.email" #email="ngModel" required />
         <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
             Please enter correct E-mail
         </div>
@@ -14,7 +14,7 @@
             <label for="password">Password</label>
             <a class="btn btn-link" [routerLink]="'/account/forgotpassword'">Forgot your password?</a>
         </div>
-        <input type="password" id="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required />
+        <input type="password" id="password" class="form-control" name="password" [(ngModel)]="signInRequestModel.password" #password="ngModel" required />
         <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
             Please enter correct password
         </div>
@@ -23,12 +23,12 @@
     <div class="row align-items-center justify-content-center">
         <div class="col-6 d-flex align-items-center justify-content-center">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="user.rememberMe">
+                <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe">
                 <label class="custom-control-label" for="rememberMe">Remember me</label>
             </div>
         </div>
         <div class="col-6 d-flex align-items-center justify-content-center">
-            <button type="button" class="btn btn-success" [disabled]=" email.invalid|| password.invalid " (click)="logIn()">Sign In</button>
+            <button type="button" class="btn btn-success" [disabled]=" email.invalid|| password.invalid " (click)="signIn()">Sign In</button>
         </div>
     </div>
     <div class="row justify-content-center">

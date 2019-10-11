@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { SignInModel } from 'src/app/models/signInModel';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SignInRequestModel } from 'src/app/models/accountModels/signInRequestModel';
+import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,26 +12,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
+  signInRequestModel: SignInRequestModel;
   returnUrl: string;
-  error = '';
-  user: SignInModel = new SignInModel();
+
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
     private router: Router) {
-    if (localStorage.getItem('currentUser')) {
-      this.router.navigate(['/']);
-    }
+    this.signInRequestModel = new SignInRequestModel();
   }
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-
-  async logIn() {
-    const result: SignInModel = await this.accountService.logIn(this.user);
-    localStorage.setItem('currentUser', JSON.stringify(result));
-    this.router.navigate([this.returnUrl]);
-
+  signIn() {
+    this.accountService.signIn(this.signInRequestModel).subscribe(
+      (data: SignInResponseModel) => {
+        const user:SignInResponseModel=new SignInResponseModel();
+        user.token=data.token;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.router.navigate([this.returnUrl]);
+      }
+    )
   }
 }

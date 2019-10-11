@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../../services/account.service';
-import { ForgotPasswordModel } from '../../../../models/forgotPasswordModel';
+import { ForgotPasswordRequestModel } from 'src/app/models/accountModels/forgotPasswordRequestModel';
+import { AccountService } from 'src/app/services/account.service';
+import { ForgotPasswordModel } from 'src/app/models/forgotPasswordModel';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,11 +11,12 @@ import { ForgotPasswordModel } from '../../../../models/forgotPasswordModel';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  user: ForgotPasswordModel = new ForgotPasswordModel();
+  requestModel: ForgotPasswordRequestModel;
   isEmailSended: boolean = false;
-  isCorrectEmail: boolean = true;
+
   constructor(private accountService: AccountService) {
-    this.user.redirectUrl = 'http://localhost:4200/account/resetpassword';
+    this.requestModel = new ForgotPasswordRequestModel();
+    this.requestModel.redirectUrl = 'http://localhost:4200/account/resetpassword';
   }
 
   ngOnInit() {
@@ -22,13 +24,10 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPassword() {
-    this.accountService.forgotPassword(this.user)
+    this.accountService.forgotPassword(this.requestModel)
       .subscribe(
         (data: ForgotPasswordModel) => {
           this.isEmailSended = true
-        },
-        (error) => {
-          this.isCorrectEmail = false;
         });
   }
 }

@@ -32,10 +32,10 @@ namespace BookShop.BusinessLogic.Services
                 return responseModel;
             }
             ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
-            responseModel.Id = user.Id;
             responseModel.Token = _jwtHelper.GenerateAccessToken(user);
             return responseModel;
         }
+
         public async Task<SignUpResponseModel> SignUpAsync(SignUpRequestModel requestModel)
         {
             ApplicationUser user = requestModel.MapToEntity();

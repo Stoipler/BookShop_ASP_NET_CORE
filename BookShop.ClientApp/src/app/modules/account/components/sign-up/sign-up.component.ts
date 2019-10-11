@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../../services/account.service';
-import { SignUpModel } from '../../../../models/signUpModel';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { SignUpRequestModel } from 'src/app/models/accountModels/signUpRequestModel';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,25 +9,23 @@ import { Router, RouterEvent, NavigationEnd } from '@angular/router';
   providers: [AccountService]
 })
 export class SignUpComponent implements OnInit {
-  angForm: FormGroup;
-  user: SignUpModel = new SignUpModel();
-  isSignUpSuccessful:boolean=false;
-  constructor(private accountService: AccountService,private router: Router) { 
-    this.user.redirectUrl='http://localhost:4200/account/emailconfirmed'
+
+  signUpRequestModel: SignUpRequestModel;
+  isSignUpSuccessful: boolean = false;
+
+  constructor(private accountService: AccountService) {
+    this.signUpRequestModel = new SignUpRequestModel();
+    this.signUpRequestModel.redirectUrl = 'http://localhost:4200/account/emailconfirmed'
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit() {
+
   }
-
-  register() {
-    this.accountService.createUser(this.user)
-      .subscribe(
-        (data: SignUpModel) => {
-          this.isSignUpSuccessful=true;
-        },
-        (error) => {
-
-        });
+  signUp() {
+    this.accountService.signUp(this.signUpRequestModel).subscribe(
+      () => {
+        this.isSignUpSuccessful = true;
+      }
+    );
   }
 }

@@ -6,6 +6,7 @@ namespace BookShop.BusinessLogic.Models.AccountModels
     {
         [Required]
         public string Email { get; set; }
+        [Required]
         public string RedirectUrl { get; set; }
     }
 }

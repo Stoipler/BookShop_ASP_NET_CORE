@@ -3,6 +3,7 @@ import { AccountService } from '../../../../services/account.service';
 import { ResetPasswordModel } from '../../../../models/resetPasswordModel';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ResetPasswordRequestModel } from 'src/app/models/accountModels/resetPasswordRequestModel';
 
 @Component({
   selector: 'app-reset-password',
@@ -11,31 +12,30 @@ import { Subscription } from 'rxjs';
   providers: [AccountService]
 })
 export class ResetPasswordComponent implements OnInit {
-  user: ResetPasswordModel = new ResetPasswordModel();
+  requestModel: ResetPasswordRequestModel;
   isPasswordChanged: boolean = false;
   private querySubscription: Subscription;
 
-  constructor(private accountService: AccountService, private route: ActivatedRoute) {
+  constructor(private accountService: AccountService,
+    private route: ActivatedRoute) {
+
+    this.requestModel = new ResetPasswordRequestModel();
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
-        this.user.code = queryParam['code'];
-        this.user.email = queryParam['email'];
+        this.requestModel.code = queryParam['code'];
+        this.requestModel.email = queryParam['email'];
       }
     );
   }
-
 
   ngOnInit() {
 
   }
 
-  resetPassword(){
-    this.accountService.resetPassword(this.user).subscribe(
-      (data: ResetPasswordModel) => {this.isPasswordChanged=true
-      },
-      (error) => {
-        
-
+  resetPassword() {
+    this.accountService.resetPassword(this.requestModel).subscribe(
+      (data: ResetPasswordModel) => {
+        this.isPasswordChanged = true
       });
   }
 }

@@ -23,7 +23,6 @@ namespace BookShop.Presentation.Controllers
             UserResponseModel responseModel = await _userService.GetUsersAsync(requestModel);
             return responseModel;
         }
-
         [HttpPost(Name = "UpdateUser")]
         public async Task UpdateUser([FromBody]UserModel requestModel)
         {

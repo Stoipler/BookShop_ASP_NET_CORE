@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faPencilAlt, faBookDead, faPlusCircle, faBackspace } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faPlusCircle, faBackspace, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Currency } from 'src/app/enums/currency';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 import { AuthorService } from 'src/app/services/author.service';
@@ -31,6 +31,7 @@ export class ProductManagementComponent implements OnInit {
   Currency = Currency;
   SortCriteria = SortCriteria;
   PrintedEditionType = PrintedEditionType;
+  faTimes=faTimes;
   faPencilAlt = faPencilAlt;
   faBackspace = faBackspace;
   faPlusCircle = faPlusCircle;
