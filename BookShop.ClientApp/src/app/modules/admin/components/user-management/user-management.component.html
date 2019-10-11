@@ -1,1 +1,58 @@
-<p>user-management works!</p>
+<div class="container">
+    <input type="text" autocomplete="off" (keyup)="getUsers()" class="form-control" id="authorsSearch" [(ngModel)]="userRequestModel.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Type there for search user by first name, last name or email">
+
+    <table class="container table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">User name</th>
+                <th scope="col">User e-mail</th>
+                <th scope="col">Is removed</th>
+                <th scope="col">Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userResponseModel.userModels">
+                <th scope="col">{{user.id}}</th>
+                <th scope="col">{{user.firstName}} {{user.lastName}}</th>
+                <th scope="col">{{user.email}}</th>
+                <th scope="col">
+                    <div class="custom-control custom-switch d-flex justify-content-center">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch{{user.id}}" checked="" (click)="changeUserStatus(user)" [(ngModel)]="user.isRemoved" #isRemoved="ngModel">
+                        <label class="custom-control-label" for="customSwitch{{user.id}}"></label>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="btn-group">
+                        <div class="btn btn-sm btn-danger" (click)="editUser(user)" (click)="openModal(userEditor)">
+                            <fa-icon [icon]="faPencilAlt"></fa-icon>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="footer">
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="userResponseModel.count" [(page)]="userRequestModel.page" [pageSize]="userRequestModel.pageSize" [maxSize]="3" (pageChange)="getUsers()"></ngb-pagination>
+</div>
+
+<ng-template #userEditor let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">User editor</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <label for="firstName">First Name:</label>
+        <input type="text" autocomplete="off" class="form-control" id="firstName" [(ngModel)]="userModel.firstName" #firstName="ngModel" placeholder="First name">
+        <label for="lastName">Last Name:</label>
+        <input type="text" autocomplete="off" class="form-control" id="lastName" [(ngModel)]="userModel.lastName" #lastName="ngModel" placeholder="Last name">
+        <label for="email">Email:</label>
+        <input [disabled]="" type="email" class="form-control" id="email" [(ngModel)]="userModel.email" #email="ngModel" placeholder="email">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="saveChanges()">Save</button>
+    </div>
+</ng-template>

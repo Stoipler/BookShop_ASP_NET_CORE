@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this.isOnEditing=!(this.isOnEditing);
   }
   updateUserProfile(){
-    this.userService.updateUser(this.user).subscribe();
+    // this.userService.updateUser(this.user).subscribe();
     this.setEditorMode();
   }
   cancel(){

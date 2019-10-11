@@ -31,7 +31,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             await _context.SaveChangesAsync();
             return item;
         }
-        public async Task Update(TEntity item)
+        public async Task UpdateAsync(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             await  _context.SaveChangesAsync();

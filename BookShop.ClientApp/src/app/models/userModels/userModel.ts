@@ -1,10 +1,11 @@
-export class UserModel{
-    firstName:string;
-    lastName:string;
-    email:string;
-    isRemoved:boolean;
+export class UserModel {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    isRemoved: boolean;
 
-    constructor(){
-        
+    constructor() {
+
     }
 }

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { UserResponseModel } from 'src/app/models/userModels/userResponseModel';
 import { UserRequestModel } from 'src/app/models/userModels/userRequestModel';
+import { UserModel } from 'src/app/models/userModels/userModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +18,9 @@ export class UserService {
   getUsers(requestModel: UserRequestModel): Observable<UserResponseModel> {
     return this.http.post<UserResponseModel>(environment.apiUrl + 'User/GetUsers', requestModel);
   }
-
+  updateUser(requestModel: UserModel) {
+    return this.http.post(environment.apiUrl + 'User/UpdateUser', requestModel);
+  }
 
 
 
@@ -27,8 +30,8 @@ export class UserService {
   async getUser(id: number): Promise<UserProfileModel> {
     return await this.http.get<UserProfileModel>(environment.apiUrl + 'user/getbyid/' + id).toPromise();
   }
-  updateUser(user: UserProfileModel) {
-    return this.http.post(environment.apiUrl + 'user/update', user);
-  }
+  // updateUser(user: UserProfileModel) {
+  //   return this.http.post(environment.apiUrl + 'user/update', user);
+  // }
 
 }

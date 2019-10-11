@@ -58,7 +58,7 @@ namespace BookShop.BusinessLogic.Services
             List<AuthorInBook> listToRemove = printedEdition.AuthorInBooks.Where(item => !authorIdsFromModel.Contains(item.AuthorId)).ToList();
             List<AuthorInBook> listToCreate = model.AuthorModels.Where(item => !authorIdsFromEntity.Contains(item.Id)).Select(item => new AuthorInBook { PrintedEditionId = printedEdition.PrintedEdition.Id, AuthorId = item.Id }).ToList();
 
-            await _printedEditionRepository.Update(printedEdition.PrintedEdition);
+            await _printedEditionRepository.UpdateAsync(printedEdition.PrintedEdition);
             if (!(listToRemove is null))
             {
                 await _authorInBookRepository.RemoveRangeAsync(listToRemove);

@@ -39,7 +39,7 @@ namespace BookShop.BusinessLogic.Services
         {
             Author author = await _authorRepository.GetByIdAsync(model.Id);
             author.Name = model.Name;
-            await _authorRepository.Update(author);
+            await _authorRepository.UpdateAsync(author);
         }
         public async Task Remove(int id)
         {

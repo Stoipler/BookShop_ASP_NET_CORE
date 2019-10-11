@@ -7,5 +7,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
     {
 
         Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel);
+        Task UpdateUserAsync(UserModel requestModel);
     }
 }

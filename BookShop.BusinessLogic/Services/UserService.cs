@@ -24,13 +24,17 @@ namespace BookShop.BusinessLogic.Services
         public async Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel)
         {
             UserRequestParameters parameters = requestModel.MapToRequestParameters();
-            (List<ApplicationUser> users,int count) = await _userRepository.GetUsersAsync(parameters);
+            (List<ApplicationUser> users, int count) = await _userRepository.GetUsersAsync(parameters);
             List<UserModel> userModels = users.Select(item => new UserModel(item)).ToList();
-            UserResponseModel responseModel = new UserResponseModel() {Count=count, UserModels=userModels};
+            UserResponseModel responseModel = new UserResponseModel() { Count = count, UserModels = userModels };
             return responseModel;
         }
 
-
-
+        public async Task UpdateUserAsync(UserModel requestModel)
+        {
+            ApplicationUser user = await _userRepository.GetByIdAsync(requestModel.Id);
+            user = requestModel.MapToEntity(user);
+            await _userRepository.UpdateAsync(user);
+        }
     }
 }
