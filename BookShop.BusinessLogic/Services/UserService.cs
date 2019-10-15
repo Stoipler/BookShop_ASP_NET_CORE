@@ -32,7 +32,6 @@ namespace BookShop.BusinessLogic.Services
             UserProfileResponseModel responseModel = new UserProfileResponseModel(user);
             return responseModel;
         }
-
         public async Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel)
         {
             UserRequestParameters parameters = requestModel.MapToRequestParameters();
@@ -41,14 +40,12 @@ namespace BookShop.BusinessLogic.Services
             UserResponseModel responseModel = new UserResponseModel() { Count = count, UserModels = userModels };
             return responseModel;
         }
-
         public async Task UpdateUserAsync(UserModel requestModel)
         {
             ApplicationUser user = await _userRepository.GetByIdAsync(requestModel.Id);
             user = requestModel.MapToEntity(user);
             await _userRepository.UpdateAsync(user);
         }
-
         public async Task UpdateUserProfileAsync(UserProfileRequestModel requestModel)
         {
             ApplicationUser user = await _userRepository.GetByIdAsync(requestModel.Id);

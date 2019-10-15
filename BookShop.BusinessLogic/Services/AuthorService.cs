@@ -32,7 +32,7 @@ namespace BookShop.BusinessLogic.Services
         }
         public async Task CreateAsync(AuthorModel requestModel)
         {
-            Author author =requestModel.MapToEntity();
+            Author author = requestModel.MapToEntity();
             await _authorRepository.CreateAsync(author);
         }
         public async Task Update(AuthorModel model)

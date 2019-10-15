@@ -34,10 +34,9 @@ namespace BookShop.BusinessLogic.Services
             }
             ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
             string userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-            responseModel.Token = _jwtHelper.GenerateAccessToken(user,userRole);
+            responseModel.Token = _jwtHelper.GenerateAccessToken(user, userRole);
             return responseModel;
         }
-
         public async Task<SignUpResponseModel> SignUpAsync(SignUpRequestModel requestModel)
         {
             ApplicationUser user = requestModel.MapToEntity();

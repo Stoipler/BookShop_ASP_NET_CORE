@@ -7,7 +7,6 @@ using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.Services
 {

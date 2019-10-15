@@ -28,7 +28,6 @@ namespace BookShop.BusinessLogic
             services.AddTransient<EmailHelper>();
             services.AddTransient<JwtHelper>();
             services.AddTransient<IAuthorService, AuthorService>();
-            services.AddTransient<ICartService, CartService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
@@ -54,7 +53,6 @@ namespace BookShop.BusinessLogic
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             Initialization.IdentityInitalization.Seed(serviceProvider);
-
         }
     }
 }
