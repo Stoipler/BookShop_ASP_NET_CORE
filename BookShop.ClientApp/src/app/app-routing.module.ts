@@ -14,10 +14,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'author',
-    loadChildren: () => import('src/app/modules/author/author.module').then(mod => mod.AuthorModule)
-  },
-  {
     path: 'printededition',
     loadChildren: () => import('src/app/modules/printed-edition/printed-edition.module').then(mod => mod.PrintedEditionModule),
   },

@@ -7,12 +7,12 @@ import { AuthorResponseModel } from 'src/app/models/authorModels/authorResponseM
 import { faPencilAlt, faBackspace, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-authors',
-  templateUrl: './authors.component.html',
-  styleUrls: ['./authors.component.css'],
+  selector: 'app-author-management',
+  templateUrl: './author-management.component.html',
+  styleUrls: ['./author-management.component.css'],
   providers: [AuthorService]
 })
-export class AuthorsComponent implements OnInit {
+export class AuthorManagementComponent implements OnInit {
 
   authorRequestModel: AuthorRequestModel;
   authorResponseModel: AuthorResponseModel;

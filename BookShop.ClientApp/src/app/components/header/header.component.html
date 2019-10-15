@@ -9,9 +9,6 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" [routerLink]="'/author'">Authors</a>
-                </li>
-                <li class="nav-item active">
                     <a class="nav-link" [routerLink]="'/printededition'">Catalog</a>
                 </li>
             </ul>
@@ -22,6 +19,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu left" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
                         <a class="nav-link" [routerLink]="'/admin/productmanagement'">Products management</a>
+                        <a class="nav-link" [routerLink]="'/admin/authormanagement'">Authors management</a>
                         <a class="nav-link" [routerLink]="'/admin/ordermanagement'">Orders management</a>
                         <a class="nav-link" [routerLink]="'/admin/usermanagement'">Users management</a>
                     </div>

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { AppComponent } from 'src/app/components/app/app.component';
 import { HeaderComponent } from 'src/app/components/header/header.component';
-import { AuthorModule } from 'src/app/modules/author/author.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrintedEditionModule } from 'src/app/modules/printed-edition/printed-edition.module';
 import { AdminModule } from 'src/app/modules/admin/admin.module';
@@ -25,7 +24,6 @@ import { ToastContainerComponent } from './components/toast-container/toast-cont
   ],
   imports: [
     AccountModule,
-    AuthorModule,
     AdminModule,
     PrintedEditionModule,
     BrowserModule,

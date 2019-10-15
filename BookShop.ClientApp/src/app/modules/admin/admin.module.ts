@@ -10,16 +10,17 @@ import { ProductManagementComponent } from 'src/app/modules/admin/components/pro
 import { OrderManagementComponent } from 'src/app/modules/admin/components/order-management/order-management.component';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { AuthorManagementComponent } from 'src/app/modules/admin/components/author-management/author-management.component';
 
 @NgModule({
-  declarations: [ProductManagementComponent, OrderManagementComponent, UserManagementComponent],
+  declarations: [ProductManagementComponent, OrderManagementComponent, UserManagementComponent, AuthorManagementComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     NgbModule,
     FontAwesomeModule,
-  ], 
-  providers:[PrintedEditionService,AuthorService]
+  ],
+  providers: [PrintedEditionService, AuthorService]
 })
 export class AdminModule { }
