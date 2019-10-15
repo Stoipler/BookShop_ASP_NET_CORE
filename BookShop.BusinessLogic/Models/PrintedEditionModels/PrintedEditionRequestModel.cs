@@ -1,5 +1,5 @@
-﻿using BookShop.DataAccess.Models;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+﻿using BookShop.DataAccess.Models.RequestParameters;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.PrintedEditionModels
 {

@@ -1,6 +1,7 @@
-﻿using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+﻿using static BookShop.DataAccess.Common.Constants.DataAccessConstants;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
-namespace BookShop.DataAccess.Models
+namespace BookShop.DataAccess.Models.RequestParameters
 {
     public class PrintedEditionRequestParameters
     {
@@ -13,13 +14,10 @@ namespace BookShop.DataAccess.Models
         public PrintedEditionType PrintedEditionType { get; set; }
         public PrintedEditionRequestParameters()
         {
-            Page = 1;
-            PageSize = 6;
+            Page = DefaultPageNumber;
+            PageSize = DefaultPageSize;
             KeyWord = string.Empty;
             PriceTo = decimal.MaxValue;
-            PriceFrom = 0;
-            SortCriteria = SortCriteria.None;
-            PrintedEditionType = PrintedEditionType.None;
         }
     }
 }

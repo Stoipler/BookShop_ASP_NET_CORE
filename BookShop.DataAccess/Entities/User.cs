@@ -1,6 +1,6 @@
-﻿using System;
-using BookShop.DataAccess.Entities.Interfaces;
+﻿using BookShop.DataAccess.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace BookShop.DataAccess.Entities
 {

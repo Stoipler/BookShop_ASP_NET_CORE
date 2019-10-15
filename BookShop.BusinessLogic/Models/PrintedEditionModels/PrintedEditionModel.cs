@@ -3,7 +3,7 @@ using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects;
 using System.Collections.Generic;
 using System.Linq;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.PrintedEditionModels
 {
@@ -29,15 +29,15 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             Type = entity.Type;
         }
 
-        public PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition):this(printedEdition.PrintedEdition)
+        public PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition) : this(printedEdition.PrintedEdition)
         {
-            if(!(printedEdition.AuthorInBooks is null))
+            if (!(printedEdition.AuthorInBooks is null))
             {
                 AuthorModels = printedEdition.AuthorInBooks.Select(item => new AuthorModel(item.Author)).ToList();
             }
         }
 
-        internal PrintedEdition MapToEntity(PrintedEdition entity=null)
+        internal PrintedEdition MapToEntity(PrintedEdition entity = null)
         {
             if (entity is null)
             {

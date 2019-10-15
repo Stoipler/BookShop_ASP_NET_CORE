@@ -18,7 +18,8 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
 
         public async Task<(List<Order>, int)> GetByParmeters(OrderRequestParameters parameters)
         {
-            IQueryable<Order> orders = _dbSet.Include(item=>item.ApplicationUser);
+            IQueryable<Order> orders = _dbSet.Include(item => item.ApplicationUser);
+
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 orders = orders.Where(item =>
@@ -26,16 +27,21 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                 item.ApplicationUser.FirstName.Contains(parameters.KeyWord) ||
                 item.ApplicationUser.LastName.Contains(parameters.KeyWord));
             }
+
             int count = await orders.CountAsync();
             int countToSkip = (--parameters.Page) * parameters.PageSize;
+
             orders = orders.Skip(countToSkip).Take(parameters.PageSize);
+
             List<Order> response = await orders.ToListAsync();
+
             return (response, count);
         }
 
         public async Task<List<Order>> GetByUserId(int id)
         {
             List<Order> orders = await _dbSet.Where(item => item.ApplicationUserId == id).ToListAsync();
+
             return orders;
         }
     }

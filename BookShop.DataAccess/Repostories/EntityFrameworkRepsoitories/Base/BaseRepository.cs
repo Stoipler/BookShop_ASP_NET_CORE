@@ -2,9 +2,7 @@
 using BookShop.DataAccess.Entities.Interfaces;
 using BookShop.DataAccess.Repostories.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
@@ -20,31 +18,38 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual async Task <IEnumerable<TEntity>> GetAsync()
+        public async Task<IEnumerable<TEntity>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            List<TEntity> result = await _dbSet.ToListAsync();
+            return result;
         }
 
         public async Task<TEntity> CreateAsync(TEntity item)
         {
             await _dbSet.AddAsync(item);
+
             await _context.SaveChangesAsync();
+
             return item;
         }
         public async Task UpdateAsync(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
-            await  _context.SaveChangesAsync();
+
+            await _context.SaveChangesAsync();
         }
-        public virtual async Task Remove(TEntity item)
+        public async Task Remove(TEntity item)
         {
             _dbSet.Remove(item);
+
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            TEntity enity = await _dbSet.FindAsync(id);
+
+            return enity;
         }
     }
 

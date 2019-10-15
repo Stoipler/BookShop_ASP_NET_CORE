@@ -1,7 +1,7 @@
 ﻿using BookShop.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Initialization
 {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using BookShop.DataAccess.Entities.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookShop.DataAccess.Entities
 {
@@ -6,9 +7,9 @@ namespace BookShop.DataAccess.Entities
     {
         [ForeignKey("Author")]
         public int AuthorId { get; set; }
-        public Author Author { get; set; }
         [ForeignKey("PrintedEdition")]
         public int PrintedEditionId { get; set; }
+        public Author Author { get; set; }
         public PrintedEdition PrintedEdition { get; set; }
     }
 }

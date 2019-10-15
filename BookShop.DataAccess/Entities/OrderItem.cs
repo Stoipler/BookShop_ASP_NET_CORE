@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using static BookShop.DataAccess.Entities.Enums.Enums.EntityFields;
+﻿using BookShop.DataAccess.Entities.Base;
+using System.ComponentModel.DataAnnotations.Schema;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Entities
 {
@@ -7,9 +8,9 @@ namespace BookShop.DataAccess.Entities
     {
         public decimal Amount { get; set; }
         public Currency Currency { get; set; }
+        public int Count { get; set; }
         [ForeignKey("PrintedEdition")]
         public int PrintedEditionId { get; set; }
         public PrintedEdition PrintedEdition { get; set; }
-        public int Count { get; set; }
     }
 }

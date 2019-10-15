@@ -9,15 +9,15 @@ namespace BookShop.BusinessLogic.Common
     {
         public async Task SendEmailAsync(string userEmail, string messageSubject, string message)
         {
-            var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("BookShopStoipler@gmail.com", "Admin");
-            var subject = messageSubject;
-            var to = new EmailAddress(userEmail, "User");
-            var plainTextContent = "";
-            var htmlContent = message;
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
+            string apiKey = Environment.GetEnvironmentVariable("API_KEY");
+            SendGridClient client = new SendGridClient(apiKey);
+            EmailAddress senderInfo = new EmailAddress("BookShopStoipler@gmail.com", "Admin");
+            EmailAddress receiverInfo = new EmailAddress(userEmail, "User");
+            string subject = messageSubject;
+            string plainTextContent = string.Empty;
+            string htmlContent = message;
+            SendGridMessage sendGridMessage = MailHelper.CreateSingleEmail(senderInfo, receiverInfo, subject, plainTextContent, htmlContent);
+            await client.SendEmailAsync(sendGridMessage);
         }
     }
 }

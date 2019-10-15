@@ -20,12 +20,11 @@ namespace BookShop.DataAccess.AppContext
         {
             var sqlServerOptionsExtension =
                    options.FindExtension<SqlServerOptionsExtension>();
-            if (sqlServerOptionsExtension != null)
+            if (!(sqlServerOptionsExtension is null))
             {
                 _connectionString = sqlServerOptionsExtension.ConnectionString;
             }
             Database.EnsureCreated();
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,9 +35,9 @@ namespace BookShop.DataAccess.AppContext
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AuthorInBook>()
-                .HasOne(e => e.Author);
+                .HasOne(entity => entity.Author);
             modelBuilder.Entity<AuthorInBook>()
-               .HasOne(e => e.PrintedEdition);
+               .HasOne(entity => entity.PrintedEdition);
             Initialization.InitialData.Seed(modelBuilder);
         }
     }

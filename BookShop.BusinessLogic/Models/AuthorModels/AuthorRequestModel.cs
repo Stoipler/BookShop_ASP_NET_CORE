@@ -1,4 +1,4 @@
-﻿using BookShop.DataAccess.Models;
+﻿using BookShop.DataAccess.Models.RequestParameters;
 using System.Collections.Generic;
 using System.Linq;
 

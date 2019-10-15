@@ -27,10 +27,14 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
                 item.Email.Contains(parameters.KeyWord) ||
                 item.UserName.Contains(parameters.KeyWord));
             }
+
             int count = await users.CountAsync();
             int countToSkip = (--parameters.Page) * parameters.PageSize;
+
             users = users.Skip(countToSkip).Take(parameters.PageSize);
+
             List<ApplicationUser> response = await users.ToListAsync();
+
             return (response, count);
         }
     }

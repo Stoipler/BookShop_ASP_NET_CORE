@@ -1,4 +1,6 @@
-﻿namespace BookShop.DataAccess.Models.RequestParameters
+﻿using static BookShop.DataAccess.Common.Constants.DataAccessConstants;
+
+namespace BookShop.DataAccess.Models.RequestParameters
 {
     public class OrderRequestParameters
     {
@@ -7,8 +9,8 @@
         public string KeyWord { get; set; }
         public OrderRequestParameters()
         {
-            Page = 1;
-            PageSize = 10;
+            Page = DefaultPageNumber;
+            PageSize = DefaultPageSize;
             KeyWord = string.Empty;
         }
     }

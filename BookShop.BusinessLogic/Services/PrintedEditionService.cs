@@ -1,7 +1,7 @@
 ﻿using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
-using BookShop.DataAccess.Models;
+using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;

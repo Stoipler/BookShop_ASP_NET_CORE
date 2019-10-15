@@ -1,5 +1,4 @@
 ﻿using BookShop.DataAccess.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects

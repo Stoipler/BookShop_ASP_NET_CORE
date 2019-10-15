@@ -16,12 +16,14 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
         public async Task AddRangeAsync(List<AuthorInBook> authorInBooks)
         {
             await _dbSet.AddRangeAsync(authorInBooks);
+
             await _context.SaveChangesAsync();
         }
 
         public async Task RemoveRangeAsync(List<AuthorInBook> listToRemove)
         {
             _dbSet.RemoveRange(listToRemove);
+
             await _context.SaveChangesAsync();
         }
     }

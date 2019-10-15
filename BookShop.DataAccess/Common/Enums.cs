@@ -1,4 +1,4 @@
-﻿namespace BookShop.DataAccess.Entities.Enums
+﻿namespace BookShop.DataAccess.Common
 {
     public partial class Enums
     {

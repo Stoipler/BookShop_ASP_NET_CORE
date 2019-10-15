@@ -1,5 +1,5 @@
 ﻿using BookShop.DataAccess.Entities;
-using BookShop.DataAccess.Models;
+using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.ObjectModels.PrintedEditionWithNestedObjects;
 using BookShop.DataAccess.Repostories.Interfaces.Base;
 using System.Collections.Generic;

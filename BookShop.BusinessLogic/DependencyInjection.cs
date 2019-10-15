@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stripe;
 using System;
+using AccountService = BookShop.BusinessLogic.Services.AccountService;
+using OrderService = BookShop.BusinessLogic.Services.OrderService;
 
 namespace BookShop.BusinessLogic
 {
@@ -22,19 +25,27 @@ namespace BookShop.BusinessLogic
             services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUserRepository, UserRepository>();
+
             services.AddTransient<EmailHelper>();
             services.AddTransient<JwtHelper>();
-            services.AddTransient<IAuthorService, AuthorService>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddTransient<IPrintedEditionService, PrintedEditionService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPrintedEditionService, PrintedEditionService>();
+
+            services.AddTransient<CustomerService>();
+            services.AddTransient<ChargeService>();
+
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
