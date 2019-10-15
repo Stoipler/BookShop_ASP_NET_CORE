@@ -1,5 +1,6 @@
 ﻿using BookShop.BusinessLogic.PrintedEditionModels;
 using BookShop.BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace BookShop.Presentation.Controllers
             PrintedEditionResponseModel responseModel = await _printedEditionService.GetAsync(requestModel);
             return responseModel;
         }
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreatePrintedEditon")]
         public async Task CreatePrintedEditon([FromBody]PrintedEditionModel model)
         {
@@ -31,6 +33,7 @@ namespace BookShop.Presentation.Controllers
         {
             return await _printedEditionService.GetByIdAsync(id);
         }
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "UpdatePrintedEdition")]
         public async Task<IActionResult> UpdatePrintedEdition([FromBody]PrintedEditionModel model)
         {

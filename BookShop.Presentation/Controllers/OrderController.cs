@@ -44,9 +44,10 @@ namespace BookShop.Presentation.Controllers
             OrdersResponseModel result = await _orderService.GetOrdersForUser();
             return result;
         }
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "GetOrdersForAdmin")]
         public async Task<OrdersResponseModel> GetOrdersForAdmin([FromBody] OrdersRequestModel requestModel)
-         {
+        {
             OrdersResponseModel responseModel = await _orderService.GetOrdersForAdmin(requestModel);
             return responseModel;
         }

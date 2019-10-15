@@ -16,7 +16,7 @@
                 </li>
             </ul>
             <div class="row align-items-center justify-content-around d-flex">
-                <div class="col-4 justify-content-center d-flex nav-item dropdown" *ngIf="isUserLogedOn()">
+                <div class="col-4 justify-content-center d-flex nav-item dropdown" *ngIf="isAdmin()">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <fa-icon [icon]="faTools" size="3x" [styles]="{'color':'white'}"></fa-icon>
                     </a>
@@ -36,16 +36,16 @@
                         <fa-icon [icon]="faUserCircle" size="3x" [styles]="{'color':'white'}"></fa-icon>
                     </a>
                     <div class="dropdown-menu dropdown-menu left" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <div *ngIf="!isUserLogedOn()">
+                        <div *ngIf="!isLogedOn()">
                             <a class="dropdown-item" [routerLink]="'/account/signin'">Sign In</a>
                             <a class="dropdown-item" [routerLink]="'/account/signup'">Sign Up</a>
                             <a class="dropdown-item" [routerLink]="'/account/forgotpassword'">Password assistance</a>
                         </div>
-                        <div *ngIf="isUserLogedOn()">
+                        <div *ngIf="isLogedOn()">
                             <a class="dropdown-item" [routerLink]="'/user/profile'">My profile</a>
                             <a class="dropdown-item" [routerLink]="'/user/orders'">My orders</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item btn" *ngIf="isUserLogedOn()" (click)="logout()">Logout</a>
+                            <a class="dropdown-item btn" *ngIf="isLogedOn()" (click)="logout()">Logout</a>
                         </div>
                     </div>
                 </div>

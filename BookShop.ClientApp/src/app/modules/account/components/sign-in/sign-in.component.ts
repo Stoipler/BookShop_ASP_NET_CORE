@@ -23,13 +23,16 @@ export class SignInComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    if (JSON.parse(localStorage.getItem('currentUser'))) {
+      this.router.navigate(['/']);
+    }
   }
 
   signIn() {
     this.accountService.signIn(this.signInRequestModel).subscribe(
       (data: SignInResponseModel) => {
-        const user:SignInResponseModel=new SignInResponseModel();
-        user.token=data.token;
+        const user: SignInResponseModel = new SignInResponseModel();
+        user.token = data.token;
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.router.navigate([this.returnUrl]);
       }

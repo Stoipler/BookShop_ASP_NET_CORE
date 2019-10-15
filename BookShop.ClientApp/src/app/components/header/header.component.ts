@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { faCartPlus,faTools, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faTools, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 
 @Component({
   selector: 'app-header',
@@ -8,22 +9,22 @@ import { faCartPlus,faTools, faUserCircle} from '@fortawesome/free-solid-svg-ico
 })
 export class HeaderComponent implements OnInit {
 
-  faCartPlus=faCartPlus;
-  faTools=faTools;
-  faUserCircle=faUserCircle;
-  constructor() { }
+  faCartPlus = faCartPlus;
+  faTools = faTools;
+  faUserCircle = faUserCircle;
+  constructor(private authHelper: AuthenticationHelper) { }
 
   ngOnInit() {
   }
-  logout(){
-    localStorage.removeItem('currentUser');
-    location.reload();
+  logout() {
+    this.authHelper.logout();
   }
-  isUserLogedOn():boolean{
-    if(localStorage.getItem('currentUser')){
-      return true;
-    }
-    return false;
+  isLogedOn(): boolean {
+    return this.authHelper.isLogedOn();
   }
+  isAdmin(): boolean {
+    return this.authHelper.isAdmin();
+  }
+
 
 }

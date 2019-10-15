@@ -1,6 +1,7 @@
 ﻿using BookShop.BusinessLogic.AuthorModels;
 using BookShop.BusinessLogic.Models.AuthorModels;
 using BookShop.BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace BookShop.Presentation.Controllers
             AuthorResponseModel responseModel = await _authorService.GetAsync(requestModel);
             return responseModel;
         }
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreateAuthor")]
         public async Task<IActionResult> CreateAuthor([FromBody]AuthorModel requestModel)
         {
@@ -32,6 +34,7 @@ namespace BookShop.Presentation.Controllers
             await _authorService.CreateAsync(requestModel);
             return Ok();
         }
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "UpdateAuthor")]
         public async Task<IActionResult> UpdateAuthor([FromBody]AuthorModel model)
         {
@@ -41,11 +44,6 @@ namespace BookShop.Presentation.Controllers
                 return Ok();
             }
             return BadRequest(ModelState);
-        }
-        [HttpDelete("{id}")]
-        public async Task Delete(int id)
-        {
-            await _authorService.Remove(id);
         }
     }
 }

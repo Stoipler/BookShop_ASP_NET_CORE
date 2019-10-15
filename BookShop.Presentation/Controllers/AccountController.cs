@@ -109,7 +109,6 @@ namespace BookShop.Presentation.Controllers
             }
             return Redirect(redirectUrl + "/?code=" + code + "&email=" + email);
         }
-
         private string CreateCallbackUrl(string action, object values)
         {
             string callbackUrl = Url.Action(

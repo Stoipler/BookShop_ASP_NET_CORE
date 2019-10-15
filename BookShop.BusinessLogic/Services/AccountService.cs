@@ -5,6 +5,7 @@ using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services
@@ -32,7 +33,8 @@ namespace BookShop.BusinessLogic.Services
                 return responseModel;
             }
             ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
-            responseModel.Token = _jwtHelper.GenerateAccessToken(user);
+            string userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            responseModel.Token = _jwtHelper.GenerateAccessToken(user,userRole);
             return responseModel;
         }
 

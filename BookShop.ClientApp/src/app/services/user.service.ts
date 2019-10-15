@@ -6,14 +6,16 @@ import { Observable } from 'rxjs';
 import { UserResponseModel } from 'src/app/models/userModels/userResponseModel';
 import { UserRequestModel } from 'src/app/models/userModels/userRequestModel';
 import { UserModel } from 'src/app/models/userModels/userModel';
+import { UserProfileResponseModel } from 'src/app/models/userModels/userProfileResponseModel';
+import { UserProfileRequestModel } from 'src/app/models/userModels/userProfileRequestModel';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   getUsers(requestModel: UserRequestModel): Observable<UserResponseModel> {
     return this.http.post<UserResponseModel>(environment.apiUrl + 'User/GetUsers', requestModel);
@@ -21,17 +23,10 @@ export class UserService {
   updateUser(requestModel: UserModel) {
     return this.http.post(environment.apiUrl + 'User/UpdateUser', requestModel);
   }
-
-
-
-
-
-
-  async getUser(id: number): Promise<UserProfileModel> {
-    return await this.http.get<UserProfileModel>(environment.apiUrl + 'user/getbyid/' + id).toPromise();
+  getUserProfile() {
+    return this.http.get<UserProfileResponseModel>(environment.apiUrl + 'User/GetUserProfile');
   }
-  // updateUser(user: UserProfileModel) {
-  //   return this.http.post(environment.apiUrl + 'user/update', user);
-  // }
-
+  updateUserProfile(requestModel: UserProfileRequestModel) {
+    return this.http.post(environment.apiUrl + 'User/UpdateUserProfile', requestModel);
+  }
 }
