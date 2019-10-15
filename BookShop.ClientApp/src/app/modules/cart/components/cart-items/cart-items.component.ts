@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PaymentHelper } from 'src/app/helpers/payment.helper';
 import { environment } from 'src/environments/environment'
 import { OrderService } from 'src/app/services/order.service';
-import { PaymentDataModel } from 'src/app/models/paymentDataModel';
-import { CartItemModel } from 'src/app/models/cartItemModel';
-import { CartModel } from 'src/app/models/cartModel';
-import { CheckoutItemModel } from 'src/app/models/checkoutItemModel';
+import { PaymentDataModel } from 'src/app/models/orderModels/paymentDataModel';
+import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
+import { CartModel } from 'src/app/models/orderModels/cartModel';
+import { CheckoutItemModel } from 'src/app/models/orderModels/checkoutItemModel';
 
 @Component({
   selector: 'app-cart-items',

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { UserProfileModel } from 'src/app/models/userProfileModel';
 import { UserService } from 'src/app/services/user.service';
-import { UserModel } from 'src/app/models/userModels/userModel';
 import { UserProfileResponseModel } from 'src/app/models/userModels/userProfileResponseModel';
 import { UserProfileRequestModel } from 'src/app/models/userModels/userProfileRequestModel';
 

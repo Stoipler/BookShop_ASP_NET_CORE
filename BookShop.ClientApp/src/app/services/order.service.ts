@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { PaymentDataModel } from 'src/app/models/paymentDataModel';
-import { CartModel } from 'src/app/models/cartModel';
+import { PaymentDataModel } from 'src/app/models/orderModels/paymentDataModel';
+import { CartModel } from 'src/app/models/orderModels/cartModel';
 import { OrderRequestModel } from 'src/app/models/orderModels/orderRequestModel';
 import { Observable } from 'rxjs';
 import { OrderResponseModel } from 'src/app/models/orderModels/orderResponseModel';

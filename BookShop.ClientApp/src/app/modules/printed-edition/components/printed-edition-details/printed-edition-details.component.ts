@@ -3,7 +3,7 @@ import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printed
 import { ActivatedRoute } from '@angular/router';
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import { CartItemModel } from 'src/app/models/cartItemModel';
+import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
 import { Currency } from 'src/app/enums/currency';
 
 @Component({

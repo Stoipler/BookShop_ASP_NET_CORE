@@ -1,4 +1,4 @@
-import { CartItemModel } from 'src/app/models/cartItemModel';
+import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
 
 export class PaymentDataModel {
     userId: number;

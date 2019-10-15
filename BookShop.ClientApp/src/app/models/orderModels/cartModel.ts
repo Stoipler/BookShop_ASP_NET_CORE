@@ -1,5 +1,5 @@
-import { CartItemModel } from 'src/app/models/cartItemModel';
-import { CheckoutItemModel } from 'src/app/models/checkoutItemModel';
+import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
+import { CheckoutItemModel } from 'src/app/models/orderModels/checkoutItemModel';
 
 export class CartModel {
     cartItemModels: CartItemModel[];
