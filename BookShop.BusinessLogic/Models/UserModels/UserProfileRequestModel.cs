@@ -10,11 +10,11 @@ namespace BookShop.BusinessLogic.Models.UserModels
         public UserRequestParameters MapToRequestParameters()
         {
             UserRequestParameters parameters = new UserRequestParameters();
-            if (Page != 0)
+            if (Page != default(int))
             {
                 parameters.Page = Page;
             }
-            if (PageSize != 0)
+            if (PageSize != default(int))
             {
                 parameters.PageSize = PageSize;
             }

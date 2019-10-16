@@ -17,8 +17,10 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
         public List<AuthorModel> AuthorModels { get; set; }
-        public PrintedEditionModel() { }
-        public PrintedEditionModel(PrintedEdition entity)
+        public PrintedEditionModel()
+        {
+        }
+        internal PrintedEditionModel(PrintedEdition entity) : this()
         {
             Id = entity.Id;
             Name = entity.Name;
@@ -29,7 +31,7 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             Type = entity.Type;
         }
 
-        public PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition) : this(printedEdition.PrintedEdition)
+        internal PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition) : this(printedEdition.PrintedEdition)
         {
             if (!(printedEdition.AuthorInBooks is null))
             {

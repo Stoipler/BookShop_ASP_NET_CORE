@@ -14,7 +14,7 @@ namespace BookShop.BusinessLogic.Models.UserModels
 
         }
 
-        public UserModel(ApplicationUser entity) : this()
+        internal UserModel(ApplicationUser entity) : this()
         {
             Id = entity.Id;
             FirstName = entity.FirstName;
@@ -22,6 +22,7 @@ namespace BookShop.BusinessLogic.Models.UserModels
             Email = entity.Email;
             IsRemoved = entity.IsRemoved;
         }
+
         internal ApplicationUser MapToEntity(ApplicationUser entity)
         {
             entity.FirstName = FirstName;

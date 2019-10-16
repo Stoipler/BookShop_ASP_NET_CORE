@@ -20,24 +20,31 @@ namespace BookShop.Presentation.Controllers
         public async Task<PrintedEditionResponseModel> GetPrintedEditions([FromBody]PrintedEditionRequestModel requestModel)
         {
             PrintedEditionResponseModel responseModel = await _printedEditionService.GetAsync(requestModel);
+
             return responseModel;
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreatePrintedEditon")]
         public async Task CreatePrintedEditon([FromBody]PrintedEditionModel model)
         {
             model = await _printedEditionService.CreateAsync(model);
         }
+
         [HttpGet("{id}")]
         public async Task<PrintedEditionModel> GetById(int id)
         {
-            return await _printedEditionService.GetByIdAsync(id);
+            PrintedEditionModel printedEditionModel = await _printedEditionService.GetByIdAsync(id);
+
+            return printedEditionModel;
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "UpdatePrintedEdition")]
         public async Task<IActionResult> UpdatePrintedEdition([FromBody]PrintedEditionModel model)
         {
             await _printedEditionService.Update(model);
+
             return Ok();
         }
     }

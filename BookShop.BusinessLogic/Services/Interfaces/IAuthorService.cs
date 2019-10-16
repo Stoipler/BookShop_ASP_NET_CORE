@@ -1,6 +1,5 @@
 ﻿using BookShop.BusinessLogic.AuthorModels;
 using BookShop.BusinessLogic.Models.AuthorModels;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces

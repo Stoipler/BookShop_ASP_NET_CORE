@@ -16,7 +16,7 @@ namespace BookShop.BusinessLogic.Models.OrderModels
         {
 
         }
-        public OrderModel(Order entity)
+        internal OrderModel(Order entity) : this()
         {
             Id = entity.Id;
             Description = entity.Description;

@@ -16,11 +16,11 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         internal PrintedEditionRequestParameters MapToRequestParameters()
         {
             PrintedEditionRequestParameters parameters = new PrintedEditionRequestParameters();
-            if (Page != 0)
+            if (Page != default(int))
             {
                 parameters.Page = Page;
             }
-            if (PageSize != 0)
+            if (PageSize != default(int))
             {
                 parameters.PageSize = PageSize;
             }
@@ -28,11 +28,11 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             {
                 parameters.KeyWord = KeyWord;
             }
-            if (PriceFrom != 0)
+            if (PriceFrom != default(int))
             {
                 parameters.PriceFrom = PriceFrom;
             }
-            if (PriceTo != 0)
+            if (PriceTo != default(int))
             {
                 parameters.PriceTo = PriceTo;
             }

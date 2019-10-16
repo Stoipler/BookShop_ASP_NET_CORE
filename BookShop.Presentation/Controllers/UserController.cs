@@ -22,20 +22,25 @@ namespace BookShop.Presentation.Controllers
         public async Task<UserResponseModel> GetUsers([FromBody]UserRequestModel requestModel)
         {
             UserResponseModel responseModel = await _userService.GetUsersAsync(requestModel);
+
             return responseModel;
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "UpdateUser")]
         public async Task UpdateUser([FromBody]UserModel requestModel)
         {
             await _userService.UpdateUserAsync(requestModel);
         }
+
         [HttpGet(Name = "GetUserProfile")]
         public async Task<UserProfileResponseModel> GetUserProfile()
         {
             UserProfileResponseModel responseModel = await _userService.GetUserProfileAsync();
+
             return responseModel;
         }
+
         [HttpPost(Name = "UpdateUserProfile")]
         public async Task UpdateUserProfile(UserProfileRequestModel requestModel)
         {

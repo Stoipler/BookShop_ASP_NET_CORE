@@ -13,7 +13,11 @@ namespace BookShop.BusinessLogic.AuthorModels
         [Required]
         public string Name { get; set; }
         public List<PrintedEditionModel> PrintedEditionModels { get; set; }
-        internal AuthorModel(Author author)
+
+        public AuthorModel()
+        {
+        }
+        internal AuthorModel(Author author) : this()
         {
             Id = author.Id;
             Name = author.Name;
@@ -24,9 +28,6 @@ namespace BookShop.BusinessLogic.AuthorModels
             {
                 PrintedEditionModels = item.AuthorInBooks.Select(authorInBook => new PrintedEditionModel(authorInBook.PrintedEdition)).ToList();
             }
-        }
-        public AuthorModel()
-        {
         }
         internal Author MapToEntity()
         {

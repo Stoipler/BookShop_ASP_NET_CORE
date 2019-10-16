@@ -10,6 +10,7 @@ using Stripe;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BookShop.BusinessLogic.Common.Constants.BusinessLogicConstants;
 using Order = BookShop.DataAccess.Entities.Order;
 
 namespace BookShop.BusinessLogic.Services
@@ -47,28 +48,34 @@ namespace BookShop.BusinessLogic.Services
                 Email = requestModel.StripeEmail,
                 Source = requestModel.StripeToken
             });
-            decimal totalPrice = 0;
+
+            decimal totalPrice = default(decimal);
+
             List<int> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
             List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
-            if (printedEditions is null)
+
+            if (!printedEditions.Any())
             {
                 return "There is no any matching with printed edition Ids that you provided";
             }
+
             foreach (CartItemModel cartItem in requestModel.CartItemModels)
             {
-                PrintedEdition printedEdition = printedEditions.Where(item => item.Id == cartItem.PrintedEditionId).FirstOrDefault();
+                PrintedEdition printedEdition = printedEditions.FirstOrDefault(item => item.Id == cartItem.PrintedEditionId);
                 if (!(printedEdition is null))
                 {
                     totalPrice += printedEdition.Price * cartItem.Quantity;
                 }
             }
+
             Charge charge = await _chargeService.CreateAsync(new ChargeCreateOptions
             {
                 Amount = ConvertToStripeAmount(totalPrice),
                 Description = string.Format("Charge for {0} user", requestModel.StripeEmail),
-                Currency = "usd",
+                Currency = StripeCurrencyUsd,
                 CustomerId = customer.Id
             });
+
             if (charge.StripeResponse.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 return "Stripe responded with status: " + charge.StripeResponse.StatusCode;
@@ -76,26 +83,34 @@ namespace BookShop.BusinessLogic.Services
 
             string[] namesList = printedEditions.Select(item => item.Name).ToArray();
             string description = "PrintedEditions :" + string.Join(", ", namesList);
+
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
+
             var order = new Order()
             {
                 ApplicationUserId = user.Id,
                 Description = description,
                 OrderAmount = totalPrice,
             };
+
             await _orderRepository.CreateAsync(order);
+
             return string.Empty;
         }
+
         public async Task<CartResponseModel> GetCheckoutAsync(CartRequestModel requestModel)
         {
             CartResponseModel responseModel = new CartResponseModel();
-            decimal totalPrice = 0;
+
+            decimal totalPrice = default(decimal);
+
             List<int> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
             List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
+
             foreach (CartItemModel cartItem in requestModel.CartItemModels)
             {
-                PrintedEdition printedEdition = printedEditions.Where(item => item.Id == cartItem.PrintedEditionId).FirstOrDefault();
+                PrintedEdition printedEdition = printedEditions.FirstOrDefault(item => item.Id == cartItem.PrintedEditionId);
                 CheckoutItemModel checkoutItem = new CheckoutItemModel
                 {
                     PrintedEditionId = printedEdition.Id,
@@ -107,26 +122,35 @@ namespace BookShop.BusinessLogic.Services
                 totalPrice += checkoutItem.OrderAmount;
                 responseModel.CheckoutItemModels.Add(checkoutItem);
             }
+
             responseModel.TotalPrice = totalPrice;
+
             return responseModel;
         }
 
         public async Task<OrdersResponseModel> GetOrdersForAdmin(OrdersRequestModel requestModel)
         {
             OrderRequestParameters parameters = requestModel.MapToRequestParameters();
+
             (List<Order> orders, int count) = await _orderRepository.GetByParmeters(parameters);
             List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();
+
             OrdersResponseModel response = new OrdersResponseModel() { OrderModels = orderModels, Count = count };
+
             return response;
         }
+
         public async Task<OrdersResponseModel> GetOrdersForUser()
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
             int id = user.Id;
+
             List<Order> orders = await _orderRepository.GetByUserId(id);
             List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();
+
             OrdersResponseModel response = new OrdersResponseModel() { OrderModels = orderModels };
+
             return response;
         }
 

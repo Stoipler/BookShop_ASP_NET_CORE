@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using BookShop.BusinessLogic.Models.OrderModels;
+﻿using BookShop.BusinessLogic.Models.OrderModels;
 using BookShop.BusinessLogic.Models.Payments;
+using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces
 {

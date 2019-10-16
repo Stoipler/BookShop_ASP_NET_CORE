@@ -25,27 +25,36 @@ namespace BookShop.BusinessLogic.Services
         {
             PrintedEditionRequestParameters parameters = requestModel.MapToRequestParameters();
             (List<PrintedEditionWithNestedObjects> printedEditions, int count) = await _printedEditionRepository.GetWithNestedObjectsAsync(parameters);
+
             PrintedEditionResponseModel responseModel = new PrintedEditionResponseModel(count, printedEditions);
+
             return responseModel;
         }
+
         public async Task<PrintedEditionModel> GetByIdAsync(int id)
         {
             PrintedEditionWithNestedObjects printedEdition = await _printedEditionRepository.GetWithNestedObjectsByIdAsync(id);
             PrintedEditionModel printedEditionModel = new PrintedEditionModel(printedEdition);
+
             return printedEditionModel;
         }
+
         public async Task<PrintedEditionModel> CreateAsync(PrintedEditionModel model)
         {
             PrintedEdition printedEdition = model.MapToEntity();
             printedEdition = await _printedEditionRepository.CreateAsync(printedEdition);
+
             List<AuthorInBook> authorInBooks = new List<AuthorInBook>();
-            if (!(model.AuthorModels is null))
+
+            if (model.AuthorModels.Any())
             {
                 authorInBooks = model.AuthorModels.Select(item => new AuthorInBook { PrintedEditionId = printedEdition.Id, AuthorId = item.Id }).ToList();
                 await _authorInBookRepository.AddRangeAsync(authorInBooks);
             }
+
             return model;
         }
+
         public async Task Update(PrintedEditionModel model)
         {
             PrintedEditionWithNestedObjects printedEdition = await _printedEditionRepository.GetWithNestedObjectsByIdAsync(model.Id);
@@ -58,15 +67,16 @@ namespace BookShop.BusinessLogic.Services
             List<AuthorInBook> listToCreate = model.AuthorModels.Where(item => !authorIdsFromEntity.Contains(item.Id)).Select(item => new AuthorInBook { PrintedEditionId = printedEdition.PrintedEdition.Id, AuthorId = item.Id }).ToList();
 
             await _printedEditionRepository.UpdateAsync(printedEdition.PrintedEdition);
-            if (!(listToRemove is null))
+            if (listToRemove.Any())
             {
                 await _authorInBookRepository.RemoveRangeAsync(listToRemove);
             }
-            if (!(listToCreate is null))
+            if (listToCreate.Any())
             {
                 await _authorInBookRepository.AddRangeAsync(listToCreate);
             }
         }
+
         public async Task Remove(PrintedEditionModel model)
         {
             PrintedEdition printedEdition = await _printedEditionRepository.GetByIdAsync(model.Id);

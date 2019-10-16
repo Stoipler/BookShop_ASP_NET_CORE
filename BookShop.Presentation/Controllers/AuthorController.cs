@@ -21,8 +21,10 @@ namespace BookShop.Presentation.Controllers
         public async Task<AuthorResponseModel> GetAuthors([FromBody]AuthorRequestModel requestModel)
         {
             AuthorResponseModel responseModel = await _authorService.GetAsync(requestModel);
+
             return responseModel;
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreateAuthor")]
         public async Task<IActionResult> CreateAuthor([FromBody]AuthorModel requestModel)
@@ -31,9 +33,12 @@ namespace BookShop.Presentation.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             await _authorService.CreateAsync(requestModel);
+
             return Ok();
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost(Name = "UpdateAuthor")]
         public async Task<IActionResult> UpdateAuthor([FromBody]AuthorModel model)
@@ -41,8 +46,10 @@ namespace BookShop.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 await _authorService.Update(model);
+
                 return Ok();
             }
+
             return BadRequest(ModelState);
         }
     }

@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.Models.OrderModels
 
         public OrdersResponseModel()
         {
-            Count = 0;
+            Count = default(int);
             OrderModels = new List<OrderModel>();
         }
     }

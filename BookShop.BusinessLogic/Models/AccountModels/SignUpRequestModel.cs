@@ -17,12 +17,8 @@ namespace BookShop.BusinessLogic.Models.AccountModels
         public string PasswordConfirmation { get; set; }
         public string RedirectUrl { get; set; }
 
-        internal ApplicationUser MapToEntity(ApplicationUser entity = null)
+        internal ApplicationUser MapToEntity(ApplicationUser entity)
         {
-            if (entity is null)
-            {
-                entity = new ApplicationUser();
-            }
             entity.FirstName = FirstName;
             entity.LastName = LastName;
             entity.Email = Email;

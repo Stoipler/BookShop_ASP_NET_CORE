@@ -2,6 +2,7 @@
 using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
+using static BookShop.BusinessLogic.Common.Constants.BusinessLogicConstants;
 
 namespace BookShop.BusinessLogic.Common
 {
@@ -11,7 +12,7 @@ namespace BookShop.BusinessLogic.Common
         {
             string apiKey = Environment.GetEnvironmentVariable("API_KEY");
             SendGridClient client = new SendGridClient(apiKey);
-            EmailAddress senderInfo = new EmailAddress("BookShopStoipler@gmail.com", "Admin");
+            EmailAddress senderInfo = new EmailAddress(BookShopEmail, BookShopName);
             EmailAddress receiverInfo = new EmailAddress(userEmail, "User");
             string subject = messageSubject;
             string plainTextContent = string.Empty;

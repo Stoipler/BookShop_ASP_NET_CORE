@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stripe;
-using System;
 using AccountService = BookShop.BusinessLogic.Services.AccountService;
 using OrderService = BookShop.BusinessLogic.Services.OrderService;
 
@@ -19,7 +18,7 @@ namespace BookShop.BusinessLogic
 {
     public static class DependencyInjection
     {
-        public static void OnLoad(IServiceCollection services, IConfiguration configuration)
+        public static void ServicesInjection(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
             services.AddIdentity<ApplicationUser, IdentityRole<int>>()
@@ -35,7 +34,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-            
+
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthorService, AuthorService>();
@@ -44,23 +43,6 @@ namespace BookShop.BusinessLogic
 
             services.AddTransient<CustomerService>();
             services.AddTransient<ChargeService>();
-
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
-            });
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             Initialization.IdentityInitalization.Seed(serviceProvider);

@@ -29,29 +29,39 @@ namespace BookShop.BusinessLogic.Services
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
+
             UserProfileResponseModel responseModel = new UserProfileResponseModel(user);
+
             return responseModel;
         }
+
         public async Task<UserResponseModel> GetUsersAsync(UserRequestModel requestModel)
         {
             UserRequestParameters parameters = requestModel.MapToRequestParameters();
             (List<ApplicationUser> users, int count) = await _userRepository.GetUsersAsync(parameters);
+
             List<UserModel> userModels = users.Select(item => new UserModel(item)).ToList();
             UserResponseModel responseModel = new UserResponseModel() { Count = count, UserModels = userModels };
+
             return responseModel;
         }
+
         public async Task UpdateUserAsync(UserModel requestModel)
         {
             ApplicationUser user = await _userRepository.GetByIdAsync(requestModel.Id);
             user = requestModel.MapToEntity(user);
+
             await _userRepository.UpdateAsync(user);
         }
+
         public async Task UpdateUserProfileAsync(UserProfileRequestModel requestModel)
         {
             ApplicationUser user = await _userRepository.GetByIdAsync(requestModel.Id);
             user = requestModel.MapToEntity(user);
+
             await _userRepository.UpdateAsync(user);
             bool condition = !(string.IsNullOrWhiteSpace(requestModel.CurrentPassword)) && !(string.IsNullOrWhiteSpace(requestModel.Password)) && requestModel.Password == requestModel.PasswordConfirmation;
+
             if (condition)
             {
                 await _userManager.ChangePasswordAsync(user, requestModel.CurrentPassword, requestModel.Password);

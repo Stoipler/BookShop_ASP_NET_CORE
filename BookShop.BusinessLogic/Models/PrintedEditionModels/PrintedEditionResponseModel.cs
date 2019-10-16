@@ -13,7 +13,7 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             PrintedEditionModels = new List<PrintedEditionModel>();
         }
 
-        public PrintedEditionResponseModel(int count, List<PrintedEditionWithNestedObjects> printedEditions)
+        internal PrintedEditionResponseModel(int count, List<PrintedEditionWithNestedObjects> printedEditions) : this()
         {
             Count = count;
             PrintedEditionModels = printedEditions.Select(item => new PrintedEditionModel(item)).ToList();

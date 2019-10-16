@@ -15,11 +15,11 @@ namespace BookShop.BusinessLogic.AuthorModels
         public AuthorRequestParameters MapToRequestParameters()
         {
             AuthorRequestParameters parameters = new AuthorRequestParameters();
-            if (Page != 0)
+            if (Page != default(int))
             {
                 parameters.Page = Page;
             }
-            if (PageSize != 0)
+            if (PageSize != default(int))
             {
                 parameters.PageSize = PageSize;
             }
