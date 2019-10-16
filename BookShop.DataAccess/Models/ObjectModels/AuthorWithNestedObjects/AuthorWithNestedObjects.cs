@@ -7,5 +7,9 @@ namespace BookShop.DataAccess.ObjectModels.AuthorWithNestedObjects
     {
         public Author Author { get; set; }
         public List<AuthorInBook> AuthorInBooks { get; set; }
+        public AuthorWithNestedObjects()
+        {
+            AuthorInBooks = new List<AuthorInBook>();
+        }
     }
 }

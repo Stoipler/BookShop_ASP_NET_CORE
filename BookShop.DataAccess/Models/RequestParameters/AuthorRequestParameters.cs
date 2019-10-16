@@ -17,6 +17,7 @@ namespace BookShop.DataAccess.Models.RequestParameters
             Page = DefaultPageNumber;
             PageSize = DefaultPageSize;
             Name = string.Empty;
+            IgnoreAuthorsList = new List<Author>();
         }
     }
 }

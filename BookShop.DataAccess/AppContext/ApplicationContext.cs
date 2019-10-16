@@ -9,6 +9,13 @@ namespace BookShop.DataAccess.AppContext
     public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         private string _connectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+        }
         public DbSet<Author> Authors { get; set; }
         public DbSet<AuthorInBook> AuthorInBooks { get; set; }
         public DbSet<PrintedEdition> PrintedEditions { get; set; }

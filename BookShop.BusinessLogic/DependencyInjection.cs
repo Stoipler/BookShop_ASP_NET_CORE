@@ -32,8 +32,10 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            //services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorRepository>();
+
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();

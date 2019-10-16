@@ -64,6 +64,5 @@ namespace BookShop.BusinessLogic.Services
             return authorModel;
         }
 
-
     }
 }
