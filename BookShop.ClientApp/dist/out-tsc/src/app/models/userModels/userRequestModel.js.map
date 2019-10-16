@@ -1,0 +1,1 @@
+{"version":3,"file":"userRequestModel.js","sourceRoot":"","sources":["../../../../../../src/app/models/userModels/userRequestModel.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,gBAAgB;IAIzB;QACI,IAAI,CAAC,IAAI,GAAG,CAAC,CAAC;QACd,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;QACnB,IAAI,CAAC,OAAO,GAAG,EAAE,CAAC;IACtB,CAAC;CACJ"}

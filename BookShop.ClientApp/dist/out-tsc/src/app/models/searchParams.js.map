@@ -1,0 +1,1 @@
+{"version":3,"file":"searchParams.js","sourceRoot":"","sources":["../../../../../src/app/models/searchParams.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,4BAA4B,CAAC;AAG1D,MAAM,OAAO,YAAY;IASrB;QAEQ,IAAI,CAAC,OAAO,GAAC,EAAE,CAAC;QAChB,IAAI,CAAC,SAAS,GAAC,CAAC,CAAC;QACjB,IAAI,CAAC,OAAO,GAAC,CAAC,CAAC;QACf,IAAI,CAAC,YAAY,GAAC,YAAY,CAAC,IAAI,CAAC;IACxC,CAAC;CAER"}
