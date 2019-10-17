@@ -24,7 +24,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
         public async Task RemoveRangeAsync(List<AuthorInBook> authorInBooks)
         {
             List<int> idsToRemove = authorInBooks.Select(item => item.Id).ToList();
-            await _connection.ExecuteAsync($"DELETE FROM ProductsAuthors WHERE Id IN @ids", new { ids = idsToRemove });
+            await _connection.ExecuteAsync($"DELETE FROM AuthorInBooks WHERE Id IN @ids", new { ids = idsToRemove });
         }
     }
 }

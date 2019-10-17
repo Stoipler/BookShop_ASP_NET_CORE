@@ -122,7 +122,6 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
             await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEdition>(itemsExpression.RawSql,
                 (printedEdition, authorInBook, author) =>
                 {
-                    printedEditionWithNestedObjects = new PrintedEditionWithNestedObjects();
                     printedEditionWithNestedObjects.PrintedEdition = printedEdition;
 
                     if (!(authorInBook is null))
