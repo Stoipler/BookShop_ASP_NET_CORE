@@ -22,12 +22,19 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
             int count = default(int);
             SqlBuilder sqlBuilder = new SqlBuilder();
 
-            SqlBuilder.Template sqlExpression = sqlBuilder.AddTemplate($@"SELECT * FROM Authors
-            LEFT JOIN AuthorInBooks ON Authors.Id = AuthorInBooks.AuthorId
-            LEFT JOIN PrintedEditions ON PrintedEditions.Id = AuthorInBooks.PrintedEditionId
-            /**where**/
-            /**orderby**/
-            ");
+            SqlBuilder.Template countExpression = sqlBuilder.AddTemplate(
+                $@"SELECT COUNT (DISTINCT Authors.Id) FROM Authors
+                LEFT JOIN AuthorInBooks ON Authors.Id = AuthorInBooks.AuthorId
+                LEFT JOIN PrintedEditions ON PrintedEditions.Id = AuthorInBooks.PrintedEditionId
+                /**where**/");
+
+            SqlBuilder.Template itemsExpression = sqlBuilder.AddTemplate($@"SELECT * FROM 
+                (SELECT DISTINCT Authors.* FROM Authors
+                LEFT JOIN AuthorInBooks ON Authors.Id = AuthorInBooks.AuthorId
+                LEFT JOIN PrintedEditions ON PrintedEditions.Id = AuthorInBooks.PrintedEditionId
+                /**where**/ /**orderby**/) AS FilteredAuthors
+                LEFT JOIN AuthorInBooks ON FilteredAuthors.Id = AuthorInBooks.AuthorId
+                LEFT JOIN PrintedEditions ON PrintedEditions.Id = AuthorInBooks.PrintedEditionId");
 
             if (!string.IsNullOrWhiteSpace(parameters.Name))
             {
@@ -38,18 +45,16 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
             {
                 sqlBuilder.Where($"Authors.Id NOT IN @IgnoreAuthorsList");
             }
-            if (!parameters.WithPagination)
-            {
-                sqlBuilder.OrderBy("Authors.Name");
-            }
-            count = await _connection.ExecuteScalarAsync<int>(sqlExpression.RawSql, parameters);
+
+            count = await _connection.ExecuteScalarAsync<int>(countExpression.RawSql, parameters);
+
             if (parameters.WithPagination)
             {
                 sqlBuilder.OrderBy("Authors.Name OFFSET ((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
 
             List<AuthorWithNestedObjects> result = new List<AuthorWithNestedObjects>();
-            await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, Author>(sqlExpression.RawSql,
+            await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, Author>(itemsExpression.RawSql,
                 (author, authorInBook, printedEdition) =>
                 {
                     AuthorWithNestedObjects authorWithNestedObjects = result.FirstOrDefault(item => item.Author.Id == author.Id);
