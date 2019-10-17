@@ -38,7 +38,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             return (response, count);
         }
 
-        public async Task<List<Order>> GetByUserId(int id)
+        public async Task<List<Order>> GetRangeByUserId(int id)
         {
             List<Order> orders = await _dbSet.Where(item => item.ApplicationUserId == id).ToListAsync();
 

@@ -30,7 +30,7 @@ namespace BookShop.BusinessLogic.AuthorModels
             parameters.WithPagination = WithPagination;
             if (!(IgnoreAuthorsList is null))
             {
-                parameters.IgnoreAuthorsList = IgnoreAuthorsList.Select(item => item.MapToEntity()).ToList();
+                parameters.IgnoreAuthorsList = IgnoreAuthorsList.Select(item => item.Id).ToList();
             }
             return parameters;
         }

@@ -36,8 +36,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
 
             if (parameters.IgnoreAuthorsList.Any())
             {
-                IEnumerable<int> authorsToDelete = parameters.IgnoreAuthorsList.Select(author => author.Id);
-                authors = authors.Where(item => !authorsToDelete.Contains(item.Author.Id));
+                authors = authors.Where(item => !parameters.IgnoreAuthorsList.Contains(item.Author.Id));
             }
 
             authors = authors.OrderByDescending(item => item.Author.CreationDate);

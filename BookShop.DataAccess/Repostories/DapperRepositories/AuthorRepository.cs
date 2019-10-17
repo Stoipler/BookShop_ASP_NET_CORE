@@ -17,17 +17,39 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
         {
         }
 
-        public async Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorRequestParameters authorSearchParams)
+        public async Task<(List<AuthorWithNestedObjects>, int)> GetWithParamsAsync(AuthorRequestParameters parameters)
         {
             int count = default(int);
             SqlBuilder sqlBuilder = new SqlBuilder();
 
-            SqlBuilder.Template countGetter = sqlBuilder.AddTemplate($@"SELECT * FROM Authors
+            SqlBuilder.Template sqlExpression = sqlBuilder.AddTemplate($@"SELECT * FROM Authors
             LEFT JOIN AuthorInBooks ON Authors.Id = AuthorInBooks.AuthorId
             LEFT JOIN PrintedEditions ON PrintedEditions.Id = AuthorInBooks.PrintedEditionId
+            /**where**/
+            /**orderby**/
             ");
+
+            if (!string.IsNullOrWhiteSpace(parameters.Name))
+            {
+                parameters.Name = parameters.Name.ToLower();
+                sqlBuilder.Where($@"LOWER(Authors.Name) LIKE '%' + @Name + '%'");
+            }
+            if (parameters.IgnoreAuthorsList.Any())
+            {
+                sqlBuilder.Where($"Authors.Id NOT IN @IgnoreAuthorsList");
+            }
+            if (!parameters.WithPagination)
+            {
+                sqlBuilder.OrderBy("Authors.Name");
+            }
+            count = await _connection.ExecuteScalarAsync<int>(sqlExpression.RawSql, parameters);
+            if (parameters.WithPagination)
+            {
+                sqlBuilder.OrderBy("Authors.Name OFFSET ((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+            }
+
             List<AuthorWithNestedObjects> result = new List<AuthorWithNestedObjects>();
-            await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, Author>(countGetter.RawSql,
+            await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, Author>(sqlExpression.RawSql,
                 (author, authorInBook, printedEdition) =>
                 {
                     AuthorWithNestedObjects authorWithNestedObjects = result.FirstOrDefault(item => item.Author.Id == author.Id);
@@ -46,7 +68,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                     }
 
                     return author;
-                });
+                }, parameters);
 
             return (result, count);
         }

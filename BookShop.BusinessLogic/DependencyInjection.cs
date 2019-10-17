@@ -31,10 +31,9 @@ namespace BookShop.BusinessLogic
 
             services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-            //services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorRepository>();
+
+            InjectEntityDapperRepositories(services);
 
 
             services.AddTransient<IAccountService, AccountService>();
@@ -49,5 +48,18 @@ namespace BookShop.BusinessLogic
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             Initialization.IdentityInitalization.Seed(serviceProvider);
         }
+
+        private static void InjectEntityFrameworkRepositories(IServiceCollection services)
+        {
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+        }
+
+        private static void InjectEntityDapperRepositories(IServiceCollection services)
+        {
+            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorRepository>();
+            services.AddTransient<IOrderRepository, BookShop.DataAccess.Repostories.DapperRepositories.OrderRepository>();
+        }
+
     }
 }

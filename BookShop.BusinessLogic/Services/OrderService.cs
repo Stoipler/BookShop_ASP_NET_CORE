@@ -87,7 +87,7 @@ namespace BookShop.BusinessLogic.Services
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
 
-            var order = new Order()
+            Order order = new Order()
             {
                 ApplicationUserId = user.Id,
                 Description = description,
@@ -146,7 +146,7 @@ namespace BookShop.BusinessLogic.Services
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
             int id = user.Id;
 
-            List<Order> orders = await _orderRepository.GetByUserId(id);
+            List<Order> orders = await _orderRepository.GetRangeByUserId(id);
             List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();
 
             OrdersResponseModel response = new OrdersResponseModel() { OrderModels = orderModels };
