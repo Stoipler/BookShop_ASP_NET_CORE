@@ -18,7 +18,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
 
         public async Task<(List<ApplicationUser> users, int count)> GetUsersAsync(UserRequestParameters parameters)
         {
-            int count = default(int);
+            int skipCount = (parameters.Page - 1) * parameters.PageSize;
             SqlBuilder sqlBuilder = new SqlBuilder();
 
             SqlBuilder.Template countExpression = sqlBuilder.AddTemplate(
@@ -37,9 +37,9 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 sqlBuilder.Where($@"LOWER(AspNetUsers.FirstName + ' ' + AspNetUsers.LastName + ' ' + AspNetUsers.UserName + ' ' + AspNetUsers.Email) LIKE '%' + @KeyWord + '%'");
             }
 
-            count = await _connection.ExecuteScalarAsync<int>(countExpression.RawSql, parameters);
+            int count = await _connection.ExecuteScalarAsync<int>(countExpression.RawSql, parameters);
 
-            sqlBuilder.OrderBy("AspNetUsers.CreationDate DESC OFFSET ((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+            sqlBuilder.OrderBy($"AspNetUsers.CreationDate DESC OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             List<ApplicationUser> response = (await _connection.QueryAsync<ApplicationUser>(itemsExpression.RawSql, parameters)).ToList();
 
             return (response, count);

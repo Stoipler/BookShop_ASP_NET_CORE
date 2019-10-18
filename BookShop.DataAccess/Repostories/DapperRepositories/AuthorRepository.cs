@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookShop.DataAccess.AppContext;
+﻿using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.ObjectModels.AuthorWithNestedObjects;
 using BookShop.DataAccess.Repostories.DapperRepositories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Dapper;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.DapperRepositories
 {
@@ -50,11 +50,11 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
 
             if (parameters.WithPagination)
             {
-                sqlBuilder.OrderBy("Authors.Name OFFSET ((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"Authors.Name OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
 
             Dictionary<int, AuthorWithNestedObjects> authorWithNestedObjectsDictionary = new Dictionary<int, AuthorWithNestedObjects>();
-            List<AuthorWithNestedObjects> result = await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, AuthorWithNestedObjects>(itemsExpression.RawSql,
+            IEnumerable<AuthorWithNestedObjects> response = await _connection.QueryAsync<Author, AuthorInBook, PrintedEdition, AuthorWithNestedObjects>(itemsExpression.RawSql,
                 (author, authorInBook, printedEdition) =>
                 {
                     bool isExist = authorWithNestedObjectsDictionary.TryGetValue(author.Id, out AuthorWithNestedObjects authorWithNestedObjects);
@@ -73,8 +73,9 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                     }
 
                     return authorWithNestedObjects;
-                }, parameters) as List<AuthorWithNestedObjects>;
+                }, parameters);
 
+            List<AuthorWithNestedObjects> result = response.Distinct().ToList();
             return (result, count);
         }
     }

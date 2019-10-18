@@ -31,6 +31,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
 
         public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionRequestParameters parameters)
         {
+            int skipCount = (parameters.Page - 1) * parameters.PageSize;
             int count = default(int);
             SqlBuilder sqlBuilder = new SqlBuilder();
 
@@ -63,46 +64,44 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
 
             if (parameters.SortCriteria == SortCriteria.PriceAsc)
             {
-                sqlBuilder.OrderBy("PrintedEditions.Price ASC OFFSET((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"PrintedEditions.Price ASC OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
             if (parameters.SortCriteria == SortCriteria.PriceDesc)
             {
-                sqlBuilder.OrderBy("PrintedEditions.Price DESC OFFSET((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"PrintedEditions.Price DESC OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
             if (parameters.SortCriteria == SortCriteria.CurrencyAsc)
             {
-                sqlBuilder.OrderBy("PrintedEditions.Currency ASC OFFSET((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"PrintedEditions.Currency ASC OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
             if (parameters.SortCriteria == SortCriteria.CurrencyDesc)
             {
-                sqlBuilder.OrderBy("PrintedEditions.Price DESC OFFSET((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"PrintedEditions.Price DESC OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
             if (parameters.SortCriteria == SortCriteria.None)
             {
-                sqlBuilder.OrderBy("PrintedEditions.Id OFFSET((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+                sqlBuilder.OrderBy($"PrintedEditions.Id OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
             }
 
-            List<PrintedEditionWithNestedObjects> result = new List<PrintedEditionWithNestedObjects>();
-            await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEdition>(itemsExpression.RawSql,
+
+            Dictionary<int, PrintedEditionWithNestedObjects> printedEditionWithNestedObjectsDictionary = new Dictionary<int, PrintedEditionWithNestedObjects>();
+            IEnumerable<PrintedEditionWithNestedObjects> response = await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEditionWithNestedObjects>(itemsExpression.RawSql,
                 (printedEdition, authorInBook, author) =>
                 {
-                    PrintedEditionWithNestedObjects printedEditionWithNestedObjects = result.FirstOrDefault(item => item.PrintedEdition.Id == printedEdition.Id);
+                    bool isExsist = printedEditionWithNestedObjectsDictionary.TryGetValue(printedEdition.Id, out PrintedEditionWithNestedObjects printedEditionWithNestedObjects);
 
-                    if (printedEditionWithNestedObjects is null)
+                    if (!isExsist)
                     {
                         printedEditionWithNestedObjects = new PrintedEditionWithNestedObjects();
                         printedEditionWithNestedObjects.PrintedEdition = printedEdition;
-                        result.Add(printedEditionWithNestedObjects);
+                        printedEditionWithNestedObjectsDictionary.Add(printedEdition.Id, printedEditionWithNestedObjects);
                     }
-
-                    if (!(authorInBook is null))
-                    {
-                        authorInBook.Author = author;
-                        printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
-                    }
-
-                    return printedEdition;
-                }, parameters);
+                    authorInBook.Author = author;
+                    printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    return printedEditionWithNestedObjects;
+                },
+                parameters);
+            List<PrintedEditionWithNestedObjects> result = response.Distinct().ToList();
 
             return (result, count);
         }
@@ -118,23 +117,28 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 LEFT JOIN AuthorInBooks ON FilteredPrintedEditions.Id = AuthorInBooks.PrintedEditionId
                 LEFT JOIN Authors ON Authors.Id = AuthorInBooks.AuthorId");
 
-            PrintedEditionWithNestedObjects printedEditionWithNestedObjects = new PrintedEditionWithNestedObjects();
+            Dictionary<int, PrintedEditionWithNestedObjects> printedEditionWithNestedObjectsDictionary = new Dictionary<int, PrintedEditionWithNestedObjects>();
 
-            await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEdition>(itemsExpression.RawSql,
+            IEnumerable<PrintedEditionWithNestedObjects> response = await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEditionWithNestedObjects>(itemsExpression.RawSql,
                 (printedEdition, authorInBook, author) =>
                 {
-                    printedEditionWithNestedObjects.PrintedEdition = printedEdition;
+                    bool isExsist = printedEditionWithNestedObjectsDictionary.TryGetValue(printedEdition.Id, out PrintedEditionWithNestedObjects printedEditionWithNestedObjects);
 
-                    if (!(authorInBook is null))
+                    if (!isExsist)
                     {
-                        authorInBook.Author = author;
-                        printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                        printedEditionWithNestedObjects = new PrintedEditionWithNestedObjects();
+                        printedEditionWithNestedObjects.PrintedEdition = printedEdition;
+                        printedEditionWithNestedObjectsDictionary.Add(printedEdition.Id, printedEditionWithNestedObjects);
                     }
+                    authorInBook.Author = author;
+                    printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    return printedEditionWithNestedObjects;
 
-                    return printedEdition;
                 }, new { Id = id });
 
-            return printedEditionWithNestedObjects;
+            PrintedEditionWithNestedObjects result = response.Distinct().FirstOrDefault();
+
+            return result;
         }
     }
 }

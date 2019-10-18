@@ -5,7 +5,6 @@ using BookShop.DataAccess.Repostories.DapperRepositories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Dapper;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.DapperRepositories
@@ -18,7 +17,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
 
         public async Task<(List<Order>, int)> GetByParmeters(OrderRequestParameters parameters)
         {
-            int count = default(int);
+            int skipCount = (parameters.Page - 1) * parameters.PageSize;
             SqlBuilder sqlBuilder = new SqlBuilder();
 
             SqlBuilder.Template countExpression = sqlBuilder.AddTemplate(
@@ -35,34 +34,23 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 WHERE FilteredOrders.ApplicationUserId NOT IN (SELECT AspNetUsers.Id FROM AspNetUsers
                 WHERE AspNetUsers.IsRemoved = 1)");
 
-            
-
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 parameters.KeyWord = parameters.KeyWord.ToLower();
                 sqlBuilder.Where($@"LOWER(AspNetUsers.FirstName + ' ' + AspNetUsers.FirstName + ' ' + AspNetUsers.UserName ) LIKE '%' + @KeyWord + '%'");
             }
 
-            count = await _connection.ExecuteScalarAsync<int>(countExpression.RawSql, parameters);
+            int count = await _connection.ExecuteScalarAsync<int>(countExpression.RawSql, parameters);
 
-            sqlBuilder.OrderBy("Orders.Id OFFSET ((@Page-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY");
+            sqlBuilder.OrderBy($"Orders.Id OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY");
 
-
-            List<Order> result = new List<Order>();
-            await _connection.QueryAsync<Order, ApplicationUser, Order>(itemsExpression.RawSql,
+            List<Order> result = await _connection.QueryAsync<Order, ApplicationUser, Order>(itemsExpression.RawSql,
                 (order, applicationUser) =>
                 {
-                    Order orderEntity = result.FirstOrDefault(item => item.Id == order.Id);
-
-                    if (orderEntity is null)
-                    {
-                        orderEntity = new Order();
-                        orderEntity = order;
-                        orderEntity.ApplicationUser = applicationUser;
-                        result.Add(orderEntity);
-                    }
+                    order.ApplicationUser = applicationUser;
                     return order;
-                }, parameters);
+                },
+                parameters) as List<Order>;
 
             return (result, count);
         }
@@ -78,21 +66,13 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 WHERE AspNetUsers.Id = @Id) AS FilteredOrders
                 LEFT JOIN AspNetUsers ON FilteredOrders.ApplicationUserId = AspNetUsers.Id");
 
-            List<Order> result = new List<Order>();
-            await _connection.QueryAsync<Order, ApplicationUser, Order>(sqlExpression.RawSql,
+            List<Order> result = await _connection.QueryAsync<Order, ApplicationUser, Order>(sqlExpression.RawSql,
                 (order, applicationUser) =>
                 {
-                    Order orderEntity = result.FirstOrDefault(item => item.Id == order.Id);
-
-                    if (orderEntity is null)
-                    {
-                        orderEntity = new Order();
-                        orderEntity = order;
-                        orderEntity.ApplicationUser = applicationUser;
-                        result.Add(orderEntity);
-                    }
+                    order.ApplicationUser = applicationUser;
                     return order;
-                }, new { Id = id });
+                },
+                new { Id = id }) as List<Order>;
 
             return result;
         }

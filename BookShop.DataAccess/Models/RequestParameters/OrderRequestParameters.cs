@@ -6,6 +6,13 @@ namespace BookShop.DataAccess.Models.RequestParameters
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public int Skip
+        {
+            get
+            {
+                return (Page - 1) * PageSize;
+            }
+        }
         public string KeyWord { get; set; }
         public OrderRequestParameters()
         {

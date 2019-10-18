@@ -8,6 +8,10 @@ namespace BookShop.DataAccess.Models.RequestParameters
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public int Skip { get
+            {
+                return (Page - 1) * PageSize;
+            } }
         public string Name { get; set; }
         public bool WithPagination { get; set; }
         public List<int> IgnoreAuthorsList { get; set; }
