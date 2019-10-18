@@ -28,13 +28,21 @@ namespace BookShop.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            SignInResponseModel responseModel = await _accountService.SignInAsync(requestModel)
-                ;
+            SignInResponseModel responseModel = await _accountService.SignInAsync(requestModel);
+
+            if (responseModel.IsRemoved)
+            {
+                ModelState.AddModelError(string.Empty, "That user has been banned");
+
+                return BadRequest(ModelState);
+            }
+
             if (responseModel.SignInResult.Succeeded)
             {
                 responseModel.SignInResult = null;
                 return Ok(responseModel);
             }
+
 
             ModelState.AddModelError(string.Empty, "Wrong login or/and password");
 

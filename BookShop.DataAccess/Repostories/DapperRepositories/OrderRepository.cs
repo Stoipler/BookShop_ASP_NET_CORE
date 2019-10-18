@@ -31,7 +31,11 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 (SELECT DISTINCT Orders.* FROM Orders
                 LEFT JOIN AspNetUsers ON Orders.ApplicationUserId = AspNetUsers.Id
                 /**where**/ /**orderby**/) AS FilteredOrders
-                LEFT JOIN AspNetUsers ON FilteredOrders.ApplicationUserId = AspNetUsers.Id");
+                LEFT JOIN AspNetUsers ON FilteredOrders.ApplicationUserId = AspNetUsers.Id
+                WHERE FilteredOrders.ApplicationUserId NOT IN (SELECT AspNetUsers.Id FROM AspNetUsers
+                WHERE AspNetUsers.IsRemoved = 1)");
+
+            
 
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {

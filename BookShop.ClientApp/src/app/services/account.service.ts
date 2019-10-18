@@ -14,8 +14,8 @@ export class AccountService {
     constructor(private http: HttpClient) {
 
     }
-    signIn(requestModel: SignInRequestModel): Observable<SignInResponseModel> {
-        return this.http.post<SignInResponseModel>(environment.apiUrl + 'Account/SignIn', requestModel);
+    signIn(requestModel: SignInRequestModel) {
+        return this.http.post(environment.apiUrl + 'Account/SignIn', requestModel);
     }
     signUp(requestModel: SignUpRequestModel) {
         return this.http.post(environment.apiUrl + 'Account/SignUp', requestModel);

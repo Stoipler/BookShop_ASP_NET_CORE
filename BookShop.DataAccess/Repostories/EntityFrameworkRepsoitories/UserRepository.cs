@@ -19,6 +19,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         public async Task<(List<ApplicationUser> users, int count)> GetUsersAsync(UserRequestParameters parameters)
         {
             IQueryable<ApplicationUser> users = _dbSet;
+            users = users.Where(item => item.UserName != "admin@email.com");
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 users = users.Where(item =>

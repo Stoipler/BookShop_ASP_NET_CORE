@@ -62,7 +62,7 @@ namespace BookShop.Presentation
                     ValidateAudience = false
                 };
             });
-            
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

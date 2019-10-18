@@ -36,7 +36,13 @@ namespace BookShop.BusinessLogic.Services
             }
 
             ApplicationUser user = await _userManager.FindByEmailAsync(requestModel.Email);
+            if (user.IsRemoved)
+            {
+                responseModel.IsRemoved = user.IsRemoved;
+                return responseModel;
+            }
             string userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            responseModel.FirstName = user.FirstName;
             responseModel.Token = _jwtHelper.GenerateAccessToken(user, userRole);
 
             return responseModel;

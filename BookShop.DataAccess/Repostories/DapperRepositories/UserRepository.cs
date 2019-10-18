@@ -30,6 +30,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 (SELECT DISTINCT AspNetUsers.* FROM AspNetUsers
                 /**where**/ /**orderby**/) AS FilteredUsers");
 
+            sqlBuilder.Where("AspNetUsers.UserName != 'admin@email.com'");
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 parameters.KeyWord = parameters.KeyWord.ToLower();

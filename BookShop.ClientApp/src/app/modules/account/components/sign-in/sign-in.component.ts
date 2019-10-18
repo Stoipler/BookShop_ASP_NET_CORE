@@ -3,6 +3,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignInRequestModel } from 'src/app/models/accountModels/signInRequestModel';
 import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-sign-in',
@@ -33,9 +34,12 @@ export class SignInComponent implements OnInit {
       (data: SignInResponseModel) => {
         const user: SignInResponseModel = new SignInResponseModel();
         user.token = data.token;
+        user.firstName = data.firstName;
+        localStorage.removeItem('cart');
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.router.navigate([this.returnUrl]);
-      }
-    )
+      }, (error) => {
+
+      });
   }
 }

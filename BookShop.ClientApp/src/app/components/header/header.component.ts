@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faCartPlus, faTools, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,10 @@ export class HeaderComponent implements OnInit {
   }
   isAdmin(): boolean {
     return this.authHelper.isAdmin();
+  }
+  currentUserName(): string {
+    const user: { firstName: string } = JSON.parse(localStorage.getItem('currentUser'));
+    return user.firstName;
   }
 
 

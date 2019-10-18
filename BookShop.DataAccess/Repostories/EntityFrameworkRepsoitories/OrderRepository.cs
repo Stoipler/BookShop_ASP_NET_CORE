@@ -20,6 +20,8 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         {
             IQueryable<Order> orders = _dbSet.Include(item => item.ApplicationUser);
 
+            orders= orders.Where(item => !item.ApplicationUser.IsRemoved);
+
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 orders = orders.Where(item =>
