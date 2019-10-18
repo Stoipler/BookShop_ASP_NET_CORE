@@ -3,7 +3,6 @@ using BookShop.BusinessLogic.Services;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
-using BookShop.DataAccess.Repostories.EFRepsoitories;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stripe;
+using System;
 using AccountService = BookShop.BusinessLogic.Services.AccountService;
 using OrderService = BookShop.BusinessLogic.Services.OrderService;
 
@@ -24,6 +24,10 @@ namespace BookShop.BusinessLogic
             services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
+
+            Environment.SetEnvironmentVariable("SendGridApiKey", configuration.GetSection("SendGridMailCredentials").GetSection("Api_Key").Value);
+            Environment.SetEnvironmentVariable("SendGridEmail", configuration.GetSection("SendGridMailCredentials").GetSection("BookshopEmail").Value);
+            Environment.SetEnvironmentVariable("SendGridSenderName", configuration.GetSection("SendGridMailCredentials").GetSection("BookshopSenderName").Value);
 
             services.AddTransient<EmailHelper>();
             services.AddTransient<JwtHelper>();
@@ -48,11 +52,11 @@ namespace BookShop.BusinessLogic
 
         private static void InjectEntityFrameworkRepositories(IServiceCollection services)
         {
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IPrintedEditionRepository, PrintedEditionRepository>();
-            services.AddTransient<IAuthorInBookRepository, AuthorInBookRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorRepository>();
+            services.AddTransient<IOrderRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.OrderRepository>();
+            services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.PrintedEditionRepository>();
+            services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorInBookRepository>();
+            services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
         }
 
         private static void InjectDapperRepositories(IServiceCollection services)

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
+namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base
 {
     public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
     {

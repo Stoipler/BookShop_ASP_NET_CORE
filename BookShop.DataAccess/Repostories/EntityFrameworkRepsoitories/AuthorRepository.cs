@@ -2,7 +2,7 @@
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.ObjectModels.AuthorWithNestedObjects;
-using BookShop.DataAccess.Repostories.EFRepsoitories.Base;
+using BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShop.DataAccess.Repostories.EFRepsoitories
+namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 {
     public class AuthorRepository : BaseRepository<Author>, IAuthorRepository
     {
