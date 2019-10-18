@@ -8,7 +8,7 @@ namespace BookShop.DataAccess.Repostories.Interfaces
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
-        Task<List<Order>> GetByUserId(int id);
+        Task<List<Order>> GetRangeByUserId(int id);
         Task<(List<Order>, int)> GetByParmeters(OrderRequestParameters parameters);
     }
 }

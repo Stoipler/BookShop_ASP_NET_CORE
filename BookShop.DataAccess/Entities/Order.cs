@@ -1,4 +1,5 @@
 ﻿using BookShop.DataAccess.Entities.Base;
+using Dapper.Contrib.Extensions;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookShop.DataAccess.Entities
@@ -7,6 +8,7 @@ namespace BookShop.DataAccess.Entities
     {
         [ForeignKey("ApplicationUser")]
         public int ApplicationUserId { get; set; }
+        [Computed]
         public ApplicationUser ApplicationUser { get; set; }
         public string Description { get; set; }
         public decimal OrderAmount { get; set; }

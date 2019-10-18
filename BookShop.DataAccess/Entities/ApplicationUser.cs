@@ -1,9 +1,11 @@
 ﻿using BookShop.DataAccess.Entities.Interfaces;
+using Dapper.Contrib.Extensions;
 using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace BookShop.DataAccess.Entities
 {
+    [Table("AspNetUsers")]
     public class ApplicationUser : IdentityUser<int>, IBaseEntity
     {
         public string FirstName { get; set; }

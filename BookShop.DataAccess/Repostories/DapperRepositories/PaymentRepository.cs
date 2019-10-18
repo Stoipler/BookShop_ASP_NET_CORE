@@ -1,9 +1,9 @@
 ﻿using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
-using BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base;
+using BookShop.DataAccess.Repostories.DapperRepositories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 
-namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
+namespace BookShop.DataAccess.Repostories.DapperRepositories
 {
     public class PaymentRepository : BaseRepository<Payment>, IPaymentRepository
     {

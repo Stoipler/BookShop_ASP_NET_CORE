@@ -25,8 +25,6 @@ namespace BookShop.Presentation
             services.AddCors();
             services.AddMvc();
 
-            DependencyInjection.ServicesInjection(services, Configuration);
-
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -42,7 +40,7 @@ namespace BookShop.Presentation
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
-
+            DependencyInjection.ServicesInjection(services, Configuration);
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             AppSettings appSettings = appSettingsSection.Get<AppSettings>();
@@ -64,6 +62,7 @@ namespace BookShop.Presentation
                     ValidateAudience = false
                 };
             });
+            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

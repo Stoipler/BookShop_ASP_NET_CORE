@@ -1,14 +1,14 @@
 ﻿using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Models.RequestParameters;
-using BookShop.DataAccess.Repostories.EFRepsoitories.Base;
+using BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShop.DataAccess.Repostories.EFRepsoitories
+namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
@@ -38,7 +38,7 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories
             return (response, count);
         }
 
-        public async Task<List<Order>> GetByUserId(int id)
+        public async Task<List<Order>> GetRangeByUserId(int id)
         {
             List<Order> orders = await _dbSet.Where(item => item.ApplicationUserId == id).ToListAsync();
 

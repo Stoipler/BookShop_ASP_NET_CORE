@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
+namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base
 {
     public class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
     {
@@ -18,19 +18,17 @@ namespace BookShop.DataAccess.Repostories.EFRepsoitories.Base
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync()
+        public async Task<List<TEntity>> GetAsync()
         {
             List<TEntity> result = await _dbSet.ToListAsync();
             return result;
         }
 
-        public async Task<TEntity> CreateAsync(TEntity item)
+        public async Task CreateAsync(TEntity item)
         {
             await _dbSet.AddAsync(item);
 
             await _context.SaveChangesAsync();
-
-            return item;
         }
         public async Task UpdateAsync(TEntity item)
         {
