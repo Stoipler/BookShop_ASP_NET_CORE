@@ -1,12 +1,12 @@
-﻿using BookShop.DataAccess.AppContext;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.DapperRepositories.Base;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Dapper;
 using Dapper.Contrib.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookShop.DataAccess.Repostories.DapperRepositories
 {
@@ -24,6 +24,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
         public async Task RemoveRangeAsync(List<AuthorInBook> authorInBooks)
         {
             List<int> idsToRemove = authorInBooks.Select(item => item.Id).ToList();
+
             await _connection.ExecuteAsync($"DELETE FROM AuthorInBooks WHERE Id IN @ids", new { ids = idsToRemove });
         }
     }

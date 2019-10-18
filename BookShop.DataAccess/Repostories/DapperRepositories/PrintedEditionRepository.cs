@@ -119,6 +119,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 LEFT JOIN Authors ON Authors.Id = AuthorInBooks.AuthorId");
 
             PrintedEditionWithNestedObjects printedEditionWithNestedObjects = new PrintedEditionWithNestedObjects();
+
             await _connection.QueryAsync<PrintedEdition, AuthorInBook, Author, PrintedEdition>(itemsExpression.RawSql,
                 (printedEdition, authorInBook, author) =>
                 {
