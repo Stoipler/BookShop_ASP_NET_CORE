@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BookShop.DataAccess.Common.Constants;
 
 namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 {
@@ -19,7 +20,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         public async Task<(List<ApplicationUser> users, int count)> GetUsersAsync(UserRequestParameters parameters)
         {
             IQueryable<ApplicationUser> users = _dbSet;
-            users = users.Where(item => item.UserName != "admin@email.com");
+            users = users.Where(item => item.UserName != AdminCredentials.UserName);
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 users = users.Where(item =>

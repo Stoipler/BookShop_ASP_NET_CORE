@@ -7,6 +7,7 @@ using Dapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BookShop.DataAccess.Common.Constants;
 
 namespace BookShop.DataAccess.Repostories.DapperRepositories
 {
@@ -30,7 +31,7 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                 (SELECT DISTINCT AspNetUsers.* FROM AspNetUsers
                 /**where**/ /**orderby**/) AS FilteredUsers");
 
-            sqlBuilder.Where("AspNetUsers.UserName != 'admin@email.com'");
+            sqlBuilder.Where($"AspNetUsers.UserName != '{AdminCredentials.UserName}'");
             if (!string.IsNullOrWhiteSpace(parameters.KeyWord))
             {
                 parameters.KeyWord = parameters.KeyWord.ToLower();

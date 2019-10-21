@@ -3,6 +3,7 @@ using BookShop.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using static BookShop.DataAccess.Common.Constants;
 
 namespace BookShop.BusinessLogic.Initialization
 {
@@ -18,19 +19,19 @@ namespace BookShop.BusinessLogic.Initialization
                 await _roleManager.CreateAsync(new IdentityRole<int>("admin"));
             }
 
-            if (!(await _userManager.FindByEmailAsync("admin@email.com") is null))
+            if (!(await _userManager.FindByNameAsync(AdminCredentials.UserName) is null))
             {
                 return;
             }
             ApplicationUser admin = new ApplicationUser
             {
-                FirstName = "Admin",
-                LastName = "Admin",
-                UserName = "admin@email.com",
-                Email = "admin@email.com",
+                FirstName = AdminCredentials.FirstName,
+                LastName = AdminCredentials.LastName,
+                UserName = AdminCredentials.UserName,
+                Email = AdminCredentials.Email,
                 EmailConfirmed = true
             };
-            string adminPassword = "Admin2019";
+            string adminPassword = AdminCredentials.NotHashedPassword;
             IdentityResult result = await _userManager.CreateAsync(admin, adminPassword);
             if (result.Succeeded)
             {
