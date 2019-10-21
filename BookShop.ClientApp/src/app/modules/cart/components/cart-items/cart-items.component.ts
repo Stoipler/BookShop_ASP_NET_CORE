@@ -18,7 +18,7 @@ export class CartItemsComponent implements OnInit {
   isAnyItemsInCart: boolean = true;
   checkout: CartModel;
   constructor(private paymentHelper: PaymentHelper, private orderService: OrderService) {
-    this.checkout=new CartModel();
+    this.checkout = new CartModel();
     this.paymentHelper.loadStripe();
   }
 
@@ -77,20 +77,8 @@ export class CartItemsComponent implements OnInit {
       amount: amount * 100
     });
   }
-
-  addTestItems() {
-    const testData: CartItemModel[] =
-      [{ printedEditionId: 3, quantity: 2 },
-      { printedEditionId: 1, quantity: 4 },
-      { printedEditionId: 2, quantity: 5 },
-      { printedEditionId: 4, quantity: 1 },
-      { printedEditionId: 5, quantity: 2 }];
-    localStorage.setItem("cart", JSON.stringify(testData));
-    this.getCartItemsList();
-  }
   clearCart() {
     localStorage.removeItem("cart");
     this.getCartItemsList();
   }
-
 }

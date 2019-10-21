@@ -96,8 +96,11 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                         printedEditionWithNestedObjects.PrintedEdition = printedEdition;
                         printedEditionWithNestedObjectsDictionary.Add(printedEdition.Id, printedEditionWithNestedObjects);
                     }
-                    authorInBook.Author = author;
-                    printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    if (!(authorInBook is null))
+                    {
+                        authorInBook.Author = author;
+                        printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    }
                     return printedEditionWithNestedObjects;
                 },
                 parameters);
@@ -130,8 +133,11 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories
                         printedEditionWithNestedObjects.PrintedEdition = printedEdition;
                         printedEditionWithNestedObjectsDictionary.Add(printedEdition.Id, printedEditionWithNestedObjects);
                     }
-                    authorInBook.Author = author;
-                    printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    if (!(authorInBook is null))
+                    {
+                        authorInBook.Author = author;
+                        printedEditionWithNestedObjects.AuthorInBooks.Add(authorInBook);
+                    }
                     return printedEditionWithNestedObjects;
 
                 }, new { Id = id });
