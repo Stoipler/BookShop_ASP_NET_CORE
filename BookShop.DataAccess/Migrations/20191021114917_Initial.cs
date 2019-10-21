@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace BookShop.DataAccess.Migrations
 {
@@ -66,23 +66,6 @@ namespace BookShop.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationDate = table.Column<DateTime>(nullable: false),
-                    IsRemoved = table.Column<bool>(nullable: false),
-                    ApplicationUserId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    OrderAmount = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,6 +209,29 @@ namespace BookShop.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    IsRemoved = table.Column<bool>(nullable: false),
+                    ApplicationUserId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    OrderAmount = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AuthorInBooks",
                 columns: table => new
                 {
@@ -263,8 +269,8 @@ namespace BookShop.DataAccess.Migrations
                     IsRemoved = table.Column<bool>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
-                    PrintedEditionId = table.Column<int>(nullable: false),
-                    Count = table.Column<int>(nullable: false)
+                    Count = table.Column<int>(nullable: false),
+                    PrintedEditionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -282,13 +288,13 @@ namespace BookShop.DataAccess.Migrations
                 columns: new[] { "Id", "CreationDate", "IsRemoved", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6546), false, "Joan Rowling" },
-                    { 2, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6548), false, "J.R. Martin" },
-                    { 3, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6549), false, "William Shaekspeare" },
-                    { 4, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6550), false, "William Shaekspeare" },
-                    { 5, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6550), false, "Lev Tolstoy" },
-                    { 6, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6551), false, "Incognito" },
-                    { 7, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6552), false, "Stan Lee" }
+                    { 1, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5879), false, "Joan Rowling" },
+                    { 2, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5881), false, "J.R. Martin" },
+                    { 3, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882), false, "William Shaekspeare" },
+                    { 4, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882), false, "William Shaekspeare" },
+                    { 5, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5883), false, "Lev Tolstoy" },
+                    { 6, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5884), false, "Incognito" },
+                    { 7, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5885), false, "Stan Lee" }
                 });
 
             migrationBuilder.InsertData(
@@ -296,15 +302,15 @@ namespace BookShop.DataAccess.Migrations
                 columns: new[] { "Id", "CreationDate", "Currency", "Description", "IsRemoved", "Name", "Price", "Type" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6687), 1, "About boy who lived", false, "Harry Potter", 100m, 1 },
-                    { 2, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6689), 1, "Origin of the Game of trones", false, "Song of ice and fire", 70.52m, 1 },
-                    { 3, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6691), 1, "Historical novel", false, "War and peace", 78.52m, 1 },
-                    { 4, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6692), 1, "New York newspaper", false, "Times", 12.30m, 3 },
-                    { 5, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6693), 1, "Not book", false, "Shrek", 23.70m, 1 },
-                    { 6, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6694), 1, "Comics", false, "The Simpsons", 15.00m, 2 },
-                    { 7, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6696), 1, "Superhero tales", false, "The amazing Spider-Man", 18.00m, 2 },
-                    { 8, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6697), 1, "Science news", false, "Electronics today", 5.00m, 3 },
-                    { 9, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6698), 1, "Computer Journal", false, "Wired", 5.00m, 2 }
+                    { 1, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6019), 1, "About boy who lived", false, "Harry Potter", 100m, 1 },
+                    { 2, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6022), 1, "Origin of the Game of trones", false, "Song of ice and fire", 70.52m, 1 },
+                    { 3, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6025), 1, "Historical novel", false, "War and peace", 78.52m, 1 },
+                    { 4, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6026), 1, "New York newspaper", false, "Times", 12.30m, 3 },
+                    { 5, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6027), 1, "Not book", false, "Shrek", 23.70m, 1 },
+                    { 6, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6028), 1, "Comics", false, "The Simpsons", 15.00m, 2 },
+                    { 7, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6029), 1, "Superhero tales", false, "The amazing Spider-Man", 18.00m, 2 },
+                    { 8, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6030), 1, "Science news", false, "Electronics today", 5.00m, 3 },
+                    { 9, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6031), 1, "Computer Journal", false, "Wired", 5.00m, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -312,12 +318,12 @@ namespace BookShop.DataAccess.Migrations
                 columns: new[] { "Id", "AuthorId", "CreationDate", "IsRemoved", "PrintedEditionId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6713), false, 1 },
-                    { 2, 2, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6714), false, 2 },
-                    { 3, 3, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6715), false, 3 },
-                    { 4, 4, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6752), false, 4 },
-                    { 5, 5, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6752), false, 5 },
-                    { 6, 6, new DateTime(2019, 10, 8, 16, 20, 32, 339, DateTimeKind.Utc).AddTicks(6753), false, 6 }
+                    { 1, 1, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6048), false, 1 },
+                    { 2, 2, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6050), false, 2 },
+                    { 3, 3, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051), false, 3 },
+                    { 4, 4, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051), false, 4 },
+                    { 5, 5, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6052), false, 5 },
+                    { 6, 6, new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6053), false, 6 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -373,6 +379,11 @@ namespace BookShop.DataAccess.Migrations
                 name: "IX_OrderItems_PrintedEditionId",
                 table: "OrderItems",
                 column: "PrintedEditionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ApplicationUserId",
+                table: "Orders",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -408,13 +419,13 @@ namespace BookShop.DataAccess.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "PrintedEditions");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

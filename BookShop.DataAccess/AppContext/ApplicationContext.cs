@@ -31,7 +31,6 @@ namespace BookShop.DataAccess.AppContext
             {
                 _connectionString = sqlServerOptionsExtension.ConnectionString;
             }
-            Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

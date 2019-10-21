@@ -33,9 +33,7 @@ export class ProductManagementComponent implements OnInit {
   PrintedEditionType = PrintedEditionType;
   faTimes = faTimes;
   faPencilAlt = faPencilAlt;
-  faBackspace = faBackspace;
   faPlusCircle = faPlusCircle;
-  faArrowRight = faArrowRight;
 
   constructor(
     private printedEditionService: PrintedEditionService,
