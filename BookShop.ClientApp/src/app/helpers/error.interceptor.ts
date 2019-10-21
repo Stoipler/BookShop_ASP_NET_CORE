@@ -23,6 +23,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 return;
             }
+            if (err.status === 0) {
+                this.toastService.show("Warning", "No connection to server");
+                return;
+            }
             const error = err.error || err.statusText;
             this.toastService.show("Warning", "Unhandled error: something went wrong");
             return throwError(error);

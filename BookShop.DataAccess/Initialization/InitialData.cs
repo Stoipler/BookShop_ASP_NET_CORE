@@ -37,7 +37,7 @@ namespace BookShop.DataAccess.Initialization
                     Id = 4,
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
-                    Name = "William Shaekspeare"
+                    Name = "Some author"
                 },
                 new Author
                 {

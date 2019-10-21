@@ -1,21 +1,22 @@
-.description {
-    height: 80px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: inline-block;
-    width: calc(100%);
-}
-
-.authors {
-    height: 20px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: inline-block;
-    width: calc(100%);
-}
-
-.printed-title {
+.printed-edition-title {
     height: 50px;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.printed-edition-description {
+    height: 150px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.printed-edition-authors {
+    height: 30px;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

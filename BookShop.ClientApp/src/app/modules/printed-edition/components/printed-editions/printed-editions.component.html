@@ -37,22 +37,22 @@
 
 <div class="container">
     <div class="row">
-        <div *ngFor="let printedEdition of printedEditionsResponseModel.printedEditionModels" class="col-sm-4">
-            <div>
-                <div class="card">
-                    <a [title]="printedEdition.name + ' details'" [routerLink]="[printedEdition.id]">
-                        <img class="card-img-top" src="assets/book.png" alt="Card image cap">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title printed-title">{{printedEdition.name}}</h5>
-                        <p class="card-text description">{{printedEdition.description}}</p>
-                        <p class="card-text authors" *ngFor="let author of printedEdition.authorModels">
+        <div *ngFor="let printedEdition of printedEditionsResponseModel.printedEditionModels" class="col-sm-4 mt-3">
+            <div class="card">
+                <a [title]="printedEdition.name + ' details'" [routerLink]="[printedEdition.id]">
+                    <img class="card-img-top" src="assets/book.png" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title printed-edition-title">{{printedEdition.name}}</h5>
+                    <p class="card-text printed-edition-description">{{printedEdition.description}}</p>
+                    <div class="printed-edition-authors">
+                        <p class="card-text " *ngFor="let author of printedEdition.authorModels">
                             {{author.name}}
                         </p>
-                        <div class="row">
-                            <div class="col">
-                                {{printedEdition.price.toFixed(2)}} {{Currency[printedEdition.currency]}}
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{printedEdition.price.toFixed(2)}} {{Currency[printedEdition.currency]}}
                         </div>
                     </div>
                 </div>
@@ -61,6 +61,6 @@
     </div>
 </div>
 
-<div class="footer">
+<div class="footer mt-3">
     <ngb-pagination class="d-flex justify-content-center" [collectionSize]="printedEditionsResponseModel.count" [(page)]="printedEditionsRequestModel.page" [pageSize]="printedEditionsRequestModel.pageSize" [maxSize]="3" (pageChange)="getPrintedEditions()"></ngb-pagination>
 </div>
