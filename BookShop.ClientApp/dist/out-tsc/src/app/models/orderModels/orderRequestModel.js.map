@@ -1,1 +1,0 @@
-{"version":3,"file":"orderRequestModel.js","sourceRoot":"","sources":["../../../../../../src/app/models/orderModels/orderRequestModel.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,iBAAiB;IAI1B;QACI,IAAI,CAAC,IAAI,GAAG,CAAC,CAAC;QACd,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;QACnB,IAAI,CAAC,OAAO,GAAG,EAAE,CAAC;IACtB,CAAC;CACJ"}
