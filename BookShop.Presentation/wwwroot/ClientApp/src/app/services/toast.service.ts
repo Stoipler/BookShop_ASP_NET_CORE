@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 export class ToastService {
   toasts: any[] = [];
 
-  show(header: string, body: string) {
+  public show(header: string, body: string) {
     this.toasts.push({ header, body });
   }
-  remove(toast) {
-    this.toasts = this.toasts.filter(t => t != toast);
+  public remove(toast) {
+    this.toasts = this.toasts.filter(t => t !== toast);
   }
 }

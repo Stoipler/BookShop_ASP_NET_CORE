@@ -14,13 +14,14 @@ import { Currency } from 'src/app/enums/currency';
 })
 
 export class PrintedEditionDetailsComponent implements OnInit {
-  Currency = Currency;
-  faCartPlus = faCartPlus;
-  printedEdition: PrintedEditionModel;
-  quantity: number = 1;
+  public Currency = Currency;
+  public faCartPlus = faCartPlus;
+  public printedEdition: PrintedEditionModel;
+  public quantity: number;
 
   constructor(private route: ActivatedRoute, private printedEditionService: PrintedEditionService) {
     this.printedEdition = new PrintedEditionModel();
+    this.quantity = 1;
   }
 
   ngOnInit() {
@@ -30,27 +31,27 @@ export class PrintedEditionDetailsComponent implements OnInit {
     });
   }
 
-  addToCart(printedEdition) {
-    let cartItems: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
+  public addToCart(printedEdition) {
+    let cartItems: CartItemModel[] = JSON.parse(localStorage.getItem('cart'));
     if (!cartItems) {
       cartItems = [];
     }
     const cartItem: CartItemModel = new CartItemModel();
-    let isItemPresentInCart: boolean = false;
+    let isItemPresentInCart = false;
     cartItem.printedEditionId = printedEdition.id;
     cartItem.quantity = this.quantity;
     cartItems.forEach((value: CartItemModel, index: number) => {
       if (cartItem.printedEditionId === value.printedEditionId) {
         cartItems[index] = cartItem;
-        localStorage.setItem("cart", JSON.stringify(cartItems));
+        localStorage.setItem('cart', JSON.stringify(cartItems));
         isItemPresentInCart = true;
         return;
       }
-    })
+    });
 
     if (!isItemPresentInCart) {
       cartItems.push(cartItem);
-      localStorage.setItem("cart", JSON.stringify(cartItems))
+      localStorage.setItem('cart', JSON.stringify(cartItems));
     }
   }
 

@@ -1,10 +1,15 @@
 import { UserModel } from 'src/app/models/userModels/userModel';
 
 export class UserResponseModel {
-    count: number;
-    userModels: UserModel[];
+    public count: number;
+    public userModels: UserModel[];
 
-    constructor(){
-        this.userModels=[]
+    constructor() {
+        this.initializeDefaulltModel();
+    }
+
+    private initializeDefaulltModel() {
+        this.count = 0;
+        this.userModels = [];
     }
 }

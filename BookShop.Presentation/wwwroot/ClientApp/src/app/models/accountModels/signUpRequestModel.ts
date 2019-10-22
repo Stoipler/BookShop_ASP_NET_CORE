@@ -1,8 +1,8 @@
 export class SignUpRequestModel {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-    redirectUrl: string;
+    public firstName: string;
+    public lastName: string;
+    public email: string;
+    public password: string;
+    public passwordConfirmation: string;
+    public redirectUrl: string;
 }

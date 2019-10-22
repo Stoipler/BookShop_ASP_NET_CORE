@@ -1,7 +1,7 @@
-export class CheckoutItemModel{
-    printedEditionId:number;
-    printedEditionName:string;
-    quantity:number;
-    unitPrice:number;
-    orderAmount:number;
+export class CheckoutItemModel {
+    public printedEditionId: number;
+    public printedEditionName: string;
+    public quantity: number;
+    public unitPrice: number;
+    public orderAmount: number;
 }

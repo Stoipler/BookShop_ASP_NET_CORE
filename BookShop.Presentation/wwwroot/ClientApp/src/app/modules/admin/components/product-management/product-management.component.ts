@@ -22,18 +22,19 @@ import { AuthorModel } from 'src/app/models/authorModels/authorModel';
   providers: [PrintedEditionService]
 })
 export class ProductManagementComponent implements OnInit {
-  printedEditionsRequestModel: PrintedEditionRequestModel;
-  printedEditionsResponseModel: PrintedEditionResponseModel;
-  authorRequestModel: AuthorRequestModel;
-  authorResponseModel: AuthorResponseModel;
-  printedEdition: PrintedEditionModel;
-  filterForm: FilterForm;
-  Currency = Currency;
-  SortCriteria = SortCriteria;
-  PrintedEditionType = PrintedEditionType;
-  faTimes = faTimes;
-  faPencilAlt = faPencilAlt;
-  faPlusCircle = faPlusCircle;
+
+  public printedEditionsRequestModel: PrintedEditionRequestModel;
+  public printedEditionsResponseModel: PrintedEditionResponseModel;
+  public authorRequestModel: AuthorRequestModel;
+  public authorResponseModel: AuthorResponseModel;
+  public printedEdition: PrintedEditionModel;
+  public filterForm: FilterForm;
+  public Currency = Currency;
+  public SortCriteria = SortCriteria;
+  public PrintedEditionType = PrintedEditionType;
+  public faTimes = faTimes;
+  public faPencilAlt = faPencilAlt;
+  public faPlusCircle = faPlusCircle;
 
   constructor(
     private printedEditionService: PrintedEditionService,
@@ -60,7 +61,8 @@ export class ProductManagementComponent implements OnInit {
       }
     );
   }
-  getAuthors() {
+
+  public getAuthors() {
     this.authorRequestModel.ignoreAuthorsList = this.printedEdition.authorModels;
     this.authorService.getAuthors(this.authorRequestModel).subscribe(
       (data: AuthorResponseModel) => {
@@ -69,24 +71,26 @@ export class ProductManagementComponent implements OnInit {
     );
   }
 
-  addAuthorToList(author: AuthorModel) {
+  public addAuthorToList(author: AuthorModel) {
     this.printedEdition.authorModels.push(author);
     this.getAuthors();
   }
-  removeFromList(author: AuthorModel) {
-    this.printedEdition.authorModels.splice(this.authorRequestModel.ignoreAuthorsList.indexOf(author), 1)
+
+  public removeFromList(author: AuthorModel) {
+    this.printedEdition.authorModels.splice(this.authorRequestModel.ignoreAuthorsList.indexOf(author), 1);
     this.getAuthors();
   }
 
-  edit(printedEdition: PrintedEditionModel) {
+  public edit(printedEdition: PrintedEditionModel) {
     this.printedEdition = printedEdition;
   }
-  cancel() {
+
+  public cancel() {
     this.printedEdition = new PrintedEditionModel();
     this.authorRequestModel = new AuthorRequestModel();
     this.getPrintedEditions();
   }
-  save() {
+  public save() {
     if (this.printedEdition.id) {
       this.printedEditionService.updatePrintedEdition(this.printedEdition).subscribe(
         (success) => {
@@ -103,7 +107,7 @@ export class ProductManagementComponent implements OnInit {
     }
   }
 
-  openModal(content) {
+  public openModal(content) {
     this.getAuthors();
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
       (result) => {
@@ -113,43 +117,49 @@ export class ProductManagementComponent implements OnInit {
         this.cancel();
       });
   }
-  setSearchParameters() {
+  public setSearchParameters() {
     this.printedEditionsRequestModel.priceFrom = this.filterForm.priceFrom;
     this.printedEditionsRequestModel.priceTo = this.filterForm.priceTo;
     this.printedEditionsRequestModel.printedEditionType = this.filterForm.printedEditionType;
     this.printedEditionsRequestModel.sortCriteria = this.filterForm.sortCriteria;
     this.getPrintedEditions();
   }
-  enumMap(typeEnum: any, defaultOptionText: string): Array<EnumParams> {
+  public enumMap(typeEnum: any, defaultOptionText: string): Array<EnumParams> {
     let keys = Object.keys(typeEnum);
-    let startIndexWithoutDefault: number = (keys.length / 2) + 1;
+    const startIndexWithoutDefault: number = (keys.length / 2) + 1;
     keys = keys.slice(startIndexWithoutDefault);
-    let items = new Array();
-    items.push(new EnumParams(0, defaultOptionText))
-    keys.forEach(function (value, index) {
-      let item = new EnumParams((index + 1), value);
+    const items = new Array();
+    const defaultValue = new EnumParams(0, defaultOptionText);
+    items.push(defaultValue);
+    keys.forEach((value, index) => {
+      const item = new EnumParams((index + 1), value);
       items.push(item);
-    })
+    });
     return items;
   }
 }
 class EnumParams {
-  id: number;
-  name: string;
+  public id: number;
+  public name: string;
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
   }
 }
 class FilterForm {
-  priceFrom: number;
-  priceTo: number;
-  sortCriteria: SortCriteria;
-  printedEditionType: PrintedEditionType;
+  public priceFrom: number;
+  public priceTo: number;
+  public sortCriteria: SortCriteria;
+  public printedEditionType: PrintedEditionType;
   constructor() {
+    this.initializeDefaultModel();
+  }
+
+  private initializeDefaultModel() {
     this.priceFrom = 0;
     this.priceTo = 0;
     this.sortCriteria = SortCriteria.None;
     this.printedEditionType = PrintedEditionType.None;
   }
+
 }

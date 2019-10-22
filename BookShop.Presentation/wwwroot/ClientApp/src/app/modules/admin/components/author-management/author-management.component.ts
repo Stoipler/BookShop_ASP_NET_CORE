@@ -14,12 +14,13 @@ import { faPencilAlt, faBackspace, faPlusCircle } from '@fortawesome/free-solid-
 })
 export class AuthorManagementComponent implements OnInit {
 
-  authorRequestModel: AuthorRequestModel;
-  authorResponseModel: AuthorResponseModel;
-  author: AuthorModel;
-  faPencilAlt = faPencilAlt;
-  faBackspace = faBackspace;
-  faPlusCircle = faPlusCircle;
+  public authorRequestModel: AuthorRequestModel;
+  public authorResponseModel: AuthorResponseModel;
+  public author: AuthorModel;
+  public faPencilAlt = faPencilAlt;
+  public faBackspace = faBackspace;
+  public faPlusCircle = faPlusCircle;
+
   constructor(private modalService: NgbModal, private authorService: AuthorService) {
     this.authorRequestModel = new AuthorRequestModel();
     this.authorResponseModel = new AuthorResponseModel();
@@ -32,20 +33,20 @@ export class AuthorManagementComponent implements OnInit {
     this.getAuthors();
 
   }
-  getAuthors() {
+  public getAuthors() {
     this.authorService.getAuthors(this.authorRequestModel).subscribe(
       (data: AuthorResponseModel) => {
         this.authorResponseModel = data;
       }
     );
   }
-  editAuthor(author: AuthorModel) {
+  public editAuthor(author: AuthorModel) {
     this.author = author;
   }
-  cancel() {
+  public cancel() {
     this.author = new AuthorModel();
   }
-  save() {
+  public save() {
     if (this.author.id) {
       this.authorService.updateAuthor(this.author).subscribe(
         (success) => {
@@ -63,7 +64,7 @@ export class AuthorManagementComponent implements OnInit {
       );
     }
   }
-  openModal(content) {
+  public openModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then((result) => {
     }, (reason) => {
     });

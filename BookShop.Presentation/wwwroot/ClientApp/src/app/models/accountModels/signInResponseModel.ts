@@ -1,4 +1,4 @@
 export class SignInResponseModel {
-    firstName: string;
-    token: string;
+    public firstName: string;
+    public token: string;
 }

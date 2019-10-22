@@ -8,7 +8,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  faUserCircle=faUserCircle;
+  public faUserCircle = faUserCircle;
   constructor() { }
 
   ngOnInit() {

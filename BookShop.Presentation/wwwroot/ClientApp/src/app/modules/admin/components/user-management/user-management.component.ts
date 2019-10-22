@@ -13,12 +13,12 @@ import { UserModel } from 'src/app/models/userModels/userModel';
 })
 export class UserManagementComponent implements OnInit {
 
-  userRequestModel: UserRequestModel;
-  userResponseModel: UserResponseModel;
-  userModel: UserModel;
-  faPencilAlt = faPencilAlt;
-  constructor(private userService: UserService,
-    private modalService: NgbModal) {
+  public userRequestModel: UserRequestModel;
+  public userResponseModel: UserResponseModel;
+  public userModel: UserModel;
+  public faPencilAlt = faPencilAlt;
+
+  constructor(private userService: UserService, private modalService: NgbModal) {
 
     this.userRequestModel = new UserRequestModel();
     this.userResponseModel = new UserResponseModel();
@@ -28,28 +28,31 @@ export class UserManagementComponent implements OnInit {
   ngOnInit() {
     this.getUsers();
   }
-  getUsers() {
+
+  public getUsers() {
     this.userService.getUsers(this.userRequestModel).subscribe(
       (data: UserResponseModel) => {
         this.userResponseModel = data;
       }
     );
   }
-  editUser(userModel: UserModel) {
+
+  public editUser(userModel: UserModel) {
     this.userModel = userModel;
   }
-  cancel() {
+
+  public cancel() {
     this.userModel = new UserModel();
   }
 
-  saveChanges() {
+  public saveChanges() {
     this.userService.updateUser(this.userModel).subscribe(
       (success) => {
         this.cancel();
         this.getUsers();
       });
   }
-  openModal(content) {
+  public openModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
       }, (reason) => {
@@ -57,7 +60,7 @@ export class UserManagementComponent implements OnInit {
         this.getUsers();
       });
   }
-  changeUserStatus(userModel: UserModel) {
+  public changeUserStatus(userModel: UserModel) {
     this.userModel = userModel;
     this.userModel.isRemoved = !this.userModel.isRemoved;
     this.userService.updateUser(this.userModel).subscribe(

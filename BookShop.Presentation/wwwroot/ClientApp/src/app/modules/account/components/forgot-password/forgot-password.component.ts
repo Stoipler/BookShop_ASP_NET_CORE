@@ -10,23 +10,24 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  requestModel: ForgotPasswordRequestModel;
-  isEmailSended: boolean = false;
+  public requestModel: ForgotPasswordRequestModel;
+  public isEmailSended: boolean;
 
   constructor(private accountService: AccountService) {
     this.requestModel = new ForgotPasswordRequestModel();
     this.requestModel.redirectUrl = 'http://localhost:4200/account/resetpassword';
+    this.isEmailSended = false;
   }
 
   ngOnInit() {
 
   }
 
-  forgotPassword() {
+  public forgotPassword() {
     this.accountService.forgotPassword(this.requestModel)
       .subscribe(
         (success) => {
-          this.isEmailSended = true
+          this.isEmailSended = true;
         });
   }
 }

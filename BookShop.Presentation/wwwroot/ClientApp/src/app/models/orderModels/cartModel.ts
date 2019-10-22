@@ -2,12 +2,16 @@ import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
 import { CheckoutItemModel } from 'src/app/models/orderModels/checkoutItemModel';
 
 export class CartModel {
-    cartItemModels: CartItemModel[];
-    checkoutItemModels:CheckoutItemModel[]
-    totalPrice: number;
+    public cartItemModels: CartItemModel[];
+    public checkoutItemModels: CheckoutItemModel[];
+    public totalPrice: number;
 
-    constructor(){
-        this.checkoutItemModels=[];
-        this.totalPrice=0;
+    constructor() {
+        this.initializeDefaultModel();
+    }
+
+    private initializeDefaultModel() {
+        this.checkoutItemModels = [];
+        this.totalPrice = 0;
     }
 }

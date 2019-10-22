@@ -1,7 +1,4 @@
 export class CartItemModel {
-    quantity: number;
-    printedEditionId:number;
-    constructor() {
-
-    }
+    public quantity: number;
+    public printedEditionId: number;
 }

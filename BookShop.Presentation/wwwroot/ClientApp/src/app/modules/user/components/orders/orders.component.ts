@@ -9,7 +9,7 @@ import { OrderResponseModel } from 'src/app/models/orderModels/orderResponseMode
   providers: [OrderService]
 })
 export class OrdersComponent implements OnInit {
-  orderResponseModel: OrderResponseModel;
+  public orderResponseModel: OrderResponseModel;
 
   constructor(private orderService: OrderService) {
     this.orderResponseModel = new OrderResponseModel();
@@ -19,9 +19,9 @@ export class OrdersComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders() {
+  public getOrders() {
     this.orderService.getOrdersForUser().subscribe((data: OrderResponseModel) => {
       this.orderResponseModel = data;
-    })
+    });
   }
 }

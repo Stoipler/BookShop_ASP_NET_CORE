@@ -4,7 +4,7 @@ import { CartItemsComponent } from 'src/app/modules/cart/components/cart-items/c
 import { AuthenticationGuard } from 'src/app/helpers/authentication.guard';
 
 
-const routes: Routes = [{ path: 'cartitems', component: CartItemsComponent, canActivate:[AuthenticationGuard] }];
+const routes: Routes = [{ path: 'cartitems', component: CartItemsComponent, canActivate: [AuthenticationGuard] }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

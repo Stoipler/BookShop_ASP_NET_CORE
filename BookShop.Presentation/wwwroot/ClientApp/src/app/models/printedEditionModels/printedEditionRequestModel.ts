@@ -2,15 +2,19 @@ import { SortCriteria } from 'src/app/enums/sortCriteria';
 import { PrintedEditionType } from 'src/app/enums/printedEditionType';
 
 export class PrintedEditionRequestModel {
-    page: number;
-    pageSize: number;
-    keyWord: string;
-    priceTo: number;
-    priceFrom: number;
-    sortCriteria: SortCriteria;
-    printedEditionType: PrintedEditionType;
+    public page: number;
+    public pageSize: number;
+    public keyWord: string;
+    public priceTo: number;
+    public priceFrom: number;
+    public sortCriteria: SortCriteria;
+    public printedEditionType: PrintedEditionType;
 
     constructor() {
+        this.initializeDefaultModel();
+    }
+
+    private initializeDefaultModel() {
         this.page = 1;
         this.pageSize = 6;
         this.keyWord = '';

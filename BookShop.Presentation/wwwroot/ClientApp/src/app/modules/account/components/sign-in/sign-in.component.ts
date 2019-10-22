@@ -3,7 +3,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignInRequestModel } from 'src/app/models/accountModels/signInRequestModel';
 import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
-import { error } from '@angular/compiler/src/util';
+import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,33 +13,29 @@ import { error } from '@angular/compiler/src/util';
 })
 export class SignInComponent implements OnInit {
 
-  signInRequestModel: SignInRequestModel;
-  returnUrl: string;
+  public signInRequestModel: SignInRequestModel;
+  public returnUrl: string;
 
   constructor(private accountService: AccountService,
-    private route: ActivatedRoute,
-    private router: Router) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private authenticationHelper: AuthenticationHelper) {
     this.signInRequestModel = new SignInRequestModel();
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     if (JSON.parse(localStorage.getItem('currentUser'))) {
       this.router.navigate(['/']);
     }
   }
 
-  signIn() {
+  public signIn() {
     this.accountService.signIn(this.signInRequestModel).subscribe(
       (data: SignInResponseModel) => {
-        const user: SignInResponseModel = new SignInResponseModel();
-        user.token = data.token;
-        user.firstName = data.firstName;
-        localStorage.removeItem('cart');
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.authenticationHelper.setCurrentUser(data);
         this.router.navigate([this.returnUrl]);
       }, (error) => {
-
       });
   }
 }

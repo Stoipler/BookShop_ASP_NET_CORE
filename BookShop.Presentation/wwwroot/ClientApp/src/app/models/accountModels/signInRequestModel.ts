@@ -1,4 +1,4 @@
-export class SignInRequestModel{
-    email:string;
-    password:string;
+export class SignInRequestModel {
+    public email: string;
+    public password: string;
 }

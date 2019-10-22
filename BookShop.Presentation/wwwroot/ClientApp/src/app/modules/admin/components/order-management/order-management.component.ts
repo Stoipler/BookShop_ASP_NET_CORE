@@ -9,8 +9,8 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./order-management.component.css']
 })
 export class OrderManagementComponent implements OnInit {
-  orderRequestModel: OrderRequestModel;
-  orderResponseModel: OrderResponseModel;
+  public orderRequestModel: OrderRequestModel;
+  public orderResponseModel: OrderResponseModel;
 
   constructor(private orderService: OrderService) {
     this.orderRequestModel = new OrderRequestModel();
@@ -21,7 +21,7 @@ export class OrderManagementComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders() {
+  public getOrders() {
     this.orderService.getOrdersForAdmin(this.orderRequestModel).subscribe(
       (data: OrderResponseModel) => {
         this.orderResponseModel = data;

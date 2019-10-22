@@ -1,4 +1,4 @@
 export class ForgotPasswordRequestModel {
-    email: string;
-    redirectUrl: string;
+    public email: string;
+    public redirectUrl: string;
 }

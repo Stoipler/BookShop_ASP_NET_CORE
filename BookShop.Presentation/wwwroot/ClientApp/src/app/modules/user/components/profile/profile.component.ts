@@ -12,11 +12,12 @@ import { PasswordChangeRequestModel } from 'src/app/models/userModels/passwordCh
   styleUrls: ['./profile.component.css'],
   providers: [UserService]
 })
+
 export class ProfileComponent implements OnInit {
-  faUserCircle = faUserCircle;
-  isOnEditing: boolean;
-  userProfileRequestModel: UserProfileRequestModel;
-  passwordChangeRequestModel: PasswordChangeRequestModel;
+  public faUserCircle = faUserCircle;
+  public isOnEditing: boolean;
+  public userProfileRequestModel: UserProfileRequestModel;
+  public passwordChangeRequestModel: PasswordChangeRequestModel;
 
   constructor(private modalService: NgbModal, private userService: UserService) {
     this.userProfileRequestModel = new UserProfileRequestModel();
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this.getProfile();
   }
 
-  getProfile() {
+  public getProfile() {
     this.userService.getUserProfile().subscribe(
       (response: UserProfileResponseModel) => {
         this.userProfileRequestModel = new UserProfileRequestModel();
@@ -40,7 +41,8 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  updateProfile() {
+
+  public updateProfile() {
     this.userService.updateUserProfile(this.userProfileRequestModel).subscribe(
       (success) => {
         this.getProfile();
@@ -48,11 +50,11 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  changeEditorMode() {
+  public changeEditorMode() {
     this.isOnEditing = !this.isOnEditing;
   }
 
-  changePassword() {
+  public changePassword() {
     this.userService.changeUserPassword(this.passwordChangeRequestModel).subscribe(
       (success) => {
         this.modalService.dismissAll();
@@ -60,7 +62,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  openModal(content) {
+  public openModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
       (result) => {
         this.passwordChangeRequestModel = new PasswordChangeRequestModel();

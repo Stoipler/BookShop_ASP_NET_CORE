@@ -17,19 +17,22 @@ export class UserService {
 
   }
 
-  getUsers(requestModel: UserRequestModel): Observable<UserResponseModel> {
-    return this.http.post<UserResponseModel>(environment.apiUrl + 'User/GetUsers', requestModel);
+  public getUsers(requestModel: UserRequestModel): Observable<UserResponseModel> {
+    return this.http.post<UserResponseModel>(`${environment.apiUrl}User/GetUsers`, requestModel);
   }
-  updateUser(requestModel: UserModel) {
-    return this.http.post(environment.apiUrl + 'User/UpdateUser', requestModel);
+
+  public updateUser(requestModel: UserModel) {
+    return this.http.post(`${environment.apiUrl}User/UpdateUser`, requestModel);
   }
-  getUserProfile() {
-    return this.http.get<UserProfileResponseModel>(environment.apiUrl + 'User/GetUserProfile');
+
+  public getUserProfile() {
+    return this.http.get<UserProfileResponseModel>(`${environment.apiUrl}User/GetUserProfile`);
   }
-  updateUserProfile(requestModel: UserProfileRequestModel) {
-    return this.http.post(environment.apiUrl + 'User/UpdateUserProfile', requestModel);
+
+  public updateUserProfile(requestModel: UserProfileRequestModel) {
+    return this.http.post(`${environment.apiUrl}User/UpdateUserProfile`, requestModel);
   }
-  changeUserPassword(requestModel: PasswordChangeRequestModel) {
-    return this.http.post(environment.apiUrl + 'User/ChangeUserPassword', requestModel);
+  public changeUserPassword(requestModel: PasswordChangeRequestModel) {
+    return this.http.post(`${environment.apiUrl}User/ChangeUserPassword`, requestModel);
   }
 }

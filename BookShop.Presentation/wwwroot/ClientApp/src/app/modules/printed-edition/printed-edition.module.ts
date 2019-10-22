@@ -18,6 +18,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgbModule,
     FontAwesomeModule
   ],
-  providers:[PrintedEditionService]
+  providers: [PrintedEditionService]
 })
 export class PrintedEditionModule { }

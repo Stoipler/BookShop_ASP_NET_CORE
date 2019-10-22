@@ -5,6 +5,6 @@ export class AuthorModel {
     public name: string;
     public printedEditionModels: PrintedEditionModel[];
     constructor(
-       
-        ) { }
+
+    ) { }
 }

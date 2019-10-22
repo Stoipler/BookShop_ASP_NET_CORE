@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faCartPlus, faTools, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-header',
@@ -10,26 +9,28 @@ import { stringify } from 'querystring';
 })
 export class HeaderComponent implements OnInit {
 
-  faCartPlus = faCartPlus;
-  faTools = faTools;
-  faUserCircle = faUserCircle;
+  public faCartPlus = faCartPlus;
+  public faTools = faTools;
+  public faUserCircle = faUserCircle;
   constructor(private authHelper: AuthenticationHelper) { }
 
   ngOnInit() {
   }
-  logout() {
+
+  public logout() {
     this.authHelper.logout();
   }
-  isLogedOn(): boolean {
+
+  public isLogedOn(): boolean {
     return this.authHelper.isLogedOn();
   }
-  isAdmin(): boolean {
+
+  public isAdmin(): boolean {
     return this.authHelper.isAdmin();
   }
-  currentUserName(): string {
+
+  public currentUserName(): string {
     const user: { firstName: string } = JSON.parse(localStorage.getItem('currentUser'));
     return user.firstName;
   }
-
-
 }

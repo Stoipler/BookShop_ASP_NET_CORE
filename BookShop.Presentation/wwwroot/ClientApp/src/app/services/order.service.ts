@@ -15,16 +15,16 @@ export class OrderService {
 
   }
 
-  sendPaymentData(model: PaymentDataModel) {
-    return this.http.post(environment.apiUrl + 'Order/SendPaymentData', model);
+  public sendPaymentData(model: PaymentDataModel) {
+    return this.http.post(`${environment.apiUrl}Order/SendPaymentData`, model);
   }
-  getCheckout(items: CartModel) {
-    return this.http.post(environment.apiUrl + 'Order/GetCheckout', items);
+  public getCheckout(items: CartModel) {
+    return this.http.post(`${environment.apiUrl}Order/GetCheckout`, items);
   }
-  getOrdersForUser() {
-    return this.http.get<OrderResponseModel>(environment.apiUrl + 'Order/GetOrdersForUser');
+  public getOrdersForUser() {
+    return this.http.get<OrderResponseModel>(`${environment.apiUrl}Order/GetOrdersForUser`);
   }
-  getOrdersForAdmin(requestModel: OrderRequestModel): Observable<OrderResponseModel> {
-    return this.http.post<OrderResponseModel>(environment.apiUrl + 'Order/GetOrdersForAdmin', requestModel);
+  public getOrdersForAdmin(requestModel: OrderRequestModel): Observable<OrderResponseModel> {
+    return this.http.post<OrderResponseModel>(`${environment.apiUrl}Order/GetOrdersForAdmin`, requestModel);
   }
 }

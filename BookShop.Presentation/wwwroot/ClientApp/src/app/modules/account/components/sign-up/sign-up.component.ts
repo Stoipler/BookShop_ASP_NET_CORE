@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../../services/account.service';
 import { SignUpRequestModel } from 'src/app/models/accountModels/signUpRequestModel';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-  signUpRequestModel: SignUpRequestModel;
-  isSignUpSuccessful: boolean = false;
+  public signUpRequestModel: SignUpRequestModel;
+  public isSignUpSuccessful: boolean;
 
   constructor(private accountService: AccountService, private router: Router) {
     this.signUpRequestModel = new SignUpRequestModel();
-    this.signUpRequestModel.redirectUrl = 'http://localhost:4200/account/emailconfirmed'
+    this.signUpRequestModel.redirectUrl = 'http://localhost:4200/account/emailconfirmed';
+    this.isSignUpSuccessful = false;
   }
 
   ngOnInit() {
@@ -24,7 +25,7 @@ export class SignUpComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-  signUp() {
+  public signUp() {
     this.accountService.signUp(this.signUpRequestModel).subscribe(
       () => {
         this.isSignUpSuccessful = true;

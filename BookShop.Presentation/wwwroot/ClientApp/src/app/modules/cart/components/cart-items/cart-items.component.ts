@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentHelper } from 'src/app/helpers/payment.helper';
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentDataModel } from 'src/app/models/orderModels/paymentDataModel';
 import { CartItemModel } from 'src/app/models/orderModels/cartItemModel';
@@ -15,19 +15,21 @@ import { CheckoutItemModel } from 'src/app/models/orderModels/checkoutItemModel'
 })
 export class CartItemsComponent implements OnInit {
 
-  isAnyItemsInCart: boolean = true;
-  checkout: CartModel;
+  public isAnyItemsInCart: boolean;
+  public checkout: CartModel;
+
   constructor(private paymentHelper: PaymentHelper, private orderService: OrderService) {
     this.checkout = new CartModel();
     this.paymentHelper.loadStripe();
+    this.isAnyItemsInCart = true;
   }
 
   ngOnInit() {
     this.getCartItemsList();
   }
 
-  getCartItemsList() {
-    const cartItems: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
+  public getCartItemsList() {
+    const cartItems: CartItemModel[] = JSON.parse(localStorage.getItem('cart'));
     if (!cartItems) {
       this.isAnyItemsInCart = false;
       return;
@@ -38,24 +40,24 @@ export class CartItemsComponent implements OnInit {
     this.orderService.getCheckout(cartModel).subscribe((data: CartModel) => {
       this.checkout = data;
       this.checkout.cartItemModels = cartItems;
-    })
+    });
   }
 
-  remove(checkoutItem: CheckoutItemModel) {
-    let cartItems: CartItemModel[] = JSON.parse(localStorage.getItem("cart"));
+  public remove(checkoutItem: CheckoutItemModel) {
+    const cartItems: CartItemModel[] = JSON.parse(localStorage.getItem('cart'));
     cartItems.forEach((value: CartItemModel, index: number) => {
       if (value.printedEditionId === checkoutItem.printedEditionId) {
         cartItems.splice(index, 1);
       }
     });
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    localStorage.setItem('cart', JSON.stringify(cartItems));
     this.getCartItemsList();
   }
 
 
-  pay(amount) {
-    const currentUser: { id: number } = JSON.parse(localStorage.getItem("currentUser"));
-    const handler = (<any>window).StripeCheckout.configure({
+  public pay(amount) {
+    const currentUser: { id: number } = JSON.parse(localStorage.getItem('currentUser'));
+    const handler = (window as any).StripeCheckout.configure({
       key: environment.publishableKey,
       locale: 'auto',
       token: (token: { id: string, email: string }) => {
@@ -70,15 +72,15 @@ export class CartItemsComponent implements OnInit {
         });
       }
     });
-
     handler.open({
       name: 'Payment service',
       description: '',
       amount: amount * 100
     });
   }
-  clearCart() {
-    localStorage.removeItem("cart");
+
+  public clearCart() {
+    localStorage.removeItem('cart');
     this.getCartItemsList();
   }
 }

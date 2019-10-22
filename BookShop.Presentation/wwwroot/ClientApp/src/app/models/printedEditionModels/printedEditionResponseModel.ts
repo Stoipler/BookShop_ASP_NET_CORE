@@ -1,6 +1,6 @@
 import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
 
 export class PrintedEditionResponseModel {
-    count: number;
-    printedEditionModels: PrintedEditionModel[];
+    public count: number;
+    public printedEditionModels: PrintedEditionModel[];
 }

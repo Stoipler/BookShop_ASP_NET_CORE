@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ResetPasswordRequestModel } from 'src/app/models/accountModels/resetPasswordRequestModel';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -11,23 +9,22 @@ import { AccountService } from 'src/app/services/account.service';
   providers: [AccountService]
 })
 export class ResetPasswordComponent implements OnInit {
-  requestModel: ResetPasswordRequestModel;
-  isPasswordChanged: boolean = false;
+  public requestModel: ResetPasswordRequestModel;
+  public isPasswordChanged: boolean;
 
-  constructor(private accountService: AccountService,
-    private route: ActivatedRoute) {
-
+  constructor(private accountService: AccountService) {
     this.requestModel = new ResetPasswordRequestModel();
+    this.isPasswordChanged = false;
   }
 
   ngOnInit() {
 
   }
 
-  resetPassword() {
+  public resetPassword() {
     this.accountService.resetPassword(this.requestModel).subscribe(
-      (sucess) => {
-        this.isPasswordChanged = true
+      () => {
+        this.isPasswordChanged = true;
       });
   }
 }
