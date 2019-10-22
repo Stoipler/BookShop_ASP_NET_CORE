@@ -5,9 +5,9 @@ using BookShop.DataAccess.Repostories.Interfaces;
 
 namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 {
-    public class AuthorInBookRepository : BaseRepository<AuthorInBook>, IAuthorInBookRepository
+    public class DiscountInBookRepository : BaseRepository<DiscountInBook>, IDiscountInBookRepository
     {
-        public AuthorInBookRepository(ApplicationContext context) : base(context)
+        public DiscountInBookRepository(ApplicationContext context) : base(context)
         {
         }
     }

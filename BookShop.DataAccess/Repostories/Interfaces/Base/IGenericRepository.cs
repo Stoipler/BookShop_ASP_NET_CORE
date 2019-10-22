@@ -8,8 +8,12 @@ namespace BookShop.DataAccess.Repostories.Interfaces.Base
     {
         Task<List<TEntity>> GetAsync();
         Task<TEntity> GetByIdAsync(int id);
-        Task CreateAsync(TEntity item);
+        Task<TEntity> AddAsync(TEntity item);
         Task UpdateAsync(TEntity item);
         Task Remove(TEntity item);
+        Task AddRangeAsync(List<TEntity> entities);
+        Task RemoveRangeAsync(List<TEntity> entities);
+        Task UpdateRangeAsync(List<TEntity> entities);
+        
     }
 }

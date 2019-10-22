@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Stripe;
 using System;
 using AccountService = BookShop.BusinessLogic.Services.AccountService;
+using DiscountService = BookShop.BusinessLogic.Services.DiscountService;
 using OrderService = BookShop.BusinessLogic.Services.OrderService;
 
 namespace BookShop.BusinessLogic
@@ -33,8 +34,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<JwtHelper>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            InjectDapperRepositories(services);
-            //InjectEntityFrameworkRepositories(services);
+            //InjectDapperRepositories(services);
+            InjectEntityFrameworkRepositories(services);
 
 
             services.AddTransient<IAccountService, AccountService>();
@@ -42,6 +43,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
+            services.AddTransient<IDiscountService, DiscountService>();
 
             services.AddTransient<CustomerService>();
             services.AddTransient<ChargeService>();
@@ -57,6 +59,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorInBookRepository>();
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
+            services.AddTransient<IDiscountRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.DiscountRepository>();
+            services.AddTransient<IDiscountInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.DiscountInBookRepository>();
         }
 
         private static void InjectDapperRepositories(IServiceCollection services)
