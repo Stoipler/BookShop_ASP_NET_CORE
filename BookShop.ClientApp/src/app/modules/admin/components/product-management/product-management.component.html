@@ -41,8 +41,8 @@
     </select>
         </div>
 
-        <div class="col-sm d-flex justify-content-end">
-            <button type="button" class="btn btn-danger" (click)="setSearchParameters()">search</button>
+        <div class="col-sm d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-danger btn-block" (click)="setSearchParameters()">search</button>
         </div>
     </div>
 </div>
@@ -163,6 +163,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="cancel()" (click)="modal.close()">Cancel</button>
-        <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid||printedEdition.type==0||printedEdition.currency==0" ngbAutofocus class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]="name.invalid||description.invalid||printedEdition.type==0||printedEdition.currency==0||printedEdition.price<=0" ngbAutofocus class="btn btn-danger" (click)="save()" (click)="modal.close()">Confirm</button>
     </div>
 </ng-template>

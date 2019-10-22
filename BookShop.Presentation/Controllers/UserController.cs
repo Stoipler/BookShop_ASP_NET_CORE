@@ -1,6 +1,7 @@
 ﻿using BookShop.BusinessLogic.Models.UserModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -45,6 +46,24 @@ namespace BookShop.Presentation.Controllers
         public async Task UpdateUserProfile(UserProfileRequestModel requestModel)
         {
             await _userService.UpdateUserProfileAsync(requestModel);
+        }
+
+        [HttpPost(Name = "ChangeUserPassword")]
+        public async Task<IActionResult> ChangeUserPassword([FromBody]PasswordChangeRequestModel requestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityResult response = await _userService.ChangeUserPasswordAsync(requestModel);
+                if (response.Succeeded)
+                {
+                    return Ok();
+                }
+                foreach (IdentityError error in response.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return BadRequest(ModelState);
         }
 
     }

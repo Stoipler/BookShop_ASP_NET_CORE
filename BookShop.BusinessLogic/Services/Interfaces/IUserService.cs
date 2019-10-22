@@ -1,4 +1,5 @@
 ﻿using BookShop.BusinessLogic.Models.UserModels;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services.Interfaces
@@ -10,5 +11,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task UpdateUserAsync(UserModel requestModel);
         Task<UserProfileResponseModel> GetUserProfileAsync();
         Task UpdateUserProfileAsync(UserProfileRequestModel requestModel);
+        Task<IdentityResult> ChangeUserPasswordAsync(PasswordChangeRequestModel requestModel);
     }
 }

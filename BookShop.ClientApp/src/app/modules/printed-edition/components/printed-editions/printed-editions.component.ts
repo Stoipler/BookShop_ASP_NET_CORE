@@ -24,7 +24,7 @@ export class PrintedEditionsComponent implements OnInit {
   SortCriteria = SortCriteria;
   PrintedEditionType = PrintedEditionType;
 
-  constructor(private modalService: NgbModal, private printedEditionService: PrintedEditionService) {
+  constructor( private printedEditionService: PrintedEditionService) {
     this.printedEditionsRequestModel = new PrintedEditionRequestModel();
     this.printedEditionsResponseModel = new PrintedEditionResponseModel();
     this.filterForm = new FilterForm();

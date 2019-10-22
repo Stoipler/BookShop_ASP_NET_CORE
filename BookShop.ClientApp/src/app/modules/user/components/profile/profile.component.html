@@ -3,40 +3,31 @@
         <div class="col-9">
             <fa-icon [icon]="faUserCircle" size="9x"></fa-icon>
         </div>
-        <div class="col-3">
-            <button type="button" class="btn btn-primary" (click)="changeEditorMode()">Edit profile</button>
+        <div class="col-3 ">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" (click)="changeEditorMode()">Edit profile</button>
+                <button type="button" class="btn btn-danger" (click)="openModal(passwordEditor)">Change password</button>
+            </div>
         </div>
     </div>
     <h3>My profile</h3>
     <fieldset [disabled]="!isOnEditing">
         <div class="form-group">
             <label for="firstName">Your First name</label>
-            <input id="firstName" class="form-control" placeholder="First name" [(ngModel)]="userProfileRequestModel.firstName" #firstName="ngModel">
+            <input id="firstName" class="form-control" placeholder="First name" [(ngModel)]="userProfileRequestModel.firstName" #firstName="ngModel" required/>
         </div>
         <div class="form-group">
             <label for="lastName">Your Last name</label>
-            <input id="lastName" class="form-control" placeholder="Last name" [(ngModel)]="userProfileRequestModel.lastName" #lastName="ngModel">
+            <input id="lastName" class="form-control" placeholder="Last name" [(ngModel)]="userProfileRequestModel.lastName" #lastName="ngModel" required/>
         </div>
         <div class="form-group">
             <label for="email">Your E-mail</label>
-            <input disabled="" id="email" class="form-control" placeholder="E-mail" [(ngModel)]="userProfileRequestModel.email" #email="ngModel">
+            <input disabled="" id="email" class="form-control" placeholder="E-mail" [(ngModel)]="userProfileRequestModel.email" #email="ngModel" required/>
         </div>
     </fieldset>
     <div *ngIf="isOnEditing">
-        <div class="form-group">
-            <label for="password">Current password</label>
-            <input type="password" id="currentPassword" class="form-control" placeholder="Curent password" [(ngModel)]="userProfileRequestModel.currentPassword" #currentPassword="ngModel">
-        </div>
-        <div class="form-group">
-            <label for="newPassword">New password</label>
-            <input type="password" id="newPassword" class="form-control" placeholder="New password" [(ngModel)]="userProfileRequestModel.password" #newPassword="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" />
-        </div>
-        <div class="form-group">
-            <label for="newPasswordConfirmation">New password confirmation</label>
-            <input type="password" id="newPasswordConfirmation" class="form-control" placeholder="New password confirmation" [(ngModel)]="userProfileRequestModel.passwordConfirmation" #newPasswordConfirmation="ngModel" pattern={{userProfileRequestModel.password}}/>
-        </div>
         <div class="d-flex btn-group">
-            <button class="btn btn-success" (click)="updateProfile()">
+            <button class="btn btn-success" [disabled]="firstName.invalid||lastName.invalid||email.invalid" (click)="updateProfile()">
                     Confrim changes   
                 </button>
             <button class=" btn btn-danger" (click)="getProfile()">
@@ -45,3 +36,31 @@
         </div>
     </div>
 </div>
+
+<ng-template #passwordEditor let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Password editor</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="password">Current password</label>
+            <input type="password" id="currentPassword" class="form-control" placeholder="Curent password" [(ngModel)]="passwordChangeRequestModel.currentPassword" #currentPassword="ngModel" required />
+        </div>
+        <div class="form-group">
+            <label for="newPassword">New password</label>
+            <input type="password" id="newPassword" class="form-control" placeholder="New password" [(ngModel)]="passwordChangeRequestModel.newPassword" #newPassword="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" required />
+        </div>
+        <div class="form-group">
+            <label for="newPasswordConfirmation">New password confirmation</label>
+            <input type="password" id="newPasswordConfirmation" class="form-control" placeholder="New password confirmation" [(ngModel)]="passwordChangeRequestModel.newPasswordConfirmation" #newPasswordConfirmation="ngModel" pattern={{passwordChangeRequestModel.newPassword}}
+                required />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]="currentPassword.invalid||newPassword.invalid||newPasswordConfirmation.invalid" ngbAutofocus class="btn btn-danger" (click)="changePassword()">Confirm</button>
+    </div>
+</ng-template>

@@ -7,6 +7,7 @@ import { UserRequestModel } from 'src/app/models/userModels/userRequestModel';
 import { UserModel } from 'src/app/models/userModels/userModel';
 import { UserProfileResponseModel } from 'src/app/models/userModels/userProfileResponseModel';
 import { UserProfileRequestModel } from 'src/app/models/userModels/userProfileRequestModel';
+import { PasswordChangeRequestModel } from 'src/app/models/userModels/passwordChangeRequestModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,5 +28,8 @@ export class UserService {
   }
   updateUserProfile(requestModel: UserProfileRequestModel) {
     return this.http.post(environment.apiUrl + 'User/UpdateUserProfile', requestModel);
+  }
+  changeUserPassword(requestModel: PasswordChangeRequestModel) {
+    return this.http.post(environment.apiUrl + 'User/ChangeUserPassword', requestModel);
   }
 }

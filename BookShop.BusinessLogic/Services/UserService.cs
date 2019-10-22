@@ -25,6 +25,15 @@ namespace BookShop.BusinessLogic.Services
             this._httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<IdentityResult> ChangeUserPasswordAsync(PasswordChangeRequestModel requestModel)
+        {
+            string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
+            ApplicationUser user = await _userManager.FindByNameAsync(userName);
+
+            IdentityResult response = await _userManager.ChangePasswordAsync(user, requestModel.CurrentPassword, requestModel.NewPassword);
+            return response;
+        }
+
         public async Task<UserProfileResponseModel> GetUserProfileAsync()
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
@@ -60,12 +69,6 @@ namespace BookShop.BusinessLogic.Services
             user = requestModel.MapToEntity(user);
 
             await _userRepository.UpdateAsync(user);
-            bool condition = !(string.IsNullOrWhiteSpace(requestModel.CurrentPassword)) && !(string.IsNullOrWhiteSpace(requestModel.Password)) && requestModel.Password == requestModel.PasswordConfirmation;
-
-            if (condition)
-            {
-                await _userManager.ChangePasswordAsync(user, requestModel.CurrentPassword, requestModel.Password);
-            }
         }
     }
 }

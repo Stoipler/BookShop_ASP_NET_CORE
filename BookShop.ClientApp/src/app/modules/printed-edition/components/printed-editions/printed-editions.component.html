@@ -29,8 +29,8 @@
     </select>
         </div>
 
-        <div class="col-sm d-flex justify-content-end">
-            <button type="button" class="btn btn-danger" (click)="setSearchParameters()">search</button>
+        <div class="col-sm d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-danger btn-block" (click)="setSearchParameters()">search</button>
         </div>
     </div>
 </div>
@@ -38,17 +38,25 @@
 <div class="container">
     <div class="row">
         <div *ngFor="let printedEdition of printedEditionsResponseModel.printedEditionModels" class="col-sm-4 mt-3">
-            <div class="card">
+            <div class="card border shadow">
                 <a [title]="printedEdition.name + ' details'" [routerLink]="[printedEdition.id]">
                     <img class="card-img-top" src="assets/book.png" alt="Card image cap">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title printed-edition-title">{{printedEdition.name}}</h5>
-                    <p class="card-text printed-edition-description">{{printedEdition.description}}</p>
-                    <div class="printed-edition-authors">
-                        <p class="card-text " *ngFor="let author of printedEdition.authorModels">
-                            {{author.name}}
-                        </p>
+                    <p>Description:</p>
+                    <div class="card">
+                        <p class="card-text printed-edition-description">{{printedEdition.description}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>Authors: </p>
+                        </div>
+                        <div class="col-8 printed-edition-authors text-right">
+                            <p class="card-text" *ngFor="let author of printedEdition.authorModels">
+                                {{author.name}}
+                            </p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">

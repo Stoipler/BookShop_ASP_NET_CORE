@@ -14,6 +14,7 @@ namespace BookShop.BusinessLogic.Models.AccountModels
         [Required]
         public string Password { get; set; }
         [Required]
+        [Compare("Password")]
         public string PasswordConfirmation { get; set; }
         public string RedirectUrl { get; set; }
 
