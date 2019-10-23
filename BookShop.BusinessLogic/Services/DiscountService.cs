@@ -5,6 +5,7 @@ using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.Services
 {
@@ -23,18 +24,21 @@ namespace BookShop.BusinessLogic.Services
         {
             Discount discount = new Discount();
             discount = requestModel.DiscountModel.MapToEntity(discount);
-            List<int> printedEditionIds = requestModel.PrintedEditionModels.Select(item => item.Id).ToList();
-
-            List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
-            foreach (PrintedEdition printedEdition in printedEditions)
-            {
-                printedEdition.DiscountId = discount.Id;
-            }
 
             discount = await _discountRepository.AddAsync(discount);
 
-            await _printedEditionRepository.UpdateRangeAsync(printedEditions);
+            if (requestModel.DiscountModel.DiscountType == DiscountType.ForPrintedEditions)
+            {
+                List<int> printedEditionIds = requestModel.PrintedEditionModels.Select(item => item.Id).ToList();
 
+                List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
+                foreach (PrintedEdition printedEdition in printedEditions)
+                {
+                    printedEdition.DiscountId = discount.Id;
+                }
+
+                await _printedEditionRepository.UpdateRangeAsync(printedEditions);
+            }
         }
     }
 }

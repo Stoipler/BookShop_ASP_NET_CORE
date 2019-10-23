@@ -4,6 +4,7 @@ import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printed
 import { environment } from 'src/environments/environment';
 import { PrintedEditionRequestModel } from 'src/app/models/printedEditionModels/printedEditionRequestModel';
 import { PrintedEditionResponseModel } from 'src/app/models/printedEditionModels/printedEditionResponseModel';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

@@ -43,6 +43,12 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
                    AuthorInBooks = authorInBooks.ToList()
                });
 
+            bool condition = !(requestParameters.PrintedEditionIgnoreList is null)&&requestParameters.PrintedEditionIgnoreList.Any();
+            if (condition)
+            {
+                printedEditions = printedEditions.Where(item => !requestParameters.PrintedEditionIgnoreList.Contains(item.PrintedEdition.Id));
+            }
+
             printedEditions = printedEditions.Where(item => (item.PrintedEdition.Price >= requestParameters.PriceFrom && item.PrintedEdition.Price <= requestParameters.PriceTo));
 
             if (!string.IsNullOrWhiteSpace(requestParameters.KeyWord))

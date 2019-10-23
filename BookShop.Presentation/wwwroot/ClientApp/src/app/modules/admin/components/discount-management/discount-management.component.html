@@ -1,3 +1,76 @@
 <div class="container mt-5">
     <p>discount-management works!</p>
+    <button (click)="openModal(discountEditor)">Add discount </button>
 </div>
+
+<ng-template #discountEditor let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="startDate">Start date:</label>
+                <div class="input-group">
+                    <input id="startDate" class="form-control" placeholder="yyyy-mm-dd" name="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group col-6">
+                <label for="expirationDate">Expiration date:</label>
+                <div class="input-group">
+                    <input id="expirationDate" class="form-control" placeholder="yyyy-mm-dd" name="expirationDate" ngbDatepicker #expirationDate="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="expirationDate.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <label for="discountTypeSelect" class="m-0">Discount type:</label>
+            <select class="form-control" id="discountTypeSelect" name="discountTypeSelect" [(ngModel)]="discountCreationModel.discountModel.discountType">
+      <option *ngFor="let item of enumMap(DiscountType,'Choose discount type')" [ngValue]="item.id">
+        {{item.name}}
+      </option>
+    </select>
+        </div>
+
+        <div class="container mt-3" *ngIf="discountCreationModel.discountModel.discountType==DiscountType.ForPrintedEditions">
+            <div class="row">
+                <div class="col-6 card">
+                    <div class="mt-3">
+                        <input type="text" autocomplete="off" (keyup)="getPrintedEditions()" class="form-control" [(ngModel)]="printedEditionRequestModel.keyWord" name="keyWord" #keyWord="ngModel" placeholder="Search">
+                        <div class="printed-editions-column">
+                            <div class="btn btn-outline btn-block btn-sm justify-content-start d-flex" *ngFor="let printedEdition of printedEditionResponseModel.printedEditionModels" (click)="addPrintedEditionToDiscount(printedEdition)">
+                                {{printedEdition.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 card">
+                    <div class="mt-3">
+                        <div class="printed-editions-column">
+                            <div class="btn btn-outline btn-block btn-sm justify-content-start d-flex" *ngFor="let printedEdition of discountCreationModel.printedEditionModels" (click)="removePrintedEditionFromDiscount(printedEdition)">
+                                {{printedEdition.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+</ng-template>

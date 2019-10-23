@@ -1,4 +1,5 @@
-﻿using static BookShop.DataAccess.Common.Constants.DataAccessConstants;
+﻿using System.Collections.Generic;
+using static BookShop.DataAccess.Common.Constants.DataAccessConstants;
 using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Models.RequestParameters
@@ -20,6 +21,7 @@ namespace BookShop.DataAccess.Models.RequestParameters
         public SortCriteria SortCriteria { get; set; }
         public PrintedEditionType PrintedEditionType { get; set; }
         public bool WithPagination { get; set; }
+        public List<int> PrintedEditionIgnoreList { get; set; }
         public PrintedEditionRequestParameters()
         {
             Page = DefaultPageNumber;
@@ -27,6 +29,7 @@ namespace BookShop.DataAccess.Models.RequestParameters
             KeyWord = string.Empty;
             PriceTo = decimal.MaxValue;
             WithPagination = true;
+            PrintedEditionIgnoreList = new List<int>();
         }
     }
 }
