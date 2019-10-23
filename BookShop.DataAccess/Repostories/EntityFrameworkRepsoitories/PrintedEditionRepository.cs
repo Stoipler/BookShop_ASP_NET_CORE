@@ -21,7 +21,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 
         public async Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(int id)
         {
-            PrintedEditionWithNestedObjects printedEdition = await _dbSet.Where(item => (item.Id == id)).GroupJoin(_context.AuthorInBooks.Include(authorInBook => authorInBook.Author),
+            PrintedEditionWithNestedObjects printedEdition = await _dbSet.Include(item => item.Discount).Where(item => (item.Id == id)).GroupJoin(_context.AuthorInBooks.Include(authorInBook => authorInBook.Author),
                outerKeySelector => outerKeySelector.Id,
                innerKeySelector => innerKeySelector.PrintedEditionId,
                (product, authorInBooks) => new PrintedEditionWithNestedObjects
@@ -34,7 +34,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         }
         public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionRequestParameters requestParameters)
         {
-            IQueryable<PrintedEditionWithNestedObjects> printedEditions = _dbSet.GroupJoin(_context.AuthorInBooks.Include(item => item.Author),
+            IQueryable<PrintedEditionWithNestedObjects> printedEditions = _dbSet.Include(item => item.Discount).GroupJoin(_context.AuthorInBooks.Include(item => item.Author),
                outerKeySelector => outerKeySelector.Id,
                innerKeySelector => innerKeySelector.PrintedEditionId,
                (printedEdition, authorInBooks) => new PrintedEditionWithNestedObjects
@@ -43,7 +43,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
                    AuthorInBooks = authorInBooks.ToList()
                });
 
-            bool condition = !(requestParameters.PrintedEditionIgnoreList is null)&&requestParameters.PrintedEditionIgnoreList.Any();
+            bool condition = !(requestParameters.PrintedEditionIgnoreList is null) && requestParameters.PrintedEditionIgnoreList.Any();
             if (condition)
             {
                 printedEditions = printedEditions.Where(item => !requestParameters.PrintedEditionIgnoreList.Contains(item.PrintedEdition.Id));
@@ -97,7 +97,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         }
         public async Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds)
         {
-            List<PrintedEdition> printedEditions = await _dbSet.Where(item => printedEditionIds.Contains(item.Id)).ToListAsync();
+            List<PrintedEdition> printedEditions = await _dbSet.Include(item => item.Discount).Where(item => printedEditionIds.Contains(item.Id)).ToListAsync();
 
             return printedEditions;
         }

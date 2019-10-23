@@ -11,7 +11,7 @@ export class DiscountService {
   constructor(private http: HttpClient) { }
 
   public addDiscount(requestModel: DiscountCreationModel) {
-    return this.http.post(`${environment.apiUrl}/Discount/AddDiscount`, requestModel);
+    return this.http.post(`${environment.apiUrl}Discount/AddDiscount`, requestModel);
   }
 }
 

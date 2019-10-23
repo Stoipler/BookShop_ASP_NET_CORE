@@ -10,6 +10,8 @@ import { DiscountCreationModel } from 'src/app/models/discountModels/discountCre
 import { error } from 'util';
 import { PrintedEditionResponseModel } from 'src/app/models/printedEditionModels/printedEditionResponseModel';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
+import { DatePickerModel } from 'src/app/models/datePickerModel';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-discount-management',
@@ -34,6 +36,7 @@ export class DiscountManagementComponent implements OnInit {
     this.printedEditionResponseModel = new PrintedEditionResponseModel();
 
     this.discountCreationModel = new DiscountCreationModel();
+
   }
 
   ngOnInit() {
@@ -53,13 +56,17 @@ export class DiscountManagementComponent implements OnInit {
     return this.enumService.enumMap(typeEnum, defaultOptionText);
   }
 
+  public addDiscount() {
+    this.discountService.addDiscount(this.discountCreationModel).subscribe();
+  }
+
   public addPrintedEditionToDiscount(printedEdition: PrintedEditionModel) {
     this.discountCreationModel.printedEditionModels.push(printedEdition);
     this.getPrintedEditions();
   }
   public removePrintedEditionFromDiscount(printedEdition: PrintedEditionModel) {
     this.discountCreationModel.printedEditionModels
-    .splice(this.printedEditionRequestModel.printedEditionIgnoreList.indexOf(printedEdition), 1);
+      .splice(this.printedEditionRequestModel.printedEditionIgnoreList.indexOf(printedEdition), 1);
     this.getPrintedEditions();
   }
 

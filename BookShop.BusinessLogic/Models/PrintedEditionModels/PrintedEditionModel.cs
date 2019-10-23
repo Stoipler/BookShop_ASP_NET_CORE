@@ -13,6 +13,8 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public decimal DiscountPrice { get; set; }
+        public bool WithDiscount { get; set; }
         public bool IsRemoved { get; set; }
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
@@ -29,6 +31,11 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             IsRemoved = entity.IsRemoved;
             Currency = entity.Currency;
             Type = entity.Type;
+            if (!(entity.Discount is null))
+            {
+                DiscountPrice = (decimal)(Price * ((100M - entity.Discount.DiscountSize) / 100M));
+                WithDiscount = true;
+            }
         }
 
         internal PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition) : this(printedEdition.PrintedEdition)

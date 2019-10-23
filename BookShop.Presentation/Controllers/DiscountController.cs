@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace BookShop.Presentation.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]/[action]")]
     public class DiscountController : Controller
     {
         private readonly IDiscountService _discountService;
@@ -15,7 +17,7 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpPost(Name = "AddDiscount")]
-        public async Task AddDiscount(DiscountCreationModel requestModel)
+        public async Task AddDiscount([FromBody]DiscountCreationModel requestModel)
         {
             await _discountService.AddDiscountAsync(requestModel);
         }
