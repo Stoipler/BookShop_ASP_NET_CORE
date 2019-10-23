@@ -1,4 +1,5 @@
 import { DiscountType } from 'src/app/enums/discountType';
+import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
 
 export class DiscountModel {
     public id: number;
@@ -7,6 +8,7 @@ export class DiscountModel {
     public startDate: Date;
     public expirationDate: Date;
     public discountType: DiscountType;
+    public printedEditionModels: PrintedEditionModel[];
 
     constructor() {
         this.initializeDefaultModel();
@@ -14,5 +16,6 @@ export class DiscountModel {
 
     private initializeDefaultModel() {
         this.discountType = DiscountType.None;
+        this.printedEditionModels = [];
     }
 }

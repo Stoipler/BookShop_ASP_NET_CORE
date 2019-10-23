@@ -1,6 +1,47 @@
 <div class="container mt-5">
     <p>discount-management works!</p>
     <button (click)="openModal(discountEditor)">Add discount </button>
+
+
+    <table class="container table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Discount size(%)</th>
+                <th scope="col">Start date</th>
+                <th scope="col">Expiration date</th>
+                <th scope="col">Discount type</th>
+                <th scope="col">Discount for:</th>
+                <th scope="col">Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let discount of discountResponseModel.discountModels" class="table-secondary">
+                <th scope="row">{{discount.id}}</th>
+                <td>{{discount.description}}</td>
+                <td> {{discount.discountSize}}</td>
+                <td> {{discount.startDate | date: 'shortDate'}}</td>
+                <td> {{discount.expirationDate| date:'shortDate'}}</td>
+                <td>{{DiscountType[discount.discountType]}}</td>
+                <td>
+                    <div *ngFor="let printedEdition of discount.printedEditionModels">
+                        {{printedEdition.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <div class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="faPencilAlt"></fa-icon>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngb-pagination class="row justify-content-center" [collectionSize]="discountResponseModel.count" [(page)]="discountRequestModel.page" [pageSize]="discountRequestModel.pageSize" [maxSize]="3" (pageChange)="getDiscounts()"></ngb-pagination>
+
+
 </div>
 
 <ng-template #discountEditor let-modal>

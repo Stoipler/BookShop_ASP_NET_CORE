@@ -7,11 +7,11 @@ import { EnumService } from 'src/app/services/enum.service';
 import { DiscountType } from 'src/app/enums/discountType';
 import { EnumParameters } from 'src/app/models/enumParameters';
 import { DiscountCreationModel } from 'src/app/models/discountModels/discountCreationModel';
-import { error } from 'util';
 import { PrintedEditionResponseModel } from 'src/app/models/printedEditionModels/printedEditionResponseModel';
 import { PrintedEditionModel } from 'src/app/models/printedEditionModels/printedEditionModel';
-import { DatePickerModel } from 'src/app/models/datePickerModel';
-import { stringify } from '@angular/compiler/src/util';
+import { DiscountRequestModel } from 'src/app/models/discountModels/discountRequestModel';
+import { DiscountResponseModel } from 'src/app/models/discountModels/discountResponseModel';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-discount-management',
@@ -21,10 +21,14 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class DiscountManagementComponent implements OnInit {
 
+
+  public DiscountType = DiscountType;
+  public faPencilAlt = faPencilAlt;
   public printedEditionRequestModel: PrintedEditionRequestModel;
   public printedEditionResponseModel: PrintedEditionResponseModel;
-  public DiscountType = DiscountType;
   public discountCreationModel: DiscountCreationModel;
+  public discountRequestModel: DiscountRequestModel;
+  public discountResponseModel: DiscountResponseModel;
 
   constructor(private discountService: DiscountService,
     private printedEditionService: PrintedEditionService,
@@ -34,13 +38,15 @@ export class DiscountManagementComponent implements OnInit {
     this.printedEditionRequestModel = new PrintedEditionRequestModel();
     this.printedEditionRequestModel.withPagination = false;
     this.printedEditionResponseModel = new PrintedEditionResponseModel();
-
     this.discountCreationModel = new DiscountCreationModel();
+    this.discountRequestModel = new DiscountRequestModel();
+    this.discountResponseModel = new DiscountResponseModel();
 
   }
 
   ngOnInit() {
     this.getPrintedEditions();
+    this.getDiscounts();
   }
 
   private getPrintedEditions() {
@@ -70,11 +76,21 @@ export class DiscountManagementComponent implements OnInit {
     this.getPrintedEditions();
   }
 
+  public getDiscounts() {
+    this.discountService.getDiscounts(this.discountRequestModel).subscribe(
+      (data: DiscountResponseModel) => {
+        this.discountResponseModel = data;
+      }
+    );
+  }
+
   public openModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
-      (result) => {
+      () => {
+        this.discountCreationModel = new DiscountCreationModel();
       },
-      (reason) => {
+      () => {
+        this.discountCreationModel = new DiscountCreationModel();
       });
   }
 }

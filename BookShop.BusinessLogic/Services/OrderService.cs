@@ -62,7 +62,11 @@ namespace BookShop.BusinessLogic.Services
             foreach (CartItemModel cartItem in requestModel.CartItemModels)
             {
                 PrintedEdition printedEdition = printedEditions.FirstOrDefault(item => item.Id == cartItem.PrintedEditionId);
-                if (!(printedEdition is null))
+                if (!(printedEdition.Discount is null))
+                {
+                    totalPrice += (decimal)(printedEdition.Price * cartItem.Quantity * ((100M - printedEdition.Discount.DiscountSize) / 100M));
+                }
+                if (printedEdition.Discount is null)
                 {
                     totalPrice += printedEdition.Price * cartItem.Quantity;
                 }
@@ -115,10 +119,20 @@ namespace BookShop.BusinessLogic.Services
                 {
                     PrintedEditionId = printedEdition.Id,
                     PrintedEditionName = printedEdition.Name,
-                    Quantity = cartItem.Quantity,
-                    UnitPrice = printedEdition.Price,
-                    OrderAmount = printedEdition.Price * cartItem.Quantity
+                    Quantity = cartItem.Quantity
                 };
+
+                if (!(printedEdition.Discount is null))
+                {
+                    checkoutItem.UnitPrice = (decimal)(printedEdition.Price * ((100M - printedEdition.Discount.DiscountSize) / 100M));
+                }
+                if (printedEdition.Discount is null)
+                {
+                    checkoutItem.UnitPrice = printedEdition.Price;
+                }
+
+                checkoutItem.OrderAmount += checkoutItem.UnitPrice * cartItem.Quantity;
+
                 totalPrice += checkoutItem.OrderAmount;
                 responseModel.CheckoutItemModels.Add(checkoutItem);
             }

@@ -29,10 +29,25 @@
                             <fa-icon [icon]="faCartPlus"></fa-icon> Add to cart
                         </button>
                 </div>
-                <div class="card-footer">
-                    <h3>
-                        {{printedEdition.price.toFixed(2)}} {{Currency[printedEdition.currency]}}
-                    </h3>
+                <div class="card-footer row">
+                    <div class="col-6">
+                        <div *ngIf="!printedEdition.withDiscount">
+                            <h4>{{printedEdition.price.toFixed(2)}}</h4>
+                        </div>
+                        <div *ngIf="printedEdition.withDiscount">
+                            <h4> {{printedEdition.discountPrice.toFixed(2)}}</h4>
+                            <div class="text-muted">
+                                <del>
+                                        {{printedEdition.price.toFixed(2)}} 
+                                    </del>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h4>
+                            {{Currency[printedEdition.currency]}}
+                        </h4>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,9 @@
-﻿using BookShop.DataAccess.Entities;
+﻿using BookShop.BusinessLogic.PrintedEditionModels;
+using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models.ObjectModels.DiscountWithNestedObjects;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.BusinessLogic.Models.DiscountModels
@@ -14,9 +18,11 @@ namespace BookShop.BusinessLogic.Models.DiscountModels
         public DateTime CreationDate { get; set; }
         public bool IsRemoved { get; set; }
         public DiscountType DiscountType { get; set; }
+        public List<PrintedEditionModel> PrintedEditionModels { get; set; }
 
         public DiscountModel()
         {
+            PrintedEditionModels = new List<PrintedEditionModel>();
 
         }
 
@@ -30,6 +36,14 @@ namespace BookShop.BusinessLogic.Models.DiscountModels
             DiscountType = entity.DiscountType;
             CreationDate = entity.CreationDate;
             IsRemoved = entity.IsRemoved;
+        }
+        internal DiscountModel(DiscountWithNestedObjects discountWithNestedObjects) : this(discountWithNestedObjects.Discount)
+        {
+            bool condition = !(discountWithNestedObjects.PrintedEditions is null) && discountWithNestedObjects.PrintedEditions.Any();
+            if (condition)
+            {
+                PrintedEditionModels = discountWithNestedObjects.PrintedEditions.Select(item => new PrintedEditionModel(item)).ToList();
+            }
         }
 
         internal Discount MapToEntity(Discount entity)

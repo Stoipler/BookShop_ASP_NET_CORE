@@ -1,6 +1,8 @@
 ﻿using BookShop.BusinessLogic.Models.DiscountModels;
 using BookShop.BusinessLogic.Services.Interfaces;
 using BookShop.DataAccess.Entities;
+using BookShop.DataAccess.Models.ObjectModels.DiscountWithNestedObjects;
+using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.Repostories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,5 +42,21 @@ namespace BookShop.BusinessLogic.Services
                 await _printedEditionRepository.UpdateRangeAsync(printedEditions);
             }
         }
+
+        public async Task<DiscountResponseModel> GetDiscountsAsync(DiscountRequestModel requestModel)
+        {
+            DiscountRequestParameters parameters = requestModel.MapToRequestParameters();
+            (List<DiscountWithNestedObjects> discountWithNestedObjects, int count) = await _discountRepository.GetWithNestedObjectsAsync(parameters);
+
+            DiscountResponseModel responseModel = new DiscountResponseModel() { Count = count };
+            bool condition = discountWithNestedObjects.Any();
+            if (condition)
+            {
+                responseModel.DiscountModels = discountWithNestedObjects.Select(item => new DiscountModel(item)).ToList();
+            }
+
+            return responseModel;
+        }
+
     }
 }

@@ -21,5 +21,13 @@ namespace BookShop.Presentation.Controllers
         {
             await _discountService.AddDiscountAsync(requestModel);
         }
+
+        [HttpPost(Name = "GetDiscounts")]
+        public async Task<DiscountResponseModel> GetDiscounts(DiscountRequestModel requestModel)
+        {
+            DiscountResponseModel responseModel = await _discountService.GetDiscountsAsync(requestModel);
+
+            return responseModel;
+        }
     }
 }
