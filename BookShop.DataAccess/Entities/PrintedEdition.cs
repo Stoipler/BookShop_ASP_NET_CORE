@@ -12,8 +12,9 @@ namespace BookShop.DataAccess.Entities
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
         public PrintedEditionType Type { get; set; }
+
         [ForeignKey("Discount")]
-        public int DiscountId { get; set; }
+        public int? DiscountId { get; set; }
         [Computed]
         public Discount Discount { get; set; }
     }

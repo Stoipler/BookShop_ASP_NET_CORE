@@ -60,7 +60,6 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorInBookRepository>();
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
             services.AddTransient<IDiscountRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.DiscountRepository>();
-            services.AddTransient<IDiscountInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.DiscountInBookRepository>();
         }
 
         private static void InjectDapperRepositories(IServiceCollection services)

@@ -19,12 +19,14 @@ namespace BookShop.DataAccess.Models.RequestParameters
         public decimal PriceFrom { get; set; }
         public SortCriteria SortCriteria { get; set; }
         public PrintedEditionType PrintedEditionType { get; set; }
+        public bool WithPagination { get; set; }
         public PrintedEditionRequestParameters()
         {
             Page = DefaultPageNumber;
             PageSize = DefaultPageSize;
             KeyWord = string.Empty;
             PriceTo = decimal.MaxValue;
+            WithPagination = true;
         }
     }
 }

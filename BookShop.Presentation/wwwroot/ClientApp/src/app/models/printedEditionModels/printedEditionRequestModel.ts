@@ -7,6 +7,7 @@ export class PrintedEditionRequestModel {
     public keyWord: string;
     public priceTo: number;
     public priceFrom: number;
+    public withPagination: boolean;
     public sortCriteria: SortCriteria;
     public printedEditionType: PrintedEditionType;
 
@@ -20,6 +21,7 @@ export class PrintedEditionRequestModel {
         this.keyWord = '';
         this.priceTo = 0;
         this.priceFrom = 0;
+        this.withPagination = true;
         this.sortCriteria = SortCriteria.None;
         this.printedEditionType = PrintedEditionType.None;
     }

@@ -23,7 +23,6 @@ namespace BookShop.DataAccess.AppContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Discount> Discounts { get; set; }
-        public DbSet<DiscountInBook> DiscountInBooks { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -42,10 +41,15 @@ namespace BookShop.DataAccess.AppContext
         {
             base.OnModelCreating(modelBuilder);
 
+
+
             modelBuilder.Entity<AuthorInBook>()
                 .HasOne(entity => entity.Author);
             modelBuilder.Entity<AuthorInBook>()
                .HasOne(entity => entity.PrintedEdition);
+            modelBuilder.Entity<PrintedEdition>()
+                .HasOne(entity => entity.Discount);
+
             Initialization.InitialData.Seed(modelBuilder);
         }
     }

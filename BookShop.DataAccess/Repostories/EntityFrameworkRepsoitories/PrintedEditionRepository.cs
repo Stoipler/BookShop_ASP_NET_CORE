@@ -77,9 +77,13 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
             }
 
             int count = await printedEditions.CountAsync();
-            int countToSkip = (--requestParameters.Page) * requestParameters.PageSize;
 
-            printedEditions = printedEditions.Skip(countToSkip).Take(requestParameters.PageSize);
+            if (requestParameters.WithPagination)
+            {
+                int countToSkip = (--requestParameters.Page) * requestParameters.PageSize;
+
+                printedEditions = printedEditions.Skip(countToSkip).Take(requestParameters.PageSize);
+            }
 
             List<PrintedEditionWithNestedObjects> result = await printedEditions.AsNoTracking().ToListAsync();
 

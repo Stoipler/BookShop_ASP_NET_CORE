@@ -11,13 +11,11 @@ namespace BookShop.BusinessLogic.Services
     public class DiscountService : IDiscountService
     {
         private readonly IDiscountRepository _discountRepository;
-        private readonly IDiscountInBookRepository _discountInBookRepository;
         private readonly IPrintedEditionRepository _printedEditionRepository;
 
-        public DiscountService(IDiscountRepository discountRepository, IDiscountInBookRepository discountInBookRepository, IPrintedEditionRepository printedEditionRepository)
+        public DiscountService(IDiscountRepository discountRepository, IPrintedEditionRepository printedEditionRepository)
         {
             _discountRepository = discountRepository;
-            _discountInBookRepository = discountInBookRepository;
             _printedEditionRepository = printedEditionRepository;
         }
 

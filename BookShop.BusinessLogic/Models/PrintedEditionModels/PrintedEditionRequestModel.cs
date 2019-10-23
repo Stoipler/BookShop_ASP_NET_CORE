@@ -12,6 +12,7 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         public decimal PriceFrom { get; set; }
         public SortCriteria SortCriteria { get; set; }
         public PrintedEditionType PrintedEditionType { get; set; }
+        public bool WithPagination { get; set; }
 
         internal PrintedEditionRequestParameters MapToRequestParameters()
         {
@@ -43,6 +44,10 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             if (PrintedEditionType != PrintedEditionType.None)
             {
                 parameters.PrintedEditionType = PrintedEditionType;
+            }
+            if (WithPagination != true)
+            {
+                parameters.WithPagination = WithPagination;
             }
             return parameters;
         }
