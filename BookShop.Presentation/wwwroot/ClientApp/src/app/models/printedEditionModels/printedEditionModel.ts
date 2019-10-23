@@ -11,6 +11,7 @@ export class PrintedEditionModel {
     public type: PrintedEditionType;
     public currency: Currency;
     public authorModels: AuthorModel[];
+    public discountSize: number;
     public discountPrice: number;
     public withDiscount: boolean;
 

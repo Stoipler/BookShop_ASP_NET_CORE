@@ -17,6 +17,16 @@
     overflow-y: hidden;
 }
 
+.discount-label {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+}
+
+.card-priceholder {
+    height: 50px;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }

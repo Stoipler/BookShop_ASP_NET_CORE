@@ -13,6 +13,7 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public int DiscountSize { get; set; }
         public decimal DiscountPrice { get; set; }
         public bool WithDiscount { get; set; }
         public bool IsRemoved { get; set; }
@@ -35,6 +36,7 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
             {
                 DiscountPrice = (decimal)(Price * ((100M - entity.Discount.DiscountSize) / 100M));
                 WithDiscount = true;
+                DiscountSize = entity.Discount.DiscountSize;
             }
         }
 

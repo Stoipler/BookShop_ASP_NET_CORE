@@ -42,6 +42,9 @@
                 <a [title]="printedEdition.name + ' details'" [routerLink]="[printedEdition.id]">
                     <img class="card-img-top" src="assets/book.png" alt="Card image cap">
                 </a>
+                <div *ngIf="printedEdition.withDiscount" class="discount-label justify-content-end d-flex">
+                    <h4>Discount! -{{printedEdition.discountSize}}% </h4>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title printed-edition-title">{{printedEdition.name}}</h5>
                     <p>Description:</p>
@@ -58,7 +61,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="container row">
+                    <div class="container row card-priceholder">
                         <div *ngIf="!printedEdition.withDiscount">
                             {{printedEdition.price.toFixed(2)}}
                         </div>
