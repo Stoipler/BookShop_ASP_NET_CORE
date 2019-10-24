@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('src/app/modules/cart/cart.module').then(mod => mod.CartModule),
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('src/app/modules/chat/chat.module').then(mod => mod.ChatModule),
   }
 ];
 

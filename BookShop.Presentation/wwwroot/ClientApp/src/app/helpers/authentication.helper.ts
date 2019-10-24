@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
+import { CurrenUserModel } from 'src/app/models/currentUserModel';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationHelper {
@@ -31,5 +32,10 @@ export class AuthenticationHelper {
         user.firstName = model.firstName;
         localStorage.removeItem('cart');
         localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    public getCurrentUserName(): string {
+        const currentUser: CurrenUserModel = JSON.parse(localStorage.getItem('currentUser'));
+        return currentUser.firstName;
     }
 }

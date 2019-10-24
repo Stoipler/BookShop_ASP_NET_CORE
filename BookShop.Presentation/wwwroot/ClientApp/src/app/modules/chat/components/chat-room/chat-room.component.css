@@ -1,0 +1,9 @@
+.chat-window {
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.message-input {
+    height: 55px;
+}
