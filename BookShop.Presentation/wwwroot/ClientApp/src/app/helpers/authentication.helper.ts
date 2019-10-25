@@ -28,6 +28,7 @@ export class AuthenticationHelper {
     }
     public setCurrentUser(model: SignInResponseModel) {
         const user: SignInResponseModel = new SignInResponseModel();
+        user.id = model.id;
         user.token = model.token;
         user.firstName = model.firstName;
         localStorage.removeItem('cart');
@@ -35,7 +36,11 @@ export class AuthenticationHelper {
     }
 
     public getCurrentUserName(): string {
-        const currentUser: CurrenUserModel = JSON.parse(localStorage.getItem('currentUser'));
+        const currentUser: SignInResponseModel = JSON.parse(localStorage.getItem('currentUser'));
         return currentUser.firstName;
+    }
+    public getCurrentUserId(): number {
+        const currentUser: SignInResponseModel = JSON.parse(localStorage.getItem('currentUser'));
+        return currentUser.id;
     }
 }

@@ -8,7 +8,7 @@ namespace BookShop.DataAccess.Repostories.Interfaces
 {
     public interface IChatRepository : IGenericRepository<Chat>
     {
-        Task<Chat> GetByUserNameAsync(string userName);
+        Task<ChatWithNestedObjects> GetByNameAsync(string userName);
         Task<List<ChatWithNestedObjects>> GetWithNestedObjectsAsync();
     }
 }

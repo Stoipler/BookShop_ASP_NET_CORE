@@ -17,24 +17,25 @@ namespace BookShop.Presentation.Hubs
 
         public async Task SendMessage(MessageModel messageModel)
         {
-            await Clients.Group("admin").SendAsync("messageRecieve", messageModel);
+            ChatModel chatModel = await _chatService.CreateMessageAsync(messageModel,Context);
+
+            await Clients.Group(chatModel.Name).SendAsync("chatReceive", chatModel);
         }
 
-        public async Task ConnectAsUser()
-        {
-            string userName = Context.User.Identity.Name;
-            string chatName = await _chatService.GetChatNameAsync(userName);
-            string connectionId = Context.ConnectionId;
-
-            await Groups.AddToGroupAsync(connectionId, chatName);
-        }
         [Authorize(Roles = "admin")]
-        public async Task ConnectToChat(string chatName)
+        public async Task ConnectToChat(int chatId)
         {
             string connectionId = Context.ConnectionId;
 
+            string chatName = await _chatService.GetChatNameAsync(chatId);
+
             await Groups.AddToGroupAsync(connectionId, chatName);
+
+            ChatModel chatModel = await _chatService.GetChatAsync(chatName);
+
+            await Clients.Group(chatName).SendAsync("chatReceive", chatModel);
         }
+
         [Authorize(Roles = "admin")]
         public async Task ConnectAsAdmin()
         {
@@ -45,6 +46,22 @@ namespace BookShop.Presentation.Hubs
             ChatListModel chatListModel = await _chatService.GetChatListAsync();
 
             await Clients.Group("admin").SendAsync("chatListReceive", chatListModel);
+        }
+        public async Task ConnectAsUser()
+        {
+            string userName = Context.User.Identity.Name;
+            string chatName = await _chatService.GetChatNameAsync(userName);
+            string connectionId = Context.ConnectionId;
+
+            ChatListModel chatListModel = await _chatService.GetChatListAsync();
+
+            await Clients.Group("admin").SendAsync("chatListReceive", chatListModel);
+
+            await Groups.AddToGroupAsync(connectionId, chatName);
+
+            ChatModel chatModel = await _chatService.GetChatAsync(chatName);
+
+            await Clients.Group(chatName).SendAsync("chatReceive", chatModel);
         }
     }
 }

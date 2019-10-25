@@ -1,4 +1,14 @@
 <div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div [routerLink]="'/admin/chatmanagement'">
+                Get back to chats list
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Chat with: {{chatModel.name}}</h3>
+        </div>
+    </div>
     <div class="card row chat-window mt-3" #scrollMe [scrollTop]="scrollMe.scrollHeight">
         <div class="container mt-3">
             <div *ngFor="let message of chatModel.messageModels">

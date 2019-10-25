@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppComponent } from 'src/app/components/app/app.component';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,7 +13,6 @@ import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({

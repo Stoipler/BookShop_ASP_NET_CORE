@@ -11,9 +11,16 @@ import { OrderManagementComponent } from 'src/app/modules/admin/components/order
 import { PrintedEditionService } from 'src/app/services/printed-edition.service';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { AuthorManagementComponent } from 'src/app/modules/admin/components/author-management/author-management.component';
+import { ChatManagementComponent } from './components/chat-management/chat-management.component';
+import { ChatRoomComponent } from './components/chat-management/chat-room/chat-room.component';
 
 @NgModule({
-  declarations: [ProductManagementComponent, OrderManagementComponent, UserManagementComponent, AuthorManagementComponent],
+  declarations: [ProductManagementComponent,
+    OrderManagementComponent,
+    UserManagementComponent,
+    AuthorManagementComponent,
+    ChatManagementComponent,
+    ChatRoomComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

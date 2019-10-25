@@ -42,6 +42,7 @@ namespace BookShop.BusinessLogic.Services
                 return responseModel;
             }
             string userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            responseModel.Id = user.Id;
             responseModel.FirstName = user.FirstName;
             responseModel.Token = _jwtHelper.GenerateAccessToken(user, userRole);
 

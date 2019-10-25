@@ -1,13 +1,13 @@
 export class MessageModel {
-    public senderName: string;
-    public message: string;
+    public content: string;
+    public userId: number;
+    public chatId: number;
     public creationDate: Date;
 
     constructor() {
         this.initializeDefaultModel();
     }
     private initializeDefaultModel() {
-        this.senderName = '';
-        this.message = '';
+        this.content = '';
     }
 }

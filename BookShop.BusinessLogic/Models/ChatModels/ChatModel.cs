@@ -7,7 +7,6 @@ namespace BookShop.BusinessLogic.Models.ChatModels
 {
     public class ChatModel
     {
-        private ChatWithNestedObjects item;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,7 +22,7 @@ namespace BookShop.BusinessLogic.Models.ChatModels
             Name = entity.Name;
         }
 
-        internal ChatModel(ChatWithNestedObjects item):this(item.Chat)
+        internal ChatModel(ChatWithNestedObjects item) : this(item.Chat)
         {
             MessageModels = item.Messages.Select(message => new MessageModel(message)).ToList();
         }

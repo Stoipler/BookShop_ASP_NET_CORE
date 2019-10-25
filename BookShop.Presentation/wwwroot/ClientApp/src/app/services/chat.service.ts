@@ -11,39 +11,43 @@ import { SignalRConnectionType } from 'src/app/enums/signalRConnectionType';
 })
 export class ChatService {
   private connection: signalR.HubConnection;
-  constructor(connectionType: SignalRConnectionType) {
-    this.openConnection(connectionType);
+  constructor() {
   }
 
-
-
-
-  public closeConnection() {
-    this.connection.stop();
-  }
-  public sendMessage(message: MessageModel) {
-    this.connection.invoke('SendMessage', message);
-
-  }
-  public onMessageWaiting(eventListenerFunction) {
-    this.connection.on('messageRecieve', eventListenerFunction);
-  }
-
-  private openConnection(connectionType: SignalRConnectionType) {
+  public async openConnection(connectionType: SignalRConnectionType) {
     const currentUser: CurrenUserModel = JSON.parse(localStorage.getItem('currentUser'));
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.serverUrl}chat`, { accessTokenFactory: () => currentUser.token })
       .build();
-    this.connection.start()
+    await this.connection.start()
       .then(() => {
         console.log('Connection started');
-        if (connectionType === SignalRConnectionType.AsUser) {
-          this.connection.invoke('ConnectAsUser');
-        }
-        if (connectionType === SignalRConnectionType.AsAdmin) {
-
-        }
       })
       .catch(error => { console.log(error); });
+    if (connectionType === SignalRConnectionType.AsAdmin) {
+      this.connection.invoke('ConnectAsAdmin');
+    }
+    if (connectionType === SignalRConnectionType.AsUser) {
+      this.connection.invoke('ConnectAsUser');
+    }
+  }
+
+  public closeConnection() {
+    this.connection.stop();
+  }
+
+  public sendMessage(messageModel: MessageModel) {
+    return this.connection.invoke('SendMessage', messageModel);
+  }
+
+  public onChatListReceive(eventListenerFunction) {
+    this.connection.on('chatListReceive', eventListenerFunction);
+  }
+  public onChatReceive(eventListenerFunction) {
+    this.connection.on('chatReceive', eventListenerFunction);
+  }
+
+  public connectToChat(chatId: number) {
+    this.connection.invoke('ConnectToChat', chatId);
   }
 }
