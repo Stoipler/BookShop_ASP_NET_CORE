@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Stripe;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookShop.Presentation
 {
@@ -32,9 +33,9 @@ namespace BookShop.Presentation
                 .AllowCredentials()
                 .WithOrigins("http://localhost:4200");
             }));
-            services.AddSignalR();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -71,6 +72,27 @@ namespace BookShop.Presentation
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/hubs/chat")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+                hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(3);
             });
 
         }
@@ -87,10 +109,6 @@ namespace BookShop.Presentation
             }
 
             app.UseCors("CorsPolicy");
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<ChatHub>("/chat");
-            });
 
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             app.UseHttpsRedirection();
@@ -102,6 +120,11 @@ namespace BookShop.Presentation
                 routes.MapRoute(
                     name: "spa-fallback",
                     template: "{*url}");
+            });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/hubs/chat");
             });
         }
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { MessageModel } from 'src/app/models/chatModels/messageModel';
 import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
+import { SignalRConnectionType } from 'src/app/enums/signalRConnectionType';
 
 @Component({
   selector: 'app-chat-room',
@@ -11,8 +12,9 @@ import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 export class ChatRoomComponent implements OnInit {
   public message: MessageModel;
   public messages: MessageModel[];
-
-  constructor(private readonly chatService: ChatService, private authenticationHelper: AuthenticationHelper) {
+  private chatService: ChatService;
+  constructor(private authenticationHelper: AuthenticationHelper) {
+    this.chatService = new ChatService(SignalRConnectionType.AsUser);
     this.message = new MessageModel();
     this.messages = [];
   }
