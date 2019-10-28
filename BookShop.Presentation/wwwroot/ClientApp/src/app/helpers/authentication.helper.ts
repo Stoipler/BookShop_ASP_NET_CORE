@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { SignInResponseModel } from 'src/app/models/accountModels/signInResponseModel';
-import { CurrenUserModel } from 'src/app/models/currentUserModel';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationHelper {
+
     public isLogedOn(): boolean {
         const currentUser = localStorage.getItem('currentUser');
         if (currentUser) {
@@ -17,6 +18,17 @@ export class AuthenticationHelper {
             const decodedToken = atob(currentUser.token.split('.')[1]);
             const userClaims: { unique_name: string, role: string } = JSON.parse(decodedToken);
             if (userClaims.role === 'admin') {
+                return true;
+            }
+        }
+        return false;
+    }
+    public isOrdinaryUser(): boolean {
+        const currentUser: { token: string } = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            const decodedToken = atob(currentUser.token.split('.')[1]);
+            const userClaims: { unique_name: string, role: string } = JSON.parse(decodedToken);
+            if (userClaims.role !== 'admin') {
                 return true;
             }
         }

@@ -47,6 +47,8 @@ namespace BookShop.DataAccess.AppContext
                 .HasOne(entity => entity.Author);
             modelBuilder.Entity<AuthorInBook>()
                .HasOne(entity => entity.PrintedEdition);
+            modelBuilder.Entity<Chat>().
+                HasOne(entity => entity.Message);
             Initialization.InitialData.Seed(modelBuilder);
         }
     }

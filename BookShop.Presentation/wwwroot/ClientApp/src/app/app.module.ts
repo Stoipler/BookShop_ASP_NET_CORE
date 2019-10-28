@@ -13,6 +13,7 @@ import { ErrorInterceptor } from 'src/app/helpers/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
+import { ChatService } from 'src/app/services/chat.service';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ToastContainerComponent } from './components/toast-container/toast-cont
     FontAwesomeModule,
   ],
   providers: [
+    ChatService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

@@ -11,5 +11,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<string> GetChatNameAsync(int chatId);
         Task<ChatModel> GetChatAsync(string chatName);
         Task<ChatModel> CreateMessageAsync(MessageModel messageModel, HubCallerContext context);
+        Task UpdateChatStatusAsync(ChatModel chatModel);
     }
 }

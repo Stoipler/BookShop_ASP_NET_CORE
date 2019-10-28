@@ -20,13 +20,17 @@ export class ChatRoomComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.connectToChat();
-    this.setOnReceive();
+    this.chatService.isConnected.then(() => {
+      this.connectToChat();
+      this.setOnReceive();
+    });
   }
   public sendMessage() {
-    this.messageModel.chatId = this.chatModel.id;
-    this.messageModel.userId = this.getCurrenUserId();
-    this.chatService.sendMessage(this.messageModel).then(() => this.messageModel = new MessageModel());
+    if (this.messageModel.content !== '') {
+      this.messageModel.chatId = this.chatModel.id;
+      this.messageModel.userId = this.getCurrenUserId();
+      this.chatService.sendMessage(this.messageModel).then(() => this.messageModel = new MessageModel());
+    }
   }
 
   public getCurrenUserId(): number {
@@ -35,7 +39,7 @@ export class ChatRoomComponent implements OnInit {
   }
 
   private connectToChat() {
-    this.chatService.openConnection(SignalRConnectionType.AsUser);
+    this.chatService.connectToChat(this.chatModel.id);
   }
   private setOnReceive() {
     this.chatService.onChatReceive((data: ChatModel) => {

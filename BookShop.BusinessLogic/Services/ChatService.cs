@@ -6,7 +6,6 @@ using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.BusinessLogic.Services
@@ -29,6 +28,11 @@ namespace BookShop.BusinessLogic.Services
             Message message = messageModel.MapToEntity();
             await _messageRepository.CreateAsync(message);
 
+            Chat chat = await _chatRepository.GetByIdAsync(message.ChatId);
+            chat.MessageId = message.Id;
+            chat.IsCheckedByAdmin = default(bool);
+            await _chatRepository.UpdateAsync(chat);
+
             string chatName = await GetChatNameAsync(message.ChatId);
             ChatModel chatModel = await GetChatAsync(chatName);
 
@@ -46,8 +50,7 @@ namespace BookShop.BusinessLogic.Services
         public async Task<ChatListModel> GetChatListAsync()
         {
             List<ChatWithNestedObjects> chatsWithNestedObjects = await _chatRepository.GetWithNestedObjectsAsync();
-            ChatListModel chatListModel = new ChatListModel();
-            chatListModel.ChatModels = chatsWithNestedObjects.Select(item => new ChatModel(item)).ToList();
+            ChatListModel chatListModel = new ChatListModel(chatsWithNestedObjects);
 
             return chatListModel;
         }
@@ -55,19 +58,27 @@ namespace BookShop.BusinessLogic.Services
         public async Task<string> GetChatNameAsync(string userName)
         {
             ChatWithNestedObjects chatWithNestedObjects = await _chatRepository.GetByNameAsync(userName);
-            Chat chat = chatWithNestedObjects.Chat;
-            if (chat is null)
+            if (chatWithNestedObjects is null)
             {
-                chat = new Chat { Name = userName };
+                Chat chat = new Chat { Name = userName };
                 await _chatRepository.CreateAsync(chat);
+                return chat.Name;
             }
-            return chat.Name;
+            return chatWithNestedObjects.Chat.Name;
         }
         public async Task<string> GetChatNameAsync(int chatId)
         {
             Chat chat = await _chatRepository.GetByIdAsync(chatId);
 
             return chat.Name;
+        }
+
+        public async Task UpdateChatStatusAsync(ChatModel chatModel)
+        {
+            Chat chat = await _chatRepository.GetByIdAsync(chatModel.Id);
+            chat.IsCheckedByAdmin = chatModel.IsCheckedByAdmin;
+
+            await _chatRepository.UpdateAsync(chat);
         }
     }
 }

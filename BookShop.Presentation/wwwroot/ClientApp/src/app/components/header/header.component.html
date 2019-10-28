@@ -11,11 +11,23 @@
                 <li class="nav-item active">
                     <a class="nav-link" [routerLink]="'/printededition'">Catalog</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" *ngIf="isOrdinaryUser()">
                     <a class="nav-link" [routerLink]="'/chat/chatroom'">Chat</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" [routerLink]="'/admin/chatmanagement'">Chats</a>
+                <li class="nav-item active" *ngIf="isAdmin()">
+                    <a class="nav-link" [routerLink]="'/admin/chatmanagement'">
+                        <div class="row">
+                            <div class="col-6">
+                                Chats
+                            </div>
+                            <div class="col-6" *ngIf="uncheckedChatsCount!=0">
+                                <span class="fa-layers fa-fw justify-content-center d-flex">
+                                        <fa-icon [icon]="faBell" size="1x" [styles]="{'color':'red'}"></fa-icon>
+                                        <span class="fa-layers-text">{{uncheckedChatsCount}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
                 </li>
             </ul>
             <div class="row align-items-center justify-content-around d-flex">
