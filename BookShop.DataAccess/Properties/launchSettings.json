@@ -3,6 +3,7 @@
     "BookShop.DataAccess": {
       "commandName": "Project",
       "environmentVariables": {
+        "MongoDbPath": "C:\\Program Files\\MongoDB\\Server\\4.2\\bin"
       }
     }
   }

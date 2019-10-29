@@ -12,15 +12,14 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
+        "MongoDbPath": "C:\\Program Files\\MongoDB\\Server\\4.2\\bin",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "BookShop.Presentation": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
