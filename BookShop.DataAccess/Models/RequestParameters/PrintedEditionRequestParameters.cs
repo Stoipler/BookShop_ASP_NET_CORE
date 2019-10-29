@@ -21,7 +21,7 @@ namespace BookShop.DataAccess.Models.RequestParameters
         public SortCriteria SortCriteria { get; set; }
         public PrintedEditionType PrintedEditionType { get; set; }
         public bool WithPagination { get; set; }
-        public List<int> PrintedEditionIgnoreList { get; set; }
+        public List<string> PrintedEditionIgnoreList { get; set; }
         public PrintedEditionRequestParameters()
         {
             Page = DefaultPageNumber;
@@ -29,7 +29,7 @@ namespace BookShop.DataAccess.Models.RequestParameters
             KeyWord = string.Empty;
             PriceTo = decimal.MaxValue;
             WithPagination = true;
-            PrintedEditionIgnoreList = new List<int>();
+            PrintedEditionIgnoreList = new List<string>();
         }
     }
 }

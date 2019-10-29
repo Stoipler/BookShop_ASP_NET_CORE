@@ -11,7 +11,7 @@ namespace BookShop.DataAccess.Entities
         public Currency Currency { get; set; }
         public int Count { get; set; }
         [ForeignKey("PrintedEdition")]
-        public int PrintedEditionId { get; set; }
+        public string PrintedEditionId { get; set; }
         [Computed]
         public PrintedEdition PrintedEdition { get; set; }
     }

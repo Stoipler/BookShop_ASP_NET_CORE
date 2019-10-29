@@ -32,7 +32,7 @@ namespace BookShop.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<PrintedEditionModel> GetById(int id)
+        public async Task<PrintedEditionModel> GetById(string id)
         {
             PrintedEditionModel printedEditionModel = await _printedEditionService.GetByIdAsync(id);
 

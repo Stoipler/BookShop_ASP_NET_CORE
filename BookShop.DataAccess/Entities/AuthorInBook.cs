@@ -7,9 +7,9 @@ namespace BookShop.DataAccess.Entities
     public class AuthorInBook : BaseEntity
     {
         [ForeignKey("Author")]
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; }
         [ForeignKey("PrintedEdition")]
-        public int PrintedEditionId { get; set; }
+        public string PrintedEditionId { get; set; }
         [Computed]
         public Author Author { get; set; }
         [Computed]

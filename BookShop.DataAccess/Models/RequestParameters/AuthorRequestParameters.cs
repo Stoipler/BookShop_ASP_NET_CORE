@@ -14,13 +14,13 @@ namespace BookShop.DataAccess.Models.RequestParameters
             } }
         public string Name { get; set; }
         public bool WithPagination { get; set; }
-        public List<int> IgnoreAuthorsList { get; set; }
+        public List<string> IgnoreAuthorsList { get; set; }
         public AuthorRequestParameters()
         {
             Page = DefaultPageNumber;
             PageSize = DefaultPageSize;
             Name = string.Empty;
-            IgnoreAuthorsList = new List<int>();
+            IgnoreAuthorsList = new List<string>();
         }
     }
 }

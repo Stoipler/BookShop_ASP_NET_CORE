@@ -21,7 +21,7 @@ namespace BookShop.BusinessLogic
         public static void ServicesInjection(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
-            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+            services.AddIdentity<ApplicationUser, IdentityRole<string>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
@@ -59,14 +59,14 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
         }
 
-        private static void InjectDapperRepositories(IServiceCollection services)
-        {
-            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorRepository>();
-            services.AddTransient<IOrderRepository, BookShop.DataAccess.Repostories.DapperRepositories.OrderRepository>();
-            services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.DapperRepositories.PrintedEditionRepository>();
-            services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorInBookRepository>();
-            services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.DapperRepositories.UserRepository>();
-        }
+        //private static void InjectDapperRepositories(IServiceCollection services)
+        //{
+        //    services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorRepository>();
+        //    services.AddTransient<IOrderRepository, BookShop.DataAccess.Repostories.DapperRepositories.OrderRepository>();
+        //    services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.DapperRepositories.PrintedEditionRepository>();
+        //    services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorInBookRepository>();
+        //    services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.DapperRepositories.UserRepository>();
+        //}
 
     }
 }

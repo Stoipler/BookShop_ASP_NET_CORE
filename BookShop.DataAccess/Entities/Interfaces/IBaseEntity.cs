@@ -4,7 +4,7 @@ namespace BookShop.DataAccess.Entities.Interfaces
 {
     public interface IBaseEntity
     {
-        int Id { get; set; }
+        string Id { get; set; }
         DateTime CreationDate { get; set; }
         bool IsRemoved { get; set; }
     }

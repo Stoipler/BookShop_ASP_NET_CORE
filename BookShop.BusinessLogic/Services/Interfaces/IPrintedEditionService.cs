@@ -9,6 +9,6 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<PrintedEditionModel> CreateAsync(PrintedEditionModel model);
         Task Update(PrintedEditionModel model);
         Task Remove(PrintedEditionModel model);
-        Task<PrintedEditionModel> GetByIdAsync(int id);
+        Task<PrintedEditionModel> GetByIdAsync(string id);
     }
 }

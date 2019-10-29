@@ -10,7 +10,7 @@ namespace BookShop.DataAccess.Repostories.Interfaces
     public interface IPrintedEditionRepository : IGenericRepository<PrintedEdition>
     {
         Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionRequestParameters searchParams);
-        Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds);
-        Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(int id);
+        Task<List<PrintedEdition>> GetRangeByIdAsync(List<string> printedEditionIds);
+        Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(string id);
     }
 }

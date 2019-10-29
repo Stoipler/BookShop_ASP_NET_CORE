@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.AuthorModels
 {
     public class AuthorModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Name { get; set; }
         public List<PrintedEditionModel> PrintedEditionModels { get; set; }

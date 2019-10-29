@@ -7,7 +7,7 @@ namespace BookShop.DataAccess.Entities
     public class Order : BaseEntity
     {
         [ForeignKey("ApplicationUser")]
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         [Computed]
         public ApplicationUser ApplicationUser { get; set; }
         public string Description { get; set; }

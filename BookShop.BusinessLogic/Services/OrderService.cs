@@ -51,7 +51,7 @@ namespace BookShop.BusinessLogic.Services
 
             decimal totalPrice = default(decimal);
 
-            List<int> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
+            List<string> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
             List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
 
             if (!printedEditions.Any())
@@ -105,7 +105,7 @@ namespace BookShop.BusinessLogic.Services
 
             decimal totalPrice = default(decimal);
 
-            List<int> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
+            List<string> printedEditionIds = requestModel.CartItemModels.Select(item => item.PrintedEditionId).ToList();
             List<PrintedEdition> printedEditions = await _printedEditionRepository.GetRangeByIdAsync(printedEditionIds);
 
             foreach (CartItemModel cartItem in requestModel.CartItemModels)
@@ -144,7 +144,7 @@ namespace BookShop.BusinessLogic.Services
         {
             string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             ApplicationUser user = await _userManager.FindByNameAsync(userName);
-            int id = user.Id;
+            string id = user.Id;
 
             List<Order> orders = await _orderRepository.GetRangeByUserId(id);
             List<OrderModel> orderModels = orders.Select(item => new OrderModel(item)).ToList();

@@ -56,7 +56,7 @@ export class CartItemsComponent implements OnInit {
 
 
   public pay(amount) {
-    const currentUser: { id: number } = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser: { id: string } = JSON.parse(localStorage.getItem('currentUser'));
     const handler = (window as any).StripeCheckout.configure({
       key: environment.publishableKey,
       locale: 'auto',

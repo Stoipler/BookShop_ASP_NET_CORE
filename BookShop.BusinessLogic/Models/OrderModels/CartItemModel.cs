@@ -2,7 +2,7 @@
 {
     public class CartItemModel
     {
-        public int PrintedEditionId { get; set; }
+        public string PrintedEditionId { get; set; }
         public int Quantity { get; set; }
     }
 }

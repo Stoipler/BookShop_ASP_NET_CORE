@@ -50,13 +50,13 @@ namespace BookShop.BusinessLogic.Services
             await _authorRepository.UpdateAsync(author);
         }
 
-        public async Task Remove(int id)
+        public async Task Remove(string id)
         {
             Author author = await _authorRepository.GetByIdAsync(id);
             await _authorRepository.Remove(author);
         }
 
-        public async Task<AuthorModel> GetByIdAsync(int id)
+        public async Task<AuthorModel> GetByIdAsync(string id)
         {
             Author author = await _authorRepository.GetByIdAsync(id);
             AuthorModel authorModel = new AuthorModel(author);

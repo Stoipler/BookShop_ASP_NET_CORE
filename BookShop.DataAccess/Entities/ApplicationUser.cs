@@ -6,7 +6,7 @@ using System;
 namespace BookShop.DataAccess.Entities
 {
     [Table("AspNetUsers")]
-    public class ApplicationUser : IdentityUser<int>, IBaseEntity
+    public class ApplicationUser : IdentityUser<string>, IBaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

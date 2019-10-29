@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191021114917_Initial")]
-    partial class Initial
+    [Migration("20191029110004_InitialWithStringIds")]
+    partial class InitialWithStringIds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,8 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.ApplicationUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -83,9 +82,8 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Author", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationDate");
 
@@ -100,50 +98,50 @@ namespace BookShop.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5879),
+                            Id = "1",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8001),
                             IsRemoved = false,
                             Name = "Joan Rowling"
                         },
                         new
                         {
-                            Id = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5881),
+                            Id = "2",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8002),
                             IsRemoved = false,
                             Name = "J.R. Martin"
                         },
                         new
                         {
-                            Id = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882),
+                            Id = "3",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8003),
                             IsRemoved = false,
                             Name = "William Shaekspeare"
                         },
                         new
                         {
-                            Id = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882),
+                            Id = "4",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8004),
                             IsRemoved = false,
-                            Name = "William Shaekspeare"
+                            Name = "Some author"
                         },
                         new
                         {
-                            Id = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5883),
+                            Id = "5",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8005),
                             IsRemoved = false,
                             Name = "Lev Tolstoy"
                         },
                         new
                         {
-                            Id = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5884),
+                            Id = "6",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8005),
                             IsRemoved = false,
                             Name = "Incognito"
                         },
                         new
                         {
-                            Id = 7,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5885),
+                            Id = "7",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8006),
                             IsRemoved = false,
                             Name = "Stan Lee"
                         });
@@ -151,17 +149,16 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.AuthorInBook", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AuthorId");
+                    b.Property<string>("AuthorId");
 
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<bool>("IsRemoved");
 
-                    b.Property<int>("PrintedEditionId");
+                    b.Property<string>("PrintedEditionId");
 
                     b.HasKey("Id");
 
@@ -174,61 +171,60 @@ namespace BookShop.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            AuthorId = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6048),
+                            Id = "1",
+                            AuthorId = "1",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8207),
                             IsRemoved = false,
-                            PrintedEditionId = 1
+                            PrintedEditionId = "1"
                         },
                         new
                         {
-                            Id = 2,
-                            AuthorId = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6050),
+                            Id = "2",
+                            AuthorId = "2",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8212),
                             IsRemoved = false,
-                            PrintedEditionId = 2
+                            PrintedEditionId = "2"
                         },
                         new
                         {
-                            Id = 3,
-                            AuthorId = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051),
+                            Id = "3",
+                            AuthorId = "3",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8213),
                             IsRemoved = false,
-                            PrintedEditionId = 3
+                            PrintedEditionId = "3"
                         },
                         new
                         {
-                            Id = 4,
-                            AuthorId = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051),
+                            Id = "4",
+                            AuthorId = "4",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8214),
                             IsRemoved = false,
-                            PrintedEditionId = 4
+                            PrintedEditionId = "4"
                         },
                         new
                         {
-                            Id = 5,
-                            AuthorId = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6052),
+                            Id = "5",
+                            AuthorId = "5",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8215),
                             IsRemoved = false,
-                            PrintedEditionId = 5
+                            PrintedEditionId = "5"
                         },
                         new
                         {
-                            Id = 6,
-                            AuthorId = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6053),
+                            Id = "6",
+                            AuthorId = "6",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8216),
                             IsRemoved = false,
-                            PrintedEditionId = 6
+                            PrintedEditionId = "6"
                         });
                 });
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApplicationUserId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("CreationDate");
 
@@ -247,9 +243,8 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("Amount");
 
@@ -261,7 +256,7 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<bool>("IsRemoved");
 
-                    b.Property<int>("PrintedEditionId");
+                    b.Property<string>("PrintedEditionId");
 
                     b.HasKey("Id");
 
@@ -272,15 +267,14 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Payment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<bool>("IsRemoved");
 
-                    b.Property<int>("TransactionId");
+                    b.Property<string>("TransactionId");
 
                     b.HasKey("Id");
 
@@ -289,9 +283,8 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.PrintedEdition", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationDate");
 
@@ -314,8 +307,8 @@ namespace BookShop.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6019),
+                            Id = "1",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8178),
                             Currency = 1,
                             Description = "About boy who lived",
                             IsRemoved = false,
@@ -325,8 +318,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6022),
+                            Id = "2",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8181),
                             Currency = 1,
                             Description = "Origin of the Game of trones",
                             IsRemoved = false,
@@ -336,8 +329,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6025),
+                            Id = "3",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8182),
                             Currency = 1,
                             Description = "Historical novel",
                             IsRemoved = false,
@@ -347,8 +340,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6026),
+                            Id = "4",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8183),
                             Currency = 1,
                             Description = "New York newspaper",
                             IsRemoved = false,
@@ -358,8 +351,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6027),
+                            Id = "5",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8184),
                             Currency = 1,
                             Description = "Not book",
                             IsRemoved = false,
@@ -369,8 +362,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6028),
+                            Id = "6",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8185),
                             Currency = 1,
                             Description = "Comics",
                             IsRemoved = false,
@@ -380,8 +373,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 7,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6029),
+                            Id = "7",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8187),
                             Currency = 1,
                             Description = "Superhero tales",
                             IsRemoved = false,
@@ -391,8 +384,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 8,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6030),
+                            Id = "8",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8188),
                             Currency = 1,
                             Description = "Science news",
                             IsRemoved = false,
@@ -402,8 +395,8 @@ namespace BookShop.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 9,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6031),
+                            Id = "9",
+                            CreationDate = new DateTime(2019, 10, 29, 11, 0, 4, 511, DateTimeKind.Utc).AddTicks(8189),
                             Currency = 1,
                             Description = "Computer Journal",
                             IsRemoved = false,
@@ -413,11 +406,10 @@ namespace BookShop.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -438,7 +430,7 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -448,7 +440,8 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -457,7 +450,7 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -467,7 +460,8 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -476,7 +470,7 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -484,7 +478,8 @@ namespace BookShop.DataAccess.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -493,11 +488,11 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -506,9 +501,9 @@ namespace BookShop.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -525,40 +520,36 @@ namespace BookShop.DataAccess.Migrations
                 {
                     b.HasOne("BookShop.DataAccess.Entities.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("BookShop.DataAccess.Entities.PrintedEdition", "PrintedEdition")
                         .WithMany()
-                        .HasForeignKey("PrintedEditionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PrintedEditionId");
                 });
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Order", b =>
                 {
                     b.HasOne("BookShop.DataAccess.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.OrderItem", b =>
                 {
                     b.HasOne("BookShop.DataAccess.Entities.PrintedEdition", "PrintedEdition")
                         .WithMany()
-                        .HasForeignKey("PrintedEditionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PrintedEditionId");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("BookShop.DataAccess.Entities.ApplicationUser")
                         .WithMany()
@@ -566,7 +557,7 @@ namespace BookShop.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("BookShop.DataAccess.Entities.ApplicationUser")
                         .WithMany()
@@ -574,9 +565,9 @@ namespace BookShop.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -587,7 +578,7 @@ namespace BookShop.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("BookShop.DataAccess.Entities.ApplicationUser")
                         .WithMany()

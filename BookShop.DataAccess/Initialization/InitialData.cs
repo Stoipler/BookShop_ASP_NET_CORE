@@ -13,49 +13,49 @@ namespace BookShop.DataAccess.Initialization
             modelBuilder.Entity<Author>().HasData(
                 new Author
                 {
-                    Id = 1,
+                    Id = "1",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "Joan Rowling"
                 },
                 new Author
                 {
-                    Id = 2,
+                    Id = "2",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "J.R. Martin"
                 },
                 new Author
                 {
-                    Id = 3,
+                    Id = "3",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "William Shaekspeare"
                 },
                 new Author
                 {
-                    Id = 4,
+                    Id = "4",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "Some author"
                 },
                 new Author
                 {
-                    Id = 5,
+                    Id = "5",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "Lev Tolstoy"
                 },
                 new Author
                 {
-                    Id = 6,
+                    Id = "6",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "Incognito"
                 },
                 new Author
                 {
-                    Id = 7,
+                    Id = "7",
                     CreationDate = DateTime.UtcNow,
                     IsRemoved = false,
                     Name = "Stan Lee"
@@ -65,7 +65,7 @@ namespace BookShop.DataAccess.Initialization
             modelBuilder.Entity<PrintedEdition>().HasData(
                  new PrintedEdition
                  {
-                     Id = 1,
+                     Id = "1",
                      CreationDate = DateTime.UtcNow,
                      IsRemoved = false,
                      Name = "Harry Potter",
@@ -76,7 +76,7 @@ namespace BookShop.DataAccess.Initialization
                  },
                  new PrintedEdition
                  {
-                     Id = 2,
+                     Id = "2",
                      CreationDate = DateTime.UtcNow,
                      IsRemoved = false,
                      Name = "Song of ice and fire",
@@ -87,7 +87,7 @@ namespace BookShop.DataAccess.Initialization
                  },
                  new PrintedEdition
                  {
-                     Id = 3,
+                     Id = "3",
                      CreationDate = DateTime.UtcNow,
                      IsRemoved = false,
                      Name = "War and peace",
@@ -98,7 +98,7 @@ namespace BookShop.DataAccess.Initialization
                  },
                  new PrintedEdition
                  {
-                     Id = 4,
+                     Id = "4",
                      CreationDate = DateTime.UtcNow,
                      IsRemoved = false,
                      Name = "Times",
@@ -109,7 +109,7 @@ namespace BookShop.DataAccess.Initialization
                  },
                   new PrintedEdition
                   {
-                      Id = 5,
+                      Id = "5",
                       CreationDate = DateTime.UtcNow,
                       IsRemoved = false,
                       Name = "Shrek",
@@ -120,7 +120,7 @@ namespace BookShop.DataAccess.Initialization
                   },
                   new PrintedEdition
                   {
-                      Id = 6,
+                      Id = "6",
                       CreationDate = DateTime.UtcNow,
                       IsRemoved = false,
                       Name = "The Simpsons",
@@ -131,7 +131,7 @@ namespace BookShop.DataAccess.Initialization
                   },
                   new PrintedEdition
                   {
-                      Id = 7,
+                      Id = "7",
                       CreationDate = DateTime.UtcNow,
                       IsRemoved = false,
                       Name = "The amazing Spider-Man",
@@ -142,7 +142,7 @@ namespace BookShop.DataAccess.Initialization
                   },
                   new PrintedEdition
                   {
-                      Id = 8,
+                      Id = "8",
                       CreationDate = DateTime.UtcNow,
                       IsRemoved = false,
                       Name = "Electronics today",
@@ -153,7 +153,7 @@ namespace BookShop.DataAccess.Initialization
                   },
                   new PrintedEdition
                   {
-                      Id = 9,
+                      Id = "9",
                       CreationDate = DateTime.UtcNow,
                       IsRemoved = false,
                       Name = "Wired",
@@ -167,51 +167,51 @@ namespace BookShop.DataAccess.Initialization
             modelBuilder.Entity<AuthorInBook>().HasData(
                new AuthorInBook
                {
-                   Id = 1,
+                   Id = "1",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 1,
-                   AuthorId = 1
+                   PrintedEditionId = "1",
+                   AuthorId = "1"
                },
                new AuthorInBook
                {
-                   Id = 2,
+                   Id = "2",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 2,
-                   AuthorId = 2
+                   PrintedEditionId = "2",
+                   AuthorId = "2"
                },
                new AuthorInBook
                {
-                   Id = 3,
+                   Id = "3",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 3,
-                   AuthorId = 3
+                   PrintedEditionId = "3",
+                   AuthorId = "3"
                },
                new AuthorInBook
                {
-                   Id = 4,
+                   Id = "4",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 4,
-                   AuthorId = 4
+                   PrintedEditionId = "4",
+                   AuthorId = "4"
                },
                new AuthorInBook
                {
-                   Id = 5,
+                   Id = "5",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 5,
-                   AuthorId = 5
+                   PrintedEditionId = "5",
+                   AuthorId = "5"
                },
                new AuthorInBook
                {
-                   Id = 6,
+                   Id = "6",
                    CreationDate = DateTime.UtcNow,
                    IsRemoved = false,
-                   PrintedEditionId = 6,
-                   AuthorId = 6
+                   PrintedEditionId = "6",
+                   AuthorId = "6"
                }
                );
         }

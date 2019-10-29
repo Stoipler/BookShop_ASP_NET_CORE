@@ -44,7 +44,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(string id)
         {
             TEntity enity = await _dbSet.FindAsync(id);
 

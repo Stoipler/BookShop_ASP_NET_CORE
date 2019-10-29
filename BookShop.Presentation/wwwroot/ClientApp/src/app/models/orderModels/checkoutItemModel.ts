@@ -1,5 +1,5 @@
 export class CheckoutItemModel {
-    public printedEditionId: number;
+    public printedEditionId: string;
     public printedEditionName: string;
     public quantity: number;
     public unitPrice: number;

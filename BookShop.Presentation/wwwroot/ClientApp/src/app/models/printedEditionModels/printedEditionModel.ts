@@ -3,7 +3,7 @@ import { Currency } from 'src/app/enums/currency';
 import { AuthorModel } from 'src/app/models/authorModels/authorModel';
 
 export class PrintedEditionModel {
-    public id: number;
+    public id: string;
     public name: string;
     public description: string;
     public price: number;

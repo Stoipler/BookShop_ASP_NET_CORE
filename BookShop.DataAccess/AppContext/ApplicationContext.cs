@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 
 namespace BookShop.DataAccess.AppContext
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<string>, string>
     {
         private string _connectionString { get; set; }
         public string ConnectionString

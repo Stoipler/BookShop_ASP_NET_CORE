@@ -19,7 +19,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
         {
         }
 
-        public async Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(int id)
+        public async Task<PrintedEditionWithNestedObjects> GetWithNestedObjectsByIdAsync(string id)
         {
             PrintedEditionWithNestedObjects printedEdition = await _dbSet.Where(item => (item.Id == id)).GroupJoin(_context.AuthorInBooks.Include(authorInBook => authorInBook.Author),
                outerKeySelector => outerKeySelector.Id,
@@ -95,7 +95,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 
             return (result, count);
         }
-        public async Task<List<PrintedEdition>> GetRangeByIdAsync(List<int> printedEditionIds)
+        public async Task<List<PrintedEdition>> GetRangeByIdAsync(List<string> printedEditionIds)
         {
             List<PrintedEdition> printedEditions = await _dbSet.Where(item => printedEditionIds.Contains(item.Id)).ToListAsync();
 

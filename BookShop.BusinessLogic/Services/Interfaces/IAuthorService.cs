@@ -9,7 +9,7 @@ namespace BookShop.BusinessLogic.Services.Interfaces
         Task<AuthorResponseModel> GetAsync(AuthorRequestModel searchParams);
         Task CreateAsync(AuthorModel model);
         Task Update(AuthorModel model);
-        Task Remove(int id);
-        Task<AuthorModel> GetByIdAsync(int id);
+        Task Remove(string id);
+        Task<AuthorModel> GetByIdAsync(string id);
     }
 }

@@ -31,7 +31,7 @@ namespace BookShop.BusinessLogic.Services
             return responseModel;
         }
 
-        public async Task<PrintedEditionModel> GetByIdAsync(int id)
+        public async Task<PrintedEditionModel> GetByIdAsync(string id)
         {
             PrintedEditionWithNestedObjects printedEdition = await _printedEditionRepository.GetWithNestedObjectsByIdAsync(id);
             PrintedEditionModel printedEditionModel = new PrintedEditionModel(printedEdition);
@@ -60,8 +60,8 @@ namespace BookShop.BusinessLogic.Services
             PrintedEditionWithNestedObjects printedEdition = await _printedEditionRepository.GetWithNestedObjectsByIdAsync(model.Id);
             printedEdition.PrintedEdition = model.MapToEntity(printedEdition.PrintedEdition);
 
-            List<int> authorIdsFromModel = model.AuthorModels.Select(item => item.Id).ToList();
-            List<int> authorIdsFromEntity = printedEdition.AuthorInBooks.Select(item => item.AuthorId).ToList();
+            List<string> authorIdsFromModel = model.AuthorModels.Select(item => item.Id).ToList();
+            List<string> authorIdsFromEntity = printedEdition.AuthorInBooks.Select(item => item.AuthorId).ToList();
 
             List<AuthorInBook> listToRemove = printedEdition.AuthorInBooks.Where(item => !authorIdsFromModel.Contains(item.AuthorId)).ToList();
             List<AuthorInBook> listToCreate = model.AuthorModels.Where(item => !authorIdsFromEntity.Contains(item.Id)).Select(item => new AuthorInBook { PrintedEditionId = printedEdition.PrintedEdition.Id, AuthorId = item.Id }).ToList();

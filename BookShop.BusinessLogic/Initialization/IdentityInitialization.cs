@@ -13,10 +13,10 @@ namespace BookShop.BusinessLogic.Initialization
         {
             ApplicationContext _context = provider.GetRequiredService<ApplicationContext>();
             UserManager<ApplicationUser> _userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
-            RoleManager<IdentityRole<int>> _roleManager = provider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+            RoleManager<IdentityRole<string>> _roleManager = provider.GetRequiredService<RoleManager<IdentityRole<string>>>();
             if (await _roleManager.FindByNameAsync("admin") is null)
             {
-                await _roleManager.CreateAsync(new IdentityRole<int>("admin"));
+                await _roleManager.CreateAsync(new IdentityRole<string>("admin"));
             }
 
             if (!(await _userManager.FindByNameAsync(AdminCredentials.UserName) is null))

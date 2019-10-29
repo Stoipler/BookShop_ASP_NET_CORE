@@ -2,7 +2,7 @@
 {
     public class CheckoutItemModel
     {
-        public int PrintedEditionId { get; set; }
+        public string PrintedEditionId { get; set; }
         public string PrintedEditionName { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
