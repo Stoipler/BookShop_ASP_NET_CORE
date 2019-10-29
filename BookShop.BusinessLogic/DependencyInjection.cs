@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDbGenericRepository;
 using Stripe;
 using System;
 using AccountService = BookShop.BusinessLogic.Services.AccountService;
@@ -36,6 +37,7 @@ namespace BookShop.BusinessLogic
             //InjectDapperRepositories(services);
             InjectEntityFrameworkRepositories(services);
 
+            MongoDbInjection(services, configuration);
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
@@ -57,6 +59,16 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorInBookRepository>();
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
+        }
+
+        private static void MongoDbInjection(IServiceCollection services, IConfiguration configuration)
+        {
+            string connectionString = configuration.GetSection("MongoDbSettings").GetSection("ConnectionString").Value;
+            string databaseName = configuration.GetSection("MongoDbSettings").GetSection("DatabaseName").Value;
+            var mongoDbContext = new MongoDbContext(connectionString, databaseName);
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddMongoDbStores<MongoDbContext>(mongoDbContext)
+                .AddDefaultTokenProviders();
         }
 
         //private static void InjectDapperRepositories(IServiceCollection services)
