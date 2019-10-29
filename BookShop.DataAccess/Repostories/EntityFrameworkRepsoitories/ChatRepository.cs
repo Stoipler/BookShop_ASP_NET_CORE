@@ -18,7 +18,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 
         public async Task<ChatWithNestedObjects> GetByNameAsync(string userName)
         {
-            IQueryable<ChatWithNestedObjects> chatsWithNestedObjects = _dbSet.Include(item => item.Message).GroupJoin(_context.Messages,
+            IQueryable<ChatWithNestedObjects> chatsWithNestedObjects = _dbSet.Include(item => item.Message).GroupJoin(_context.Messages.Include(message => message.ApplicationUser),
                 outerKeySelector => outerKeySelector.Id,
                 innerKeySelector => innerKeySelector.ChatId,
                 (chat, message) => new ChatWithNestedObjects
@@ -32,7 +32,7 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories
 
         public async Task<List<ChatWithNestedObjects>> GetWithNestedObjectsAsync()
         {
-            IQueryable<ChatWithNestedObjects> chatsWithNestedObjects = _dbSet.Include(item => item.Message).GroupJoin(_context.Messages,
+            IQueryable<ChatWithNestedObjects> chatsWithNestedObjects = _dbSet.Include(item => item.Message).GroupJoin(_context.Messages.Include(message => message.ApplicationUser),
                 outerKeySelector => outerKeySelector.Id,
                 innerKeySelector => innerKeySelector.ChatId,
                 (chat, message) => new ChatWithNestedObjects

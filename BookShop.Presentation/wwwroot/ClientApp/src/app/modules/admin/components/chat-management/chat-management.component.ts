@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { ChatListModel } from 'src/app/models/chatModels/chatListModel';
 import { HubConnection, HubConnectionState } from '@aspnet/signalr';
+import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 
 @Component({
   selector: 'app-chat-management',
@@ -10,7 +11,7 @@ import { HubConnection, HubConnectionState } from '@aspnet/signalr';
 })
 export class ChatManagementComponent implements OnInit {
   public chatListModel: ChatListModel;
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private authHelper: AuthenticationHelper) {
     this.chatListModel = new ChatListModel();
   }
 
@@ -22,6 +23,10 @@ export class ChatManagementComponent implements OnInit {
         });
       }
     );
+  }
+
+  public getCurrentUserId() {
+    return this.authHelper.getCurrentUserId();
   }
 }
 

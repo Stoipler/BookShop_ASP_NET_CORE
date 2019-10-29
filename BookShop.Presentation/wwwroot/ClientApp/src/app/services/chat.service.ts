@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as signalR from '@aspnet/signalr';
 import { MessageModel } from 'src/app/models/chatModels/messageModel';

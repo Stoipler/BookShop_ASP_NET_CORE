@@ -21,7 +21,6 @@ export class ChatRoomComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.isConnected.then(() => {
-      this.connectToChat();
       this.setOnReceive();
     });
   }
@@ -38,9 +37,6 @@ export class ChatRoomComponent implements OnInit {
     return id;
   }
 
-  private connectToChat() {
-    this.chatService.connectToChat(this.chatModel.id);
-  }
   private setOnReceive() {
     this.chatService.onChatReceive((data: ChatModel) => {
       this.chatModel = data;

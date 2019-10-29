@@ -5,13 +5,17 @@ import { ChatService } from 'src/app/services/chat.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationHelper {
 
-    public isLogedOn(): boolean {
+    constructor() {
+    }
+
+    public isLogedOn() {
         const currentUser = localStorage.getItem('currentUser');
         if (currentUser) {
             return true;
         }
         return false;
     }
+
     public isAdmin(): boolean {
         const currentUser: { token: string } = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser) {

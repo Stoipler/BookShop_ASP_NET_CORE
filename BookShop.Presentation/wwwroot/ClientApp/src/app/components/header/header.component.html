@@ -7,7 +7,7 @@
   </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto fustify-content-around d-flex">
                 <li class="nav-item active">
                     <a class="nav-link" [routerLink]="'/printededition'">Catalog</a>
                 </li>
@@ -17,14 +17,9 @@
                 <li class="nav-item active" *ngIf="isAdmin()">
                     <a class="nav-link" [routerLink]="'/admin/chatmanagement'">
                         <div class="row">
-                            <div class="col-6">
-                                Chats
-                            </div>
-                            <div class="col-6" *ngIf="uncheckedChatsCount!=0">
-                                <span class="fa-layers fa-fw justify-content-center d-flex">
-                                        <fa-icon [icon]="faBell" size="1x" [styles]="{'color':'red'}"></fa-icon>
-                                        <span class="fa-layers-text">{{uncheckedChatsCount}}</span>
-                                </span>
+                            Chats
+                            <div class="" *ngIf="uncheckedChatsCount!=0">
+                                <span class="badge badge-danger badge-pill">{{uncheckedChatsCount}}</span>
                             </div>
                         </div>
                     </a>

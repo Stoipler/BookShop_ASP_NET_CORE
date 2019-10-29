@@ -10,12 +10,28 @@
                 <strong>{{chatModel.name}}</strong>
             </div>
             <div class="col-7 message-area-unchecked justify-content-start d-flex" *ngIf="!chatModel.isCheckedByAdmin">
-                {{chatModel.lastMessageModel.content}}
+                <strong>
+                    <div *ngIf="chatModel.lastMessageModel.userId==getCurrentUserId()">
+                        You:
+                    </div>
+                    <div *ngIf="chatModel.lastMessageModel.userId!=getCurrentUserId()">
+                            {{chatModel.lastMessageModel.userModel.firstName}}: 
+                    </div>
+                </strong>
+                <div>{{chatModel.lastMessageModel.content}}</div>
             </div>
             <div class="col-7 message-area-checked justify-content-start d-flex" *ngIf="chatModel.isCheckedByAdmin">
-                {{chatModel.lastMessageModel.content}}
+                <strong>
+                            <div *ngIf="chatModel.lastMessageModel.userId==getCurrentUserId()">
+                                You: 
+                            </div>
+                            <div *ngIf="chatModel.lastMessageModel.userId!=getCurrentUserId()">
+                                    {{chatModel.lastMessageModel.userModel.firstName}}:
+                            </div>
+                        </strong>
+                <div>{{chatModel.lastMessageModel.content}}</div>
             </div>
-            <div class="col-2 time-area justify-content-center d-flex">
+            <div class="col-2 time-area justify-content-end d-flex">
                 <strong> 
                     {{chatModel.lastMessageModel.creationDate | date: 'mediumTime' }}
                 </strong>
