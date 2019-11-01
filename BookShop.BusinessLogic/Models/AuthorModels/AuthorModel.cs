@@ -19,8 +19,11 @@ namespace BookShop.BusinessLogic.AuthorModels
         }
         internal AuthorModel(Author author) : this()
         {
-            Id = author.Id;
-            Name = author.Name;
+            if (!(author is null))
+            {
+                Id = author.Id;
+                Name = author.Name;
+            }
         }
         internal AuthorModel(AuthorWithNestedObjects item) : this(item.Author)
         {

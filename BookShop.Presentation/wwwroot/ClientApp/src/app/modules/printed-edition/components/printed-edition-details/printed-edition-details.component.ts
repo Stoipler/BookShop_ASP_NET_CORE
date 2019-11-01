@@ -26,7 +26,7 @@ export class PrintedEditionDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.printedEditionService.getById(+params.get('printedEditionId'))
+      this.printedEditionService.getById(params.get('printedEditionId'))
         .subscribe((data: PrintedEditionModel) => this.printedEdition = data);
     });
   }

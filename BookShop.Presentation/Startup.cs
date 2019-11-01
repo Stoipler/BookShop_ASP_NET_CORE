@@ -41,6 +41,7 @@ namespace BookShop.Presentation
                 options.User.RequireUniqueEmail = true;
             });
             DependencyInjection.ServicesInjection(services, Configuration);
+
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             AppSettings appSettings = appSettingsSection.Get<AppSettings>();

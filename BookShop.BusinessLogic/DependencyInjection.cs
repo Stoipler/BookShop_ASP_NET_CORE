@@ -1,12 +1,10 @@
 ﻿using BookShop.BusinessLogic.Common;
 using BookShop.BusinessLogic.Services;
 using BookShop.BusinessLogic.Services.Interfaces;
-using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using BookShop.DataAccess.Repostories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDbGenericRepository;
@@ -21,10 +19,10 @@ namespace BookShop.BusinessLogic
     {
         public static void ServicesInjection(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
-            services.AddIdentity<ApplicationUser, IdentityRole<string>>()
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
+            //services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationDb")));
+            //services.AddIdentity<ApplicationUser, IdentityRole<string>>()
+            //    .AddEntityFrameworkStores<ApplicationContext>()
+            //    .AddDefaultTokenProviders();
 
             Environment.SetEnvironmentVariable("SendGridApiKey", configuration.GetSection("SendGridMailCredentials").GetSection("Api_Key").Value);
             Environment.SetEnvironmentVariable("SendGridEmail", configuration.GetSection("SendGridMailCredentials").GetSection("BookshopEmail").Value);
@@ -35,7 +33,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             //InjectDapperRepositories(services);
-            InjectEntityFrameworkRepositories(services);
+            //InjectEntityFrameworkRepositories(services);
 
             MongoDbInjection(services, configuration);
 
@@ -48,8 +46,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<CustomerService>();
             services.AddTransient<ChargeService>();
 
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            Initialization.IdentityInitalization.Seed(serviceProvider);
+            //ServiceProvider serviceProvider = services.BuildServiceProvider();
+            //Initialization.IdentityInitalization.Seed(serviceProvider);
         }
 
         private static void InjectEntityFrameworkRepositories(IServiceCollection services)
@@ -65,10 +63,22 @@ namespace BookShop.BusinessLogic
         {
             string connectionString = configuration.GetSection("MongoDbSettings").GetSection("ConnectionString").Value;
             string databaseName = configuration.GetSection("MongoDbSettings").GetSection("DatabaseName").Value;
-            var mongoDbContext = new MongoDbContext(connectionString, databaseName);
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddMongoDbStores<MongoDbContext>(mongoDbContext)
+
+            MongoDbContext mongoDbContext = new MongoDbContext(connectionString, databaseName);
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(cfg =>
+            {
+                cfg.Password.RequireNonAlphanumeric = false;
+                cfg.SignIn.RequireConfirmedEmail = true;
+            })
+                .AddMongoDbStores<ApplicationUser, ApplicationRole, string>(mongoDbContext)
                 .AddDefaultTokenProviders();
+            services.AddTransient<IAuthorRepository, BookShop.DataAccess.Repostories.MongoDbRepositories.AuthorRepository>();
+            services.AddTransient<IOrderRepository, BookShop.DataAccess.Repostories.MongoDbRepositories.OrderRepository>();
+            services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.MongoDbRepositories.PrintedEditionRepository>();
+            services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.MongoDbRepositories.AuthorInBookRepository>();
+            services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.MongoDbRepositories.UserRepository>();
+
         }
 
         //private static void InjectDapperRepositories(IServiceCollection services)

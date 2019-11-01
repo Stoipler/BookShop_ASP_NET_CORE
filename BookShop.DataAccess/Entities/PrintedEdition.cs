@@ -1,8 +1,10 @@
 ﻿using BookShop.DataAccess.Entities.Base;
+using MongoDbGenericRepository.Attributes;
 using static BookShop.DataAccess.Common.Enums.EntityFields;
 
 namespace BookShop.DataAccess.Entities
 {
+    [CollectionName("PrintedEditions")]
     public class PrintedEdition : BaseEntity
     {
         public string Name { get; set; }

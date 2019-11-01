@@ -1,12 +1,14 @@
-﻿using BookShop.DataAccess.Entities.Interfaces;
+﻿using AspNetCore.Identity.MongoDbCore.Models;
+using BookShop.DataAccess.Entities.Interfaces;
 using Dapper.Contrib.Extensions;
-using Microsoft.AspNetCore.Identity;
+using MongoDbGenericRepository.Attributes;
 using System;
 
 namespace BookShop.DataAccess.Entities
 {
+    [CollectionName("ApplicationUsers")]
     [Table("AspNetUsers")]
-    public class ApplicationUser : IdentityUser<string>, IBaseEntity
+    public class ApplicationUser : MongoIdentityUser<string>, IBaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

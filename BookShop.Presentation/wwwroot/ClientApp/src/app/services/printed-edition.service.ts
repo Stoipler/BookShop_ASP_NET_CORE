@@ -26,7 +26,7 @@ export class PrintedEditionService {
     return this.http.post(`${environment.apiUrl}PrintedEdition/CreatePrintedEditon`, printedEdition);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     return this.http.get(`${environment.apiUrl}PrintedEdition/GetById/` + id);
   }
 }
