@@ -34,6 +34,14 @@ namespace BookShop.DataAccess.Utils
         {
             _bsonElements.Add(new BsonDocument { { "$sort", document } });
         }
+        public void AddFields(BsonDocument document)
+        {
+            _bsonElements.Add(new BsonDocument { { "$addFields", document } });
+        }
+        public void Group(BsonDocument document)
+        {
+            _bsonElements.Add(new BsonDocument { { "$group", document } });
+        }
         public void AddExpression(BsonDocument document)
         {
             _bsonElements.Add(document);

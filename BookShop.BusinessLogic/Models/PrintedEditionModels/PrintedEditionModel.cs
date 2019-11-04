@@ -22,13 +22,16 @@ namespace BookShop.BusinessLogic.PrintedEditionModels
         }
         internal PrintedEditionModel(PrintedEdition entity) : this()
         {
-            Id = entity.Id;
-            Name = entity.Name;
-            Description = entity.Description;
-            Price = entity.Price;
-            IsRemoved = entity.IsRemoved;
-            Currency = entity.Currency;
-            Type = entity.Type;
+            if (!(entity is null))
+            {
+                Id = entity.Id;
+                Name = entity.Name;
+                Description = entity.Description;
+                Price = entity.Price;
+                IsRemoved = entity.IsRemoved;
+                Currency = entity.Currency;
+                Type = entity.Type;
+            }
         }
 
         internal PrintedEditionModel(PrintedEditionWithNestedObjects printedEdition) : this(printedEdition.PrintedEdition)

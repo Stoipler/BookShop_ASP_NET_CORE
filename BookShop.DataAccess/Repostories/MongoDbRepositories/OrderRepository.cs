@@ -2,6 +2,7 @@
 using BookShop.DataAccess.Models.RequestParameters;
 using BookShop.DataAccess.Repostories.Interfaces;
 using BookShop.DataAccess.Repostories.MongoDbRepositories.Base;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDbGenericRepository;

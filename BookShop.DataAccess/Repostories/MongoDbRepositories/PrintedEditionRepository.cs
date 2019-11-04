@@ -32,40 +32,8 @@ namespace BookShop.DataAccess.Repostories.MongoDbRepositories
         public async Task<(List<PrintedEditionWithNestedObjects>, int)> GetWithNestedObjectsAsync(PrintedEditionRequestParameters requestParameters)
         {
             MongoDbPipelineBuilder pipelineBuilder = new MongoDbPipelineBuilder();
-
             pipelineBuilder.Lookup(new BsonDocument {
                 {"from", "AuthorInBooks" },
-                { "localField", "_id" },
-                { "foreignField", "PrintedEditionId" },
-                { "as", "AuthorInBook" } });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$unwind", "$AuthorInBook" } });
-            pipelineBuilder.Lookup(new BsonDocument {
-                {"from","Authors" },
-                {"localField","AuthorInBook.AuthorId" },
-                {"foreignField","_id" },
-                { "as","Author"}
-            });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$unwind", "$Author" } });
-            pipelineBuilder.Set(new BsonDocument {
-                {"_id","$AuthorInBook._id" },
-                {"IsRemoved","$AuthorInBook.IsRemoved" },
-                {"CreationDate","$AuthorInBook.CreationDate" },
-                {"PrintedEditionId","$AuthorInBook.PrintedEditionId" },
-                {"AuthorId","$AuthorInBook.AuthorId" },
-            });
-            pipelineBuilder.Project(new BsonDocument {
-                        { "Name", 0 },
-                        { "Description", 0 },
-                        { "Price", 0 },
-                        { "Currency", 0 },
-                        { "Type", 0 },
-                        {"AuthorInBook",0 }
-            });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$out", "authorInBooks" } });
-
-            pipelineBuilder = new MongoDbPipelineBuilder();
-            pipelineBuilder.Lookup(new BsonDocument {
-                {"from", "authorInBooks" },
                 { "localField", "_id" },
                 { "foreignField", "PrintedEditionId" },
                 { "as", "AuthorInBooks" } });
@@ -89,6 +57,42 @@ namespace BookShop.DataAccess.Repostories.MongoDbRepositories
                         { "Price", 0 },
                         { "Currency", 0 },
                         { "Type", 0 }});
+            pipelineBuilder.AddExpression(new BsonDocument {
+                { "$unwind", new BsonDocument {
+                    {"path","$AuthorInBooks" },
+                    {"preserveNullAndEmptyArrays",true } }
+                }
+            });
+            pipelineBuilder.Lookup(new BsonDocument {
+                {"from", "Authors" },
+                { "localField", "AuthorInBooks.AuthorId" },
+                { "foreignField", "_id" },
+                { "as", "Author" }
+            });
+            pipelineBuilder.AddExpression(new BsonDocument {
+                { "$unwind", new BsonDocument {
+                    {"path","$Author" },
+                    {"preserveNullAndEmptyArrays",true } }
+                }
+            });
+            pipelineBuilder.AddFields(new BsonDocument{
+                    {"AuthorInBooks.Author","$Author" }
+            });
+            pipelineBuilder.Project(new BsonDocument {
+                        { "Author", 0 }
+            });
+            pipelineBuilder.Group(new BsonDocument{
+                    {"_id","$PrintedEdition" },
+                    { "AuthorInBooks",new BsonDocument{
+                        {"$push","$AuthorInBooks" }}
+                    }
+            });
+            pipelineBuilder.Set(new BsonDocument {
+                    { "PrintedEdition","$_id"}
+            });
+            pipelineBuilder.Project(new BsonDocument {
+                        { "_id", 0 }
+            });
 
             pipelineBuilder.Match(new BsonDocument {
                 { "PrintedEdition.Price", new BsonDocument {
@@ -151,39 +155,10 @@ namespace BookShop.DataAccess.Repostories.MongoDbRepositories
         {
             MongoDbPipelineBuilder pipelineBuilder = new MongoDbPipelineBuilder();
 
+            pipelineBuilder.Match(new BsonDocument { { "_id", new ObjectId(id) } });
+
             pipelineBuilder.Lookup(new BsonDocument {
                 {"from", "AuthorInBooks" },
-                { "localField", "_id" },
-                { "foreignField", "PrintedEditionId" },
-                { "as", "AuthorInBook" } });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$unwind", "$AuthorInBook" } });
-            pipelineBuilder.Lookup(new BsonDocument {
-                {"from","Authors" },
-                {"localField","AuthorInBook.AuthorId" },
-                {"foreignField","_id" },
-                { "as","Author"}
-            });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$unwind", "$Author" } });
-            pipelineBuilder.Set(new BsonDocument {
-                {"_id","$AuthorInBook._id" },
-                {"IsRemoved","$AuthorInBook.IsRemoved" },
-                {"CreationDate","$AuthorInBook.CreationDate" },
-                {"PrintedEditionId","$AuthorInBook.PrintedEditionId" },
-                {"AuthorId","$AuthorInBook.AuthorId" },
-            });
-            pipelineBuilder.Project(new BsonDocument {
-                        { "Name", 0 },
-                        { "Description", 0 },
-                        { "Price", 0 },
-                        { "Currency", 0 },
-                        { "Type", 0 },
-                        {"AuthorInBook",0 }
-            });
-            pipelineBuilder.AddExpression(new BsonDocument { { "$out", "authorInBooks" } });
-
-            pipelineBuilder = new MongoDbPipelineBuilder();
-            pipelineBuilder.Lookup(new BsonDocument {
-                {"from", "authorInBooks" },
                 { "localField", "_id" },
                 { "foreignField", "PrintedEditionId" },
                 { "as", "AuthorInBooks" } });
@@ -207,8 +182,42 @@ namespace BookShop.DataAccess.Repostories.MongoDbRepositories
                         { "Price", 0 },
                         { "Currency", 0 },
                         { "Type", 0 }});
-
-            pipelineBuilder.Match(new BsonDocument { { "PrintedEdition._id", new ObjectId(id) } });
+            pipelineBuilder.AddExpression(new BsonDocument {
+                { "$unwind", new BsonDocument {
+                    {"path","$AuthorInBooks" },
+                    {"preserveNullAndEmptyArrays",true } }
+                }
+            });
+            pipelineBuilder.Lookup(new BsonDocument {
+                {"from", "Authors" },
+                { "localField", "AuthorInBooks.AuthorId" },
+                { "foreignField", "_id" },
+                { "as", "Author" }
+            });
+            pipelineBuilder.AddExpression(new BsonDocument {
+                { "$unwind", new BsonDocument {
+                    {"path","$Author" },
+                    {"preserveNullAndEmptyArrays",true } }
+                }
+            });
+            pipelineBuilder.AddFields(new BsonDocument{
+                    {"AuthorInBooks.Author","$Author" }
+            });
+            pipelineBuilder.Project(new BsonDocument {
+                        { "Author", 0 }
+            });
+            pipelineBuilder.Group(new BsonDocument{
+                    {"_id","$PrintedEdition" },
+                    { "AuthorInBooks",new BsonDocument{
+                        {"$push","$AuthorInBooks" }}
+                    }
+            });
+            pipelineBuilder.Set(new BsonDocument {
+                    { "PrintedEdition","$_id"}
+            });
+            pipelineBuilder.Project(new BsonDocument {
+                        { "_id", 0 }
+            });
 
             IAsyncCursor<PrintedEditionWithNestedObjects> asyncCursor = await _mongoCollection.AggregateAsync<PrintedEditionWithNestedObjects>(pipelineBuilder.Pipeline);
             PrintedEditionWithNestedObjects printedEdition = await asyncCursor.FirstOrDefaultAsync();

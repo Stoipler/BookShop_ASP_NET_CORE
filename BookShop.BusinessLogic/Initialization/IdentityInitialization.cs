@@ -1,4 +1,5 @@
-﻿using BookShop.DataAccess.AppContext;
+﻿using AspNetCore.Identity.MongoDbCore.Models;
+using BookShop.DataAccess.AppContext;
 using BookShop.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,7 @@ namespace BookShop.BusinessLogic.Initialization
 {
     public class IdentityInitalization
     {
-        public async static void Seed(IServiceProvider provider)
+        public async static void IdentitySeed(IServiceProvider provider)
         {
             ApplicationContext _context = provider.GetRequiredService<ApplicationContext>();
             UserManager<ApplicationUser> _userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -17,6 +18,34 @@ namespace BookShop.BusinessLogic.Initialization
             if (await _roleManager.FindByNameAsync("admin") is null)
             {
                 await _roleManager.CreateAsync(new IdentityRole<string>("admin"));
+            }
+
+            if (!(await _userManager.FindByNameAsync(AdminCredentials.UserName) is null))
+            {
+                return;
+            }
+            ApplicationUser admin = new ApplicationUser
+            {
+                FirstName = AdminCredentials.FirstName,
+                LastName = AdminCredentials.LastName,
+                UserName = AdminCredentials.UserName,
+                Email = AdminCredentials.Email,
+                EmailConfirmed = true
+            };
+            string adminPassword = AdminCredentials.NotHashedPassword;
+            IdentityResult result = await _userManager.CreateAsync(admin, adminPassword);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(admin, "admin");
+            }
+        }
+        public async static void MongoSeed(IServiceProvider provider)
+        {
+            UserManager<ApplicationUser> _userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<MongoIdentityRole<string>> _roleManager = provider.GetRequiredService<RoleManager<MongoIdentityRole<string>>>();
+            if (await _roleManager.FindByNameAsync("admin") is null)
+            {
+                await _roleManager.CreateAsync(new MongoIdentityRole<string>("admin"));
             }
 
             if (!(await _userManager.FindByNameAsync(AdminCredentials.UserName) is null))
