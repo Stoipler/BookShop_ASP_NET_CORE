@@ -94,7 +94,7 @@ namespace BookShop.BusinessLogic.Services
                 OrderAmount = totalPrice,
             };
 
-            await _orderRepository.CreateAsync(order);
+            await _orderRepository.AddAsync(order);
 
             return string.Empty;
         }

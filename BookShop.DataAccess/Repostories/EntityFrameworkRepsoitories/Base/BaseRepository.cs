@@ -24,11 +24,12 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base
             return result;
         }
 
-        public async Task CreateAsync(TEntity item)
+        public async Task<TEntity> AddAsync(TEntity item)
         {
             await _dbSet.AddAsync(item);
 
             await _context.SaveChangesAsync();
+            return item;
         }
         public async Task UpdateAsync(TEntity item)
         {
@@ -48,6 +49,26 @@ namespace BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.Base
             TEntity enity = await _dbSet.FindAsync(id);
 
             return enity;
+        }
+        public async Task AddRangeAsync(List<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveRangeAsync(List<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateRangeAsync(List<TEntity> entities)
+        {
+            _dbSet.UpdateRange(entities);
+
+            await _context.SaveChangesAsync();
         }
     }
 

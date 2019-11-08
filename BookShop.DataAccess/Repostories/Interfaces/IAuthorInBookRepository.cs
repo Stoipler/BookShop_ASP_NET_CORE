@@ -7,7 +7,6 @@ namespace BookShop.DataAccess.Repostories.Interfaces
 {
     public interface IAuthorInBookRepository : IGenericRepository<AuthorInBook>
     {
-        Task AddRangeAsync(List<AuthorInBook> authorInBooks);
-        Task RemoveRangeAsync(List<AuthorInBook> listToRemove);
+        
     }
 }

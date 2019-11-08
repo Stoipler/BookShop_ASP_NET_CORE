@@ -40,10 +40,13 @@ namespace BookShop.DataAccess.AppContext
         {
             base.OnModelCreating(modelBuilder);
 
+
+
             modelBuilder.Entity<AuthorInBook>()
                 .HasOne(entity => entity.Author);
             modelBuilder.Entity<AuthorInBook>()
                .HasOne(entity => entity.PrintedEdition);
+
             Initialization.InitialData.Seed(modelBuilder);
         }
     }

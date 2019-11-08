@@ -26,9 +26,10 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories.Base
             return entities;
         }
 
-        public async Task CreateAsync(TEntity item)
+        public async Task<TEntity> AddAsync(TEntity item)
         {
             await _connection.InsertAsync(item);
+            return item;
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
@@ -46,6 +47,21 @@ namespace BookShop.DataAccess.Repostories.DapperRepositories.Base
         public async Task UpdateAsync(TEntity item)
         {
             await _connection.UpdateAsync(item);
+        }
+
+        public async Task AddRangeAsync(List<TEntity> entities)
+        {
+            await _connection.InsertAsync(entities);
+        }
+
+        public async Task RemoveRangeAsync(List<TEntity> entities)
+        {
+            await _connection.DeleteAsync(entities);
+        }
+
+        public async Task UpdateRangeAsync(List<TEntity> entities)
+        {
+            await _connection.UpdateAsync(entities);
         }
     }
 }

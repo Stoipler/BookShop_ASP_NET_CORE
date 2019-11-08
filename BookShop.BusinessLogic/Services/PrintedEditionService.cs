@@ -42,7 +42,7 @@ namespace BookShop.BusinessLogic.Services
         public async Task<PrintedEditionModel> CreateAsync(PrintedEditionModel model)
         {
             PrintedEdition printedEdition = model.MapToEntity();
-            await _printedEditionRepository.CreateAsync(printedEdition);
+            await _printedEditionRepository.AddAsync(printedEdition);
 
             List<AuthorInBook> authorInBooks = new List<AuthorInBook>();
 

@@ -1,0 +1,9 @@
+.printed-editions-column {
+    height: 150px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

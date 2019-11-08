@@ -33,8 +33,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<JwtHelper>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            InjectDapperRepositories(services);
-            //InjectEntityFrameworkRepositories(services);
+            //InjectDapperRepositories(services);
+            InjectEntityFrameworkRepositories(services);
 
 
             services.AddTransient<IAccountService, AccountService>();
