@@ -25,7 +25,7 @@ namespace BookShop.DataAccess.AppContext
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            var sqlServerOptionsExtension =
+            SqlServerOptionsExtension sqlServerOptionsExtension =
                    options.FindExtension<SqlServerOptionsExtension>();
             if (!(sqlServerOptionsExtension is null))
             {
