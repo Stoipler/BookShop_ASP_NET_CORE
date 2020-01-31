@@ -5,6 +5,8 @@ import { OrderManagementComponent } from 'src/app/modules/admin/components/order
 import { UserManagementComponent } from 'src/app/modules/admin/components/user-management/user-management.component';
 import { AuthenticationAdminGuard } from 'src/app/helpers/authenticationAdmin.guard';
 import { AuthorManagementComponent } from 'src/app/modules/admin/components/author-management/author-management.component';
+import { ChatManagementComponent } from 'src/app/modules/admin/components/chat-management/chat-management.component';
+import { ChatRoomComponent } from 'src/app/modules/admin/components/chat-management/chat-room/chat-room.component';
 
 
 const routes: Routes = [
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'ordermanagement', component: OrderManagementComponent, canActivate: [AuthenticationAdminGuard] },
   { path: 'usermanagement', component: UserManagementComponent, canActivate: [AuthenticationAdminGuard] },
   { path: 'authormanagement', component: AuthorManagementComponent, canActivate: [AuthenticationAdminGuard] },
+  { path: 'chatmanagement', component: ChatManagementComponent, canActivate: [AuthenticationAdminGuard] },
+  { path: 'chatmanagement/chatroom/:chatId', component: ChatRoomComponent, canActivate: [AuthenticationAdminGuard] },
 ];
 
 @NgModule({

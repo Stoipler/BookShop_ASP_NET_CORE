@@ -33,8 +33,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<JwtHelper>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            InjectDapperRepositories(services);
-            //InjectEntityFrameworkRepositories(services);
+            //InjectDapperRepositories(services);
+            InjectEntityFrameworkRepositories(services);
 
 
             services.AddTransient<IAccountService, AccountService>();
@@ -42,6 +42,7 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPrintedEditionService, PrintedEditionService>();
+            services.AddTransient<IChatService, ChatService>();
 
             services.AddTransient<CustomerService>();
             services.AddTransient<ChargeService>();
@@ -57,6 +58,8 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IPrintedEditionRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.PrintedEditionRepository>();
             services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.AuthorInBookRepository>();
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.UserRepository>();
+            services.AddTransient<IChatRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.ChatRepository>();
+            services.AddTransient<IMessageRepository, BookShop.DataAccess.Repostories.EntityFrameworkRepsoitories.MessageRepository>();
         }
 
         private static void InjectDapperRepositories(IServiceCollection services)
@@ -67,6 +70,5 @@ namespace BookShop.BusinessLogic
             services.AddTransient<IAuthorInBookRepository, BookShop.DataAccess.Repostories.DapperRepositories.AuthorInBookRepository>();
             services.AddTransient<IUserRepository, BookShop.DataAccess.Repostories.DapperRepositories.UserRepository>();
         }
-
     }
 }

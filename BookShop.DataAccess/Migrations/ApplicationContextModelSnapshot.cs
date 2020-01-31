@@ -99,49 +99,49 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5879),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8841),
                             IsRemoved = false,
                             Name = "Joan Rowling"
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5881),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8843),
                             IsRemoved = false,
                             Name = "J.R. Martin"
                         },
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8844),
                             IsRemoved = false,
                             Name = "William Shaekspeare"
                         },
                         new
                         {
                             Id = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5882),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8845),
                             IsRemoved = false,
-                            Name = "William Shaekspeare"
+                            Name = "Some author"
                         },
                         new
                         {
                             Id = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5883),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8846),
                             IsRemoved = false,
                             Name = "Lev Tolstoy"
                         },
                         new
                         {
                             Id = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5884),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8847),
                             IsRemoved = false,
                             Name = "Incognito"
                         },
                         new
                         {
                             Id = 7,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(5885),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(8848),
                             IsRemoved = false,
                             Name = "Stan Lee"
                         });
@@ -174,7 +174,7 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6048),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9065),
                             IsRemoved = false,
                             PrintedEditionId = 1
                         },
@@ -182,7 +182,7 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 2,
                             AuthorId = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6050),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9066),
                             IsRemoved = false,
                             PrintedEditionId = 2
                         },
@@ -190,7 +190,7 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 3,
                             AuthorId = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9067),
                             IsRemoved = false,
                             PrintedEditionId = 3
                         },
@@ -198,7 +198,7 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 4,
                             AuthorId = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6051),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9067),
                             IsRemoved = false,
                             PrintedEditionId = 4
                         },
@@ -206,7 +206,7 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 5,
                             AuthorId = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6052),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9068),
                             IsRemoved = false,
                             PrintedEditionId = 5
                         },
@@ -214,10 +214,56 @@ namespace BookShop.DataAccess.Migrations
                         {
                             Id = 6,
                             AuthorId = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6053),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9069),
                             IsRemoved = false,
                             PrintedEditionId = 6
                         });
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<bool>("IsCheckedByAdmin");
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.Property<int?>("MessageId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageId");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationUserId");
+
+                    b.Property<int>("ChatId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("BookShop.DataAccess.Entities.Order", b =>
@@ -313,7 +359,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6019),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9037),
                             Currency = 1,
                             Description = "About boy who lived",
                             IsRemoved = false,
@@ -324,7 +370,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6022),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9040),
                             Currency = 1,
                             Description = "Origin of the Game of trones",
                             IsRemoved = false,
@@ -335,7 +381,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6025),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9042),
                             Currency = 1,
                             Description = "Historical novel",
                             IsRemoved = false,
@@ -346,7 +392,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6026),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9043),
                             Currency = 1,
                             Description = "New York newspaper",
                             IsRemoved = false,
@@ -357,7 +403,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6027),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9044),
                             Currency = 1,
                             Description = "Not book",
                             IsRemoved = false,
@@ -368,7 +414,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6028),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9045),
                             Currency = 1,
                             Description = "Comics",
                             IsRemoved = false,
@@ -379,7 +425,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 7,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6029),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9046),
                             Currency = 1,
                             Description = "Superhero tales",
                             IsRemoved = false,
@@ -390,7 +436,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 8,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6030),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9047),
                             Currency = 1,
                             Description = "Science news",
                             IsRemoved = false,
@@ -401,7 +447,7 @@ namespace BookShop.DataAccess.Migrations
                         new
                         {
                             Id = 9,
-                            CreationDate = new DateTime(2019, 10, 21, 11, 49, 14, 947, DateTimeKind.Utc).AddTicks(6031),
+                            CreationDate = new DateTime(2019, 10, 28, 15, 55, 52, 250, DateTimeKind.Utc).AddTicks(9048),
                             Currency = 1,
                             Description = "Computer Journal",
                             IsRemoved = false,
@@ -529,6 +575,21 @@ namespace BookShop.DataAccess.Migrations
                     b.HasOne("BookShop.DataAccess.Entities.PrintedEdition", "PrintedEdition")
                         .WithMany()
                         .HasForeignKey("PrintedEditionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.Chat", b =>
+                {
+                    b.HasOne("BookShop.DataAccess.Entities.Message", "Message")
+                        .WithMany()
+                        .HasForeignKey("MessageId");
+                });
+
+            modelBuilder.Entity("BookShop.DataAccess.Entities.Message", b =>
+                {
+                    b.HasOne("BookShop.DataAccess.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

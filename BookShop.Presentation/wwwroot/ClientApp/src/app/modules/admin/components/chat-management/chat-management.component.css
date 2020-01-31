@@ -1,0 +1,15 @@
+.chat-label {
+    height: 50px;
+}
+
+.message-area-unchecked {
+    background-color: rgb(191, 199, 196);
+}
+
+.message-area-checked {
+    background-color: rgb(223, 233, 229);
+}
+
+.chatname-area {
+    background-color: rgb(180, 124, 233);
+}

@@ -7,9 +7,22 @@
   </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto fustify-content-around d-flex">
                 <li class="nav-item active">
                     <a class="nav-link" [routerLink]="'/printededition'">Catalog</a>
+                </li>
+                <li class="nav-item active" *ngIf="isOrdinaryUser()">
+                    <a class="nav-link" [routerLink]="'/chat/chatroom'">Chat</a>
+                </li>
+                <li class="nav-item active" *ngIf="isAdmin()">
+                    <a class="nav-link" [routerLink]="'/admin/chatmanagement'">
+                        <div class="row">
+                            Chats
+                            <div class="" *ngIf="uncheckedChatsCount!=0">
+                                <span class="badge badge-danger badge-pill">{{uncheckedChatsCount}}</span>
+                            </div>
+                        </div>
+                    </a>
                 </li>
             </ul>
             <div class="row align-items-center justify-content-around d-flex">

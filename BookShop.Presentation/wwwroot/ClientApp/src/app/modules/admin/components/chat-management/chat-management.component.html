@@ -1,0 +1,41 @@
+<div class="container">
+    <h3>
+        Chats
+    </h3>
+</div>
+<div class="container mt-3">
+    <div class="card " *ngFor="let chatModel of chatListModel.chatModels">
+        <div class="row chat-label container justify-content-around d-flex" [routerLink]="'chatroom/'+chatModel.id">
+            <div class="col-3 chatname-area justify-content-start d-flex">
+                <strong>{{chatModel.name}}</strong>
+            </div>
+            <div class="col-7 message-area-unchecked justify-content-start d-flex" *ngIf="!chatModel.isCheckedByAdmin">
+                <strong>
+                    <div *ngIf="chatModel.lastMessageModel.userId==getCurrentUserId()">
+                        You:
+                    </div>
+                    <div *ngIf="chatModel.lastMessageModel.userId!=getCurrentUserId()">
+                            {{chatModel.lastMessageModel.userModel.firstName}}: 
+                    </div>
+                </strong>
+                <div>{{chatModel.lastMessageModel.content}}</div>
+            </div>
+            <div class="col-7 message-area-checked justify-content-start d-flex" *ngIf="chatModel.isCheckedByAdmin">
+                <strong>
+                            <div *ngIf="chatModel.lastMessageModel.userId==getCurrentUserId()">
+                                You: 
+                            </div>
+                            <div *ngIf="chatModel.lastMessageModel.userId!=getCurrentUserId()">
+                                    {{chatModel.lastMessageModel.userModel.firstName}}:
+                            </div>
+                        </strong>
+                <div>{{chatModel.lastMessageModel.content}}</div>
+            </div>
+            <div class="col-2 time-area justify-content-end d-flex">
+                <strong> 
+                    {{chatModel.lastMessageModel.creationDate | date: 'mediumTime' }}
+                </strong>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\ClientApp\**" />
+    <Content Remove="wwwroot\ClientApp\**" />
+    <EmbeddedResource Remove="wwwroot\ClientApp\**" />
+    <None Remove="wwwroot\ClientApp\**" />
+    <TypeScriptCompile Remove="wwwroot\ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
@@ -30,6 +38,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookShop.BusinessLogic\BookShop.BusinessLogic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
